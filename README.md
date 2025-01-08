@@ -1,19 +1,19 @@
-# 个人作品集网站
+# Personal Portfolio
 
-基于 React + Vite 构建的个人作品集网站。
+A personal portfolio website built with React + Vite.
 
-## 技术栈
+## Tech Stack
 
 - React
 - Tailwind CSS
 - Framer Motion
 - EmailJS
 
-## 功能特点
+## Features
 
-- 响应式设计
-- 平滑滚动
-- 动画效果
-- 联系表单
+- Responsive Design
+- Smooth Scrolling
+- Animations
+- Contact Form
 
-## 本地开发
+## Local Development

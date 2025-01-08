@@ -4,23 +4,23 @@ import { FaBars, FaTimes } from 'react-icons/fa'
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const navItems = ['首页', '关于', '技能', '项目', '联系']
+  const navItems = ['Home', 'About', 'Skills', 'Projects', 'Contact']
 
   return (
     <nav className="fixed w-full bg-gray-900 bg-opacity-90 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
-            <h1 className="text-xl font-bold">你的名字</h1>
+            <h1 className="text-xl font-bold">Your Name</h1>
           </div>
           
-          {/* 桌面端导航 */}
+          {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               {navItems.map((item) => (
                 <a
                   key={item}
-                  href={`#${item}`}
+                  href={`#${item.toLowerCase()}`}
                   className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-white"
                 >
                   {item}
@@ -29,7 +29,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* 移动端菜单按钮 */}
+          {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -41,14 +41,14 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* 移动端导航菜单 */}
+      {/* Mobile Navigation Menu */}
       {isOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => (
               <a
                 key={item}
-                href={`#${item}`}
+                href={`#${item.toLowerCase()}`}
                 className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
                 onClick={() => setIsOpen(false)}
               >

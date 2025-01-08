@@ -17,7 +17,7 @@ import {
 const Skills = () => {
   const skillCategories = [
     {
-      title: "前端开发",
+      title: "Frontend Development",
       skills: [
         {
           name: "React",
@@ -52,7 +52,7 @@ const Skills = () => {
       ]
     },
     {
-      title: "后端技术",
+      title: "Backend Technologies",
       skills: [
         {
           name: "Node.js",
@@ -61,7 +61,7 @@ const Skills = () => {
           color: "#339933"
         },
         {
-          name: "数据库",
+          name: "Databases",
           icon: <FaDatabase />,
           level: 75,
           color: "#336791"
@@ -69,7 +69,7 @@ const Skills = () => {
       ]
     },
     {
-      title: "开发工具",
+      title: "Development Tools",
       skills: [
         {
           name: "Git",
@@ -94,7 +94,7 @@ const Skills = () => {
   ]
 
   return (
-    <section className="section-padding" id="技能">
+    <section className="section-padding" id="skills">
       <div className="container-width">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -102,7 +102,7 @@ const Skills = () => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="heading text-center">技能专长</h2>
+          <h2 className="heading text-center">Skills & Expertise</h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {skillCategories.map((category, categoryIndex) => (
@@ -150,7 +150,7 @@ const Skills = () => {
             ))}
           </div>
 
-          {/* 补充技能说明 */}
+          {/* Additional Skills Info */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -159,9 +159,11 @@ const Skills = () => {
             className="mt-16 text-center text-gray-400"
           >
             <p>
-              除了上述技能外，我还具备良好的问题解决能力、团队协作能力和持续学习的热情。
+              Beyond these technical skills, I possess strong problem-solving abilities,
+              excellent teamwork capabilities, and a passion for continuous learning.
               <br />
-              持续关注前端领域的新技术发展，并积极在实际项目中应用新技术。
+              I stay up-to-date with the latest developments in frontend technology
+              and actively implement new technologies in projects.
             </p>
           </motion.div>
         </motion.div>

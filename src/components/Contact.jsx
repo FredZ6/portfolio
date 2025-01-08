@@ -20,19 +20,19 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: <FaEnvelope />,
-      label: "邮箱",
+      label: "Email",
       value: "your.email@example.com",
       link: "mailto:your.email@example.com"
     },
     {
       icon: <FaPhone />,
-      label: "电话",
-      value: "+86 123 4567 8900",
-      link: "tel:+8612345678900"
+      label: "Phone",
+      value: "+1 234 567 8900",
+      link: "tel:+12345678900"
     },
     {
       icon: <FaWeixin />,
-      label: "微信",
+      label: "WeChat",
       value: "WeChat_ID",
       link: "#"
     }
@@ -55,15 +55,15 @@ const Contact = () => {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // 这里添加发送表单的逻辑
-    // 可以使用 EmailJS 或其他服务
+    // Add form submission logic here
+    // You can use EmailJS or other services
     console.log('Form submitted:', formData)
     
-    // 模拟发送延迟
+    // Simulate sending delay
     await new Promise(resolve => setTimeout(resolve, 1000))
     setIsSubmitting(false)
     
-    // 重置表单
+    // Reset form
     setFormData({
       name: '',
       email: '',
@@ -81,7 +81,7 @@ const Contact = () => {
   }
 
   return (
-    <section className="section-padding" id="联系">
+    <section className="section-padding" id="contact">
       <div className="container-width">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -89,14 +89,14 @@ const Contact = () => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="heading text-center">联系我</h2>
+          <h2 className="heading text-center">Contact Me</h2>
 
           <div className="grid lg:grid-cols-2 gap-12">
-            {/* 联系信息 */}
+            {/* Contact Information */}
             <div>
-              <h3 className="text-xl font-bold mb-6">联系方式</h3>
+              <h3 className="text-xl font-bold mb-6">Get in Touch</h3>
               
-              {/* 联系方式列表 */}
+              {/* Contact List */}
               <div className="space-y-4 mb-8">
                 {contactInfo.map((info, index) => (
                   <motion.a
@@ -117,8 +117,8 @@ const Contact = () => {
                 ))}
               </div>
 
-              {/* 社交媒体链接 */}
-              <h3 className="text-xl font-bold mb-4">社交媒体</h3>
+              {/* Social Links */}
+              <h3 className="text-xl font-bold mb-4">Social Media</h3>
               <div className="flex gap-4">
                 {socialLinks.map((social, index) => (
                   <motion.a
@@ -138,7 +138,7 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* 联系表单 */}
+            {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -149,7 +149,7 @@ const Contact = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium mb-2">
-                      姓名
+                      Name
                     </label>
                     <input
                       type="text"
@@ -163,7 +163,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium mb-2">
-                      邮箱
+                      Email
                     </label>
                     <input
                       type="email"
@@ -179,7 +179,7 @@ const Contact = () => {
                 
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                    主题
+                    Subject
                   </label>
                   <input
                     type="text"
@@ -194,7 +194,7 @@ const Contact = () => {
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium mb-2">
-                    消息
+                    Message
                   </label>
                   <textarea
                     id="message"
@@ -212,7 +212,7 @@ const Contact = () => {
                   disabled={isSubmitting}
                   className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
                 >
-                  {isSubmitting ? '发送中...' : '发送消息'}
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </motion.div>

@@ -5,29 +5,29 @@ const About = () => {
   const experiences = [
     {
       icon: <FaGraduationCap className="text-2xl" />,
-      title: "教育经历",
-      organization: "你的学校",
+      title: "Education",
+      organization: "Your University",
       period: "2019 - 2023",
-      description: "计算机科学与技术专业，主修软件开发与设计"
+      description: "Bachelor's in Computer Science, focused on Software Development"
     },
     {
       icon: <FaBriefcase className="text-2xl" />,
-      title: "工作经历",
-      organization: "公司名称",
-      period: "2023 - 至今",
-      description: "担任前端开发工程师，负责公司核心产品的开发与维护"
+      title: "Work Experience",
+      organization: "Company Name",
+      period: "2023 - Present",
+      description: "Frontend Developer, responsible for core product development"
     },
     {
       icon: <FaCode className="text-2xl" />,
-      title: "个人项目",
-      organization: "开源社区",
-      period: "2022 - 至今",
-      description: "积极参与开源项目，为社区贡献代码"
+      title: "Personal Projects",
+      organization: "Open Source",
+      period: "2022 - Present",
+      description: "Active contributor to open source projects"
     }
   ]
 
   return (
-    <section className="section-padding bg-secondary/10" id="关于">
+    <section className="section-padding bg-secondary/10" id="about">
       <div className="container-width">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -35,17 +35,18 @@ const About = () => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="heading text-center">关于我</h2>
+          <h2 className="heading text-center">About Me</h2>
           
-          {/* 个人简介 */}
+          {/* Personal Introduction */}
           <div className="max-w-3xl mx-auto text-center mb-16">
             <p className="text-gray-300 leading-relaxed">
-              我是一名充满激情的前端开发者，有着扎实的计算机科学基础和丰富的实践经验。
-              我热爱创造性的工作，善于解决复杂的技术问题，并且持续关注前端领域的最新发展。
+              I am a passionate frontend developer with a strong foundation in computer science
+              and extensive practical experience. I love creative work, excel at solving complex
+              technical challenges, and stay current with the latest developments in frontend technology.
             </p>
           </div>
 
-          {/* 经历时间线 */}
+          {/* Experience Timeline */}
           <div className="grid md:grid-cols-3 gap-8">
             {experiences.map((exp, index) => (
               <motion.div
@@ -71,9 +72,9 @@ const About = () => {
             ))}
           </div>
 
-          {/* 技能标签 */}
+          {/* Skills Tags */}
           <div className="mt-16">
-            <h3 className="text-xl font-bold text-center mb-8">技术栈</h3>
+            <h3 className="text-xl font-bold text-center mb-8">Tech Stack</h3>
             <div className="flex flex-wrap justify-center gap-4">
               {[
                 "JavaScript", "TypeScript", "React", "Vue",
