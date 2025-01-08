@@ -13,20 +13,21 @@ const Hero = () => {
         >
           <h2 className="text-primary font-medium text-lg mb-2">Hello, I&apos;m</h2>
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Your Name
+            Fred Zhang
           </h1>
           <h2 className="text-2xl md:text-3xl text-gray-400 mb-6">
-            Frontend Developer
+            Full Stack Developer
           </h2>
           <p className="text-gray-300 mb-8 max-w-lg">
-            A passionate developer focused on creating exceptional user experiences and interactive designs.
-            Proficient in React, TypeScript, and modern frontend technologies.
+            A dedicated full-stack developer with a strong passion for building scalable and efficient applications. 
+            Experienced in both frontend and backend technologies, with expertise in React, TypeScript, Java, 
+            Spring Boot, and PostgreSQL.
           </p>
           
           {/* Social Links */}
           <div className="flex space-x-4">
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/FredZ6"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-primary transition-colors"
@@ -34,7 +35,7 @@ const Hero = () => {
               <FaGithub size={24} />
             </a>
             <a
-              href="https://linkedin.com/in/yourusername"
+              href="https://www.linkedin.com/in/haifeng-zhang26/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-primary transition-colors"
@@ -42,7 +43,7 @@ const Hero = () => {
               <FaLinkedin size={24} />
             </a>
             <a
-              href="mailto:your.email@example.com"
+              href="mailto:fredzhang026@gmail.com"
               className="text-gray-400 hover:text-primary transition-colors"
             >
               <FaEnvelope size={24} />

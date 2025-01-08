@@ -1,6 +1,6 @@
-# Personal Portfolio
+# Fred Zhang - Portfolio
 
-A personal portfolio website built with React + Vite.
+A personal portfolio website showcasing my work as a Full Stack Developer.
 
 ## Tech Stack
 

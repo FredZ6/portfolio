@@ -1,17 +1,21 @@
 import { motion } from 'framer-motion'
 import { 
   FaReact, 
-  FaVuejs, 
-  FaNode, 
+  FaAws,
   FaGitAlt,
-  FaDatabase
+  FaDocker,
+  FaNodeJs
 } from 'react-icons/fa'
 import { 
-  SiJavascript, 
   SiTypescript, 
   SiTailwindcss,
-  SiWebpack,
-  SiDocker
+  SiNextdotjs,
+  SiSpring,
+  SiMui,
+  SiRedis,
+  SiMongodb,
+  SiPostgresql,
+  SiGithubactions
 } from 'react-icons/si'
 
 const Skills = () => {
@@ -26,51 +30,75 @@ const Skills = () => {
           color: "#61DAFB"
         },
         {
-          name: "Vue.js",
-          icon: <FaVuejs />,
-          level: 85,
-          color: "#4FC08D"
-        },
-        {
-          name: "JavaScript",
-          icon: <SiJavascript />,
-          level: 95,
-          color: "#F7DF1E"
-        },
-        {
           name: "TypeScript",
           icon: <SiTypescript />,
-          level: 85,
+          level: 90,
           color: "#3178C6"
+        },
+        {
+          name: "Next.js",
+          icon: <SiNextdotjs />,
+          level: 70,
+          color: "#000000"
         },
         {
           name: "Tailwind CSS",
           icon: <SiTailwindcss />,
-          level: 90,
+          level: 80,
           color: "#06B6D4"
+        },
+        {
+          name: "Material UI",
+          icon: <SiMui />,
+          level: 60,
+          color: "#007FFF"
         }
       ]
     },
     {
-      title: "Backend Technologies",
+      title: "Backend Development",
       skills: [
         {
+          name: "Java Spring Boot",
+          icon: <SiSpring />,
+          level: 90,
+          color: "#6DB33F"
+        },
+        {
           name: "Node.js",
-          icon: <FaNode />,
-          level: 80,
+          icon: <FaNodeJs />,
+          level: 75,
           color: "#339933"
         },
         {
-          name: "Databases",
-          icon: <FaDatabase />,
-          level: 75,
-          color: "#336791"
+          name: "PostgreSQL",
+          icon: <SiPostgresql />,
+          level: 85,
+          color: "#4169E1"
+        },
+        {
+          name: "MongoDB",
+          icon: <SiMongodb />,
+          level: 85,
+          color: "#47A248"
+        },
+        {
+          name: "Redis",
+          icon: <SiRedis />,
+          level: 85,
+          color: "#DC382D"
         }
       ]
     },
     {
-      title: "Development Tools",
+      title: "DevOps & Tools",
       skills: [
+        {
+          name: "AWS",
+          icon: <FaAws />,
+          level: 90,
+          color: "#FF9900"
+        },
         {
           name: "Git",
           icon: <FaGitAlt />,
@@ -78,16 +106,16 @@ const Skills = () => {
           color: "#F05032"
         },
         {
-          name: "Webpack",
-          icon: <SiWebpack />,
-          level: 80,
-          color: "#8DD6F9"
+          name: "Docker",
+          icon: <FaDocker />,
+          level: 85,
+          color: "#2496ED"
         },
         {
-          name: "Docker",
-          icon: <SiDocker />,
+          name: "CI/CD",
+          icon: <SiGithubactions />,
           level: 70,
-          color: "#2496ED"
+          color: "#2088FF"
         }
       ]
     }
@@ -150,21 +178,26 @@ const Skills = () => {
             ))}
           </div>
 
-          {/* Additional Skills Info */}
+          {/* AWS Certification */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mt-16 text-center text-gray-400"
+            className="mt-16 text-center bg-dark p-6 rounded-lg"
           >
-            <p>
-              Beyond these technical skills, I possess strong problem-solving abilities,
-              excellent teamwork capabilities, and a passion for continuous learning.
-              <br />
-              I stay up-to-date with the latest developments in frontend technology
-              and actively implement new technologies in projects.
-            </p>
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <FaAws className="text-[#FF9900] text-2xl" />
+              <h3 className="text-xl font-bold">Certification</h3>
+            </div>
+            <div className="space-y-2">
+              <p className="text-gray-300">
+                AWS Certified Developer Associate (DVA-C02)
+              </p>
+              <p className="text-gray-300">
+                AWS Certified Cloud Practitioner (CLF-C02)
+              </p>
+            </div>
           </motion.div>
         </motion.div>
       </div>

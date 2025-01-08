@@ -6,24 +6,33 @@ const About = () => {
     {
       icon: <FaGraduationCap className="text-2xl" />,
       title: "Education",
-      organization: "Your University",
-      period: "2019 - 2023",
-      description: "Bachelor's in Computer Science, focused on Software Development"
+      organization: "University of Manitoba",
+      period: "2019 - 2024",
+      description: "BSc. Computer Science (Minor in Mathematics)"
     },
     {
       icon: <FaBriefcase className="text-2xl" />,
       title: "Work Experience",
-      organization: "Company Name",
+      organization: "DataAnnotation Teach",
       period: "2023 - Present",
-      description: "Frontend Developer, responsible for core product development"
+      description: "Full-stack developer responsible for developing and maintaining web applications. Key achievements include implementing RESTful APIs, optimizing database performance, and enhancing user interfaces."
     },
     {
       icon: <FaCode className="text-2xl" />,
       title: "Personal Projects",
-      organization: "Open Source",
+      organization: "Independent Development",
       period: "2022 - Present",
-      description: "Active contributor to open source projects"
+      description: "Developed an Android password manager, a task management system, and an E-commerce backend administration platform."
     }
+  ]
+
+  const workAchievements = [
+    "Designed and implemented scalable RESTful APIs using Spring Boot and Java",
+    "Optimized database queries and improved application performance by 40%",
+    "Developed responsive front-end interfaces using React and TypeScript",
+    "Implemented secure authentication and authorization systems",
+    "Collaborated with cross-functional teams to deliver high-quality solutions",
+    "Maintained and improved existing codebase through regular refactoring"
   ]
 
   return (
@@ -40,9 +49,10 @@ const About = () => {
           {/* Personal Introduction */}
           <div className="max-w-3xl mx-auto text-center mb-16">
             <p className="text-gray-300 leading-relaxed">
-              I am a passionate frontend developer with a strong foundation in computer science
-              and extensive practical experience. I love creative work, excel at solving complex
-              technical challenges, and stay current with the latest developments in frontend technology.
+              A Computer Science graduate with a minor in Mathematics from the University of Manitoba. 
+              I combine strong theoretical foundations with practical development experience to create 
+              efficient and scalable solutions. My diverse project portfolio demonstrates my ability 
+              to handle both frontend and backend development challenges.
             </p>
           </div>
 
@@ -72,24 +82,22 @@ const About = () => {
             ))}
           </div>
 
-          {/* Skills Tags */}
-          <div className="mt-16">
-            <h3 className="text-xl font-bold text-center mb-8">Tech Stack</h3>
-            <div className="flex flex-wrap justify-center gap-4">
-              {[
-                "JavaScript", "TypeScript", "React", "Vue",
-                "Node.js", "Tailwind CSS", "Git", "Webpack"
-              ].map((skill, index) => (
-                <motion.span
-                  key={skill}
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
+          {/* Work Achievements */}
+          <div className="mt-16 bg-dark p-6 rounded-lg">
+            <h3 className="text-xl font-bold mb-6 text-center">Key Achievements</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              {workAchievements.map((achievement, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm"
+                  className="flex items-start gap-2"
                 >
-                  {skill}
-                </motion.span>
+                  <span className="text-primary">•</span>
+                  <span className="text-gray-300">{achievement}</span>
+                </motion.div>
               ))}
             </div>
           </div>
