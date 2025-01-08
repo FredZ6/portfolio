@@ -1,0 +1,11 @@
+npm create vite@latest my-portfolio -- --template react
+cd my-portfolio
+npm install
+npm install -D tailwindcss postcss autoprefixer framer-motion react-icons
+npx tailwindcss init -p 
+mkdir -p public/projects
+# 添加项目截图到 public/projects/ 目录
+# 添加你的头像到 public/ 目录 
+npm install @emailjs/browser 
+npm install prop-types 
+npm install @emailjs/browser prop-types framer-motion react-icons 

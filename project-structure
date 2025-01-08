@@ -1,0 +1,24 @@
+my-portfolio/
+├── public/
+│   ├── projects/        # 项目截图
+│   ├── favicon.svg      # 网站图标
+│   └── avatar.jpg       # 你的头像
+├── src/
+│   ├── components/
+│   │   ├── Navbar.jsx
+│   │   ├── Hero.jsx
+│   │   ├── About.jsx
+│   │   ├── Projects.jsx
+│   │   ├── Skills.jsx
+│   │   ├── Contact.jsx
+│   │   ├── Footer.jsx
+│   │   ├── Loading.jsx
+│   │   └── Toast.jsx
+│   ├── App.jsx
+│   └── index.css
+├── .env
+├── .gitignore
+├── index.html
+├── package.json
+├── README.md
+└── tailwind.config.js 
