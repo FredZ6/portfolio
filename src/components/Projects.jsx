@@ -4,45 +4,44 @@ import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
 const Projects = () => {
   const projects = [
     {
-      title: "E-commerce Platform",
-      description: "Modern e-commerce platform built with React + TypeScript, featuring product showcase, shopping cart, and payment integration",
+      title: "Password Manager Android Application",
+      description: "Secure Android app for generating, evaluating, and managing user passwords.",
+      image: "/projects/password-manager.jpg",
+      tags: ["Android Studio", "SQL", "JUnit", "GitHub"],
+      github: "https://github.com/FredZ6",
+      features: [
+        "Password generation and evaluation system",
+        "Secure data storage and retrieval using SQL",
+        "Version control and team collaboration via GitHub",
+        "Comprehensive testing process including unit tests and automated UI tests",
+        "User-friendly interface design"
+      ]
+    },
+    {
+      title: "Mobile Life Health Web Project",
+      description: "User-friendly mobile web application for health and wellness, featuring calorie tracking, recipe recommendations, and fitness goal management.",
+      image: "/projects/health-app.jpg",
+      tags: ["HTML", "CSS", "JavaScript"],
+      github: "https://github.com/FredZ6",
+      features: [
+        "Designed and implemented an intuitive mobile interface",
+        "Calorie tracking functionality",
+        "Recipe recommendation system",
+        "Fitness goal management tools",
+        "Enhanced user engagement through interactive navigation"
+      ]
+    },
+    {
+      title: "E-commerce Website Project",
+      description: "Full-stack e-commerce website showcasing user registration, product display, shopping cart, and order processing.",
       image: "/projects/ecommerce.jpg",
-      tags: ["React", "TypeScript", "Redux", "Tailwind CSS"],
-      github: "https://github.com/yourusername/ecommerce",
-      demo: "https://demo-ecommerce.com",
+      tags: ["React", "Spring Boot", "PostgreSQL", "JWT"],
+      github: "https://github.com/FredZ6",
       features: [
-        "Responsive design for all devices",
-        "State management with Redux Toolkit",
-        "Payment gateway integration",
-        "Product search and filtering"
-      ]
-    },
-    {
-      title: "Online Learning Platform",
-      description: "Educational platform built with Vue3 + Vite, supporting video courses and course management",
-      image: "/projects/education.jpg",
-      tags: ["Vue3", "Vite", "Element Plus", "Node.js"],
-      github: "https://github.com/yourusername/education",
-      demo: "https://demo-education.com",
-      features: [
-        "Custom video player",
-        "Course progress tracking",
-        "User authentication",
-        "Course rating system"
-      ]
-    },
-    {
-      title: "Community Forum",
-      description: "Full-stack project using Next.js for frontend and Node.js with MongoDB for backend",
-      image: "/projects/forum.jpg",
-      tags: ["Next.js", "Node.js", "MongoDB", "Tailwind CSS"],
-      github: "https://github.com/yourusername/forum",
-      demo: "https://demo-forum.com",
-      features: [
-        "Server-side rendering",
-        "Real-time notifications",
-        "Rich text editor",
-        "Image upload system"
+        "User registration and JWT-based login",
+        "Product listings and detailed views",
+        "Shopping cart management",
+        "Order creation and checkout"
       ]
     }
   ]
@@ -69,12 +68,10 @@ const Projects = () => {
                 className="bg-dark rounded-lg overflow-hidden group"
               >
                 {/* Project Image */}
-                <div className="relative overflow-hidden h-48">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
+                <div className="relative overflow-hidden h-48 bg-gray-800">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-gray-600 text-sm">Image Coming Soon</span>
+                  </div>
                   {/* Link Overlay */}
                   <div className="absolute inset-0 bg-black/60 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
                     <a
@@ -84,14 +81,6 @@ const Projects = () => {
                       className="text-white hover:text-primary transition-colors"
                     >
                       <FaGithub size={24} />
-                    </a>
-                    <a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-white hover:text-primary transition-colors"
-                    >
-                      <FaExternalLinkAlt size={24} />
                     </a>
                   </div>
                 </div>
@@ -133,7 +122,7 @@ const Projects = () => {
             className="text-center mt-12"
           >
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/FredZ6"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
