@@ -4,7 +4,8 @@ import {
   FaAws,
   FaGitAlt,
   FaDocker,
-  FaNodeJs
+  FaNodeJs,
+  FaExternalLinkAlt
 } from 'react-icons/fa'
 import { 
   SiTypescript, 
@@ -17,6 +18,35 @@ import {
   SiPostgresql,
   SiGithubactions
 } from 'react-icons/si'
+
+const certifications = [
+  {
+    title: (
+      <a
+        href="https://www.credly.com/badges/f68690b3-1e68-46d8-ae56-366bd880c0e5/linked_in_profile"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-primary transition-colors flex items-center justify-center gap-2"
+      >
+        <FaExternalLinkAlt className="text-sm" />
+        AWS Certified Developer Associate (DVA-C02)
+      </a>
+    )
+  },
+  {
+    title: (
+      <a
+        href="https://www.credly.com/badges/ff21fdcd-97e7-42a1-9e15-ddf052af8c57/linked_in_profile"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-primary transition-colors flex items-center justify-center gap-2"
+      >
+        <FaExternalLinkAlt className="text-sm" />
+        AWS Certified Cloud Practitioner (CLF-C02)
+      </a>
+    )
+  }
+];
 
 const Skills = () => {
   const skillCategories = [
@@ -193,12 +223,11 @@ const Skills = () => {
               <h3 className="text-xl font-bold">Certification</h3>
             </div>
             <div className="space-y-2">
-              <p className="text-gray-300">
-                AWS Certified Developer Associate (DVA-C02)
-              </p>
-              <p className="text-gray-300">
-                AWS Certified Cloud Practitioner (CLF-C02)
-              </p>
+              {certifications.map((cert, index) => (
+                <div key={index} className="text-gray-300">
+                  {cert.title}
+                </div>
+              ))}
             </div>
           </motion.div>
         </motion.div>
