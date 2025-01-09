@@ -140,9 +140,11 @@ const Skills = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-dark p-6 rounded-lg"
+                className="bg-dark p-6 rounded-lg border border-primary/20 hover:border-primary/40 transition-colors"
               >
-                <h3 className="text-xl font-bold mb-6">{category.title}</h3>
+                <div className="flex items-center gap-3 mb-6">
+                  <h3 className="text-xl font-bold">{category.title}</h3>
+                </div>
                 <div className="space-y-6">
                   {category.skills.map((skill, skillIndex) => (
                     <motion.div
