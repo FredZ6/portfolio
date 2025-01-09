@@ -26,10 +26,10 @@ const certifications = [
         href="https://www.credly.com/badges/f68690b3-1e68-46d8-ae56-366bd880c0e5/linked_in_profile"
         target="_blank"
         rel="noopener noreferrer"
-        className="hover:text-primary transition-colors flex items-center justify-center gap-2"
+        className="hover:text-primary transition-colors inline-flex items-center justify-center gap-2"
       >
-        <FaExternalLinkAlt className="text-sm" />
-        AWS Certified Developer Associate (DVA-C02)
+        <FaExternalLinkAlt className="text-sm flex-shrink-0" />
+        <span>AWS Certified Developer Associate (DVA-C02)</span>
       </a>
     )
   },
@@ -39,10 +39,10 @@ const certifications = [
         href="https://www.credly.com/badges/ff21fdcd-97e7-42a1-9e15-ddf052af8c57/linked_in_profile"
         target="_blank"
         rel="noopener noreferrer"
-        className="hover:text-primary transition-colors flex items-center justify-center gap-2"
+        className="hover:text-primary transition-colors inline-flex items-center justify-center gap-2"
       >
-        <FaExternalLinkAlt className="text-sm" />
-        AWS Certified Cloud Practitioner (CLF-C02)
+        <FaExternalLinkAlt className="text-sm flex-shrink-0" />
+        <span>AWS Certified Cloud Practitioner (CLF-C02)</span>
       </a>
     )
   }
