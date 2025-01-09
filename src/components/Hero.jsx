@@ -78,10 +78,10 @@ const Hero = () => {
           transition={{ duration: 0.5 }}
           className="relative"
         >
-          <div className="w-[280px] h-[280px] md:w-[400px] md:h-[400px] mx-auto relative">
+          <div className="w-[532px] h-[532px] md:w-[760px] md:h-[760px] mx-auto relative">
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-primary/50 blur-2xl opacity-30" />
             <img
-              src="/avatar.jpg"
+              src="/avatar.png"
               alt="Profile Picture"
               className="rounded-full w-full h-full object-cover relative z-10"
             />
