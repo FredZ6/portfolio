@@ -81,7 +81,7 @@ const Hero = () => {
           <div className="w-[532px] h-[532px] md:w-[760px] md:h-[760px] mx-auto relative">
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-primary/50 blur-2xl opacity-30" />
             <img
-              src="/avatar.png"
+              src="/portfolio/avatar.png"
               alt="Profile Picture"
               className="rounded-full w-full h-full object-cover relative z-10"
             />
