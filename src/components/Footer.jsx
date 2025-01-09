@@ -5,9 +5,11 @@ const Footer = () => {
     <footer className="py-8 text-center text-gray-400 text-sm">
       <div className="container-width">
         <p className="flex items-center justify-center gap-1">
-          Made with <FaHeart className="text-red-500" /> by Your Name
+          Designed & Built by <FaHeart className="text-red-500" /> Fred Zhang
         </p>
-        <p className="mt-2">© {new Date().getFullYear()} All rights reserved.</p>
+        <p className="mt-2">
+          © {new Date().getFullYear()} Fred Zhang. All Rights Reserved.
+        </p>
       </div>
     </footer>
   )

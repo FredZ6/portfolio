@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { 
   FaEnvelope, 
-  FaPhone, 
-  FaWeixin,
+  FaPhone,
   FaGithub, 
   FaLinkedin 
 } from 'react-icons/fa'
+import emailjs from '@emailjs/browser'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -16,25 +16,25 @@ const Contact = () => {
     message: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState({ show: false, type: '', message: '' })
+
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY)
+  }, [])
 
   const contactInfo = [
     {
       icon: <FaEnvelope />,
       label: "Email",
-      value: "your.email@example.com",
-      link: "mailto:your.email@example.com"
+      value: "fredzhang026@gmail.com",
+      link: "mailto:fredzhang026@gmail.com"
     },
     {
       icon: <FaPhone />,
       label: "Phone",
-      value: "+1 234 567 8900",
-      link: "tel:+12345678900"
-    },
-    {
-      icon: <FaWeixin />,
-      label: "WeChat",
-      value: "WeChat_ID",
-      link: "#"
+      value: "+1 (204) 770-3168",
+      link: "tel:+12047703168"
     }
   ]
 
@@ -42,34 +42,61 @@ const Contact = () => {
     {
       icon: <FaGithub />,
       label: "GitHub",
-      link: "https://github.com/yourusername"
+      link: "https://github.com/FredZ6"
     },
     {
       icon: <FaLinkedin />,
       label: "LinkedIn",
-      link: "https://linkedin.com/in/yourusername"
+      link: "https://www.linkedin.com/in/haifeng-zhang26/"
     }
   ]
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitStatus({ show: false, type: '', message: '' })
     
-    // Add form submission logic here
-    // You can use EmailJS or other services
-    console.log('Form submitted:', formData)
-    
-    // Simulate sending delay
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    setIsSubmitting(false)
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    })
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_name: 'Fred Zhang',
+        }
+      )
+      
+      // Success
+      setSubmitStatus({
+        show: true,
+        type: 'success',
+        message: 'Message sent successfully!'
+      })
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      })
+    } catch {
+      setSubmitStatus({
+        show: true,
+        type: 'error',
+        message: 'Failed to send message. Please try again.'
+      })
+    } finally {
+      setIsSubmitting(false)
+      
+      // Hide status message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus({ show: false, type: '', message: '' })
+      }, 5000)
+    }
   }
 
   const handleChange = (e) => {
@@ -90,6 +117,19 @@ const Contact = () => {
           viewport={{ once: true }}
         >
           <h2 className="heading text-center">Contact Me</h2>
+
+          {/* Status Message */}
+          {submitStatus.show && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`text-center mb-6 p-4 rounded-lg ${
+                submitStatus.type === 'success' ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'
+              }`}
+            >
+              {submitStatus.message}
+            </motion.div>
+          )}
 
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Information */}
@@ -158,7 +198,7 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-2 bg-dark rounded-lg focus:ring-2 focus:ring-primary outline-none"
+                      className="w-full px-4 py-2 bg-dark rounded-lg border border-primary/20 focus:ring-2 focus:ring-primary outline-none"
                     />
                   </div>
                   <div>
@@ -172,7 +212,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-2 bg-dark rounded-lg focus:ring-2 focus:ring-primary outline-none"
+                      className="w-full px-4 py-2 bg-dark rounded-lg border border-primary/20 focus:ring-2 focus:ring-primary outline-none"
                     />
                   </div>
                 </div>
@@ -188,7 +228,7 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 bg-dark rounded-lg focus:ring-2 focus:ring-primary outline-none"
+                    className="w-full px-4 py-2 bg-dark rounded-lg border border-primary/20 focus:ring-2 focus:ring-primary outline-none"
                   />
                 </div>
 
@@ -203,7 +243,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-2 bg-dark rounded-lg focus:ring-2 focus:ring-primary outline-none resize-none"
+                    className="w-full px-4 py-2 bg-dark rounded-lg border border-primary/20 focus:ring-2 focus:ring-primary outline-none resize-none"
                   />
                 </div>
 
