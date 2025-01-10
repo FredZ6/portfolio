@@ -15,7 +15,8 @@ import {
   SiRedis,
   SiMongodb,
   SiPostgresql,
-  SiGithubactions
+  SiGithubactions,
+  SiKubernetes
 } from 'react-icons/si'
 
 const Skills = () => {
@@ -110,6 +111,12 @@ const Skills = () => {
           icon: <FaDocker />,
           level: 85,
           color: "#2496ED"
+        },
+        {
+          name: "Kubernetes",
+          icon: <SiKubernetes />,
+          level: 60,
+          color: "#326CE5"
         },
         {
           name: "CI/CD",
