@@ -25,3 +25,13 @@
     @apply text-3xl sm:text-4xl font-bold mb-8;
   }
 }
+
+/* 添加滚动偏移量 */
+section {
+  scroll-margin-top: 5rem;  /* 80px */
+}
+
+/* 添加平滑滚动效果 */
+html {
+  scroll-behavior: smooth;
+}

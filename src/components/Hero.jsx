@@ -3,7 +3,7 @@ import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
 
 const Hero = () => {
   return (
-    <section className="min-h-screen flex items-center justify-center section-padding pt-20 md:pt-0" id="home">
+    <section className="min-h-screen flex items-center justify-center section-padding pt-24 md:pt-20" id="home">
       <div className="container-width grid md:grid-cols-2 gap-4 md:gap-8 items-center">
         {/* Text Content */}
         <motion.div

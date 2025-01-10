@@ -36,7 +36,7 @@ const About = () => {
   ]
 
   return (
-    <section className="section-padding bg-secondary/10" id="about">
+    <section className="section-padding pt-24 md:pt-20 bg-secondary/10" id="about">
       <div className="container-width">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

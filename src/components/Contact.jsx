@@ -75,7 +75,7 @@ const Contact = () => {
   }
 
   return (
-    <section className="section-padding" id="contact">
+    <section className="section-padding pt-24 md:pt-20" id="contact">
       <div className="container-width max-w-xl mx-auto">
         {submitStatus.show && (
           <Toast type={submitStatus.type} message={submitStatus.message} />
