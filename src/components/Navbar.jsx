@@ -7,39 +7,46 @@ const Navbar = () => {
   const navItems = ['Home', 'About', 'Skills', 'Projects', 'Contact']
 
   return (
-    <nav className="fixed w-full bg-gray-900 bg-opacity-90 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex-shrink-0">
-            <h1 className="text-xl font-bold">Fred Zhang</h1>
-          </div>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              {navItems.map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-white"
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-          </div>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-darker/80 backdrop-blur-sm">
+      <nav className="container-width flex items-center justify-between h-20">
+        {/* Logo */}
+        <a 
+          href="#home" 
+          className="text-2xl font-bold flex items-center gap-2"
+        >
+          <img 
+            src="/portfolio/avatar.png"
+            alt="Avatar" 
+            className="w-16 h-16 rounded-full"
+          />
+          Fred Zhang
+        </a>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-700 focus:outline-none"
-            >
-              {isOpen ? <FaTimes /> : <FaBars />}
-            </button>
+        {/* Desktop Navigation */}
+        <div className="hidden md:block">
+          <div className="ml-10 flex items-baseline space-x-4">
+            {navItems.map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-white"
+              >
+                {item}
+              </a>
+            ))}
           </div>
         </div>
-      </div>
+
+        {/* Mobile Menu Button */}
+        <div className="md:hidden">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-700 focus:outline-none"
+          >
+            {isOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
+      </nav>
 
       {/* Mobile Navigation Menu */}
       {isOpen && (
@@ -58,7 +65,7 @@ const Navbar = () => {
           </div>
         </div>
       )}
-    </nav>
+    </header>
   )
 }
 
