@@ -16,9 +16,16 @@ const Hero = () => {
           <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-2 md:mb-4">
             Fred Zhang
           </h1>
-          <h2 className="text-xl md:text-2xl lg:text-3xl text-gray-400 mb-4 md:mb-6">
-            Full Stack Developer
-          </h2>
+          <div className="flex items-center justify-center md:justify-start gap-2 mb-4 md:mb-6">
+            <h2 className="text-xl md:text-2xl lg:text-3xl text-gray-400">
+              Full Stack Developer
+            </h2>
+            <img 
+              src="/portfolio/dvac02.png" 
+              alt="AWS Developer Associate" 
+              className="h-6 md:h-8 lg:h-10 w-auto"
+            />
+          </div>
           <p className="text-sm md:text-base text-gray-300 mb-6 md:mb-8 max-w-lg mx-auto md:mx-0">
             A dedicated full-stack developer with a strong passion for building scalable and efficient applications. 
             Experienced in both frontend and backend technologies, with expertise in React, TypeScript, Java, 

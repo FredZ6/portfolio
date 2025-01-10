@@ -222,12 +222,37 @@ const Skills = () => {
               <FaAws className="text-[#FF9900] text-2xl" />
               <h3 className="text-xl font-bold">Certification</h3>
             </div>
-            <div className="space-y-2">
-              {certifications.map((cert, index) => (
-                <div key={index} className="text-gray-300">
-                  {cert.title}
-                </div>
-              ))}
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="flex flex-col items-center">
+                <a
+                  href="https://www.credly.com/badges/f68690b3-1e68-46d8-ae56-366bd880c0e5/linked_in_profile"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mb-2"
+                >
+                  <img 
+                    src="/portfolio/dvac02.png" 
+                    alt="AWS Developer Associate" 
+                    className="w-48 h-48 object-contain hover:scale-105 transition-transform"
+                  />
+                </a>
+                <span className="text-gray-300">AWS Certified Developer Associate (DVA-C02)</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <a
+                  href="https://www.credly.com/badges/ff21fdcd-97e7-42a1-9e15-ddf052af8c57/linked_in_profile"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mb-2"
+                >
+                  <img 
+                    src="/portfolio/clf-c02.png" 
+                    alt="AWS Cloud Practitioner" 
+                    className="w-48 h-48 object-contain hover:scale-105 transition-transform"
+                  />
+                </a>
+                <span className="text-gray-300">AWS Certified Cloud Practitioner (CLF-C02)</span>
+              </div>
             </div>
           </motion.div>
         </motion.div>
