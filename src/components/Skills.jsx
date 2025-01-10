@@ -4,8 +4,7 @@ import {
   FaAws,
   FaGitAlt,
   FaDocker,
-  FaNodeJs,
-  FaExternalLinkAlt
+  FaNodeJs
 } from 'react-icons/fa'
 import { 
   SiTypescript, 
@@ -18,35 +17,6 @@ import {
   SiPostgresql,
   SiGithubactions
 } from 'react-icons/si'
-
-const certifications = [
-  {
-    title: (
-      <a
-        href="https://www.credly.com/badges/f68690b3-1e68-46d8-ae56-366bd880c0e5/linked_in_profile"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="hover:text-primary transition-colors inline-flex items-start justify-center gap-2"
-      >
-        <FaExternalLinkAlt className="text-sm flex-shrink-0 mt-1" />
-        <span className="text-left">AWS Certified Developer Associate (DVA-C02)</span>
-      </a>
-    )
-  },
-  {
-    title: (
-      <a
-        href="https://www.credly.com/badges/ff21fdcd-97e7-42a1-9e15-ddf052af8c57/linked_in_profile"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="hover:text-primary transition-colors inline-flex items-start justify-center gap-2"
-      >
-        <FaExternalLinkAlt className="text-sm flex-shrink-0 mt-1" />
-        <span className="text-left">AWS Certified Cloud Practitioner (CLF-C02)</span>
-      </a>
-    )
-  }
-];
 
 const Skills = () => {
   const skillCategories = [
