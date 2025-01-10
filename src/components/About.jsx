@@ -14,7 +14,7 @@ const About = () => {
       icon: <FaBriefcase className="text-2xl" />,
       title: "Work Experience",
       organization: "DataAnnotation Teach",
-      period: "2023 - Present",
+      period: "2023 - 2024",
       description: "Full-stack developer responsible for developing and maintaining web applications. Key achievements include implementing RESTful APIs, optimizing database performance, and enhancing user interfaces."
     },
     {
