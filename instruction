@@ -1,0 +1,52 @@
+演示链接，项目截图暂时没有，先不用更新。GitHub 链接全部用@https://github.com/FredZ6 。
+
+
+1.Password Manager Android Application
+Secure Android app for generating, evaluating, and managing user passwords.
+
+Technologies Used:
+
+Android Studio
+GitHub
+Agile Software Development
+SQL
+JUnit
+Key Features:
+
+Password generation and evaluation system
+Secure data storage and retrieval using SQL
+Version control and team collaboration via GitHub
+Comprehensive testing process including unit tests and automated UI tests
+User-friendly interface design
+
+
+2.Mobile Life Health Web Project
+User-friendly mobile web application for health and wellness, featuring calorie tracking, recipe recommendations, and fitness goal management.
+
+Technologies Used:
+
+HTML
+CSS
+JavaScript
+Key Features:
+
+Designed and implemented an intuitive mobile interface
+Calorie tracking functionality
+Recipe recommendation system
+Fitness goal management tools
+Enhanced user engagement through interactive navigation
+
+3.E-commerce Website Project
+Full-stack e-commerce website showcasing user registration, product display, shopping cart, and order processing.
+
+Technologies Used:
+
+React
+Spring Boot (Java)
+PostgreSQL
+Key Features:
+
+User registration and JWT-based login
+Product listings and detailed views
+Shopping cart management
+Order creation and checkout
