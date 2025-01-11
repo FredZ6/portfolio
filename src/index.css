@@ -3,21 +3,30 @@
 @tailwind utilities;
 
 /* 自定义滚动条样式 */
+html {
+  overflow-y: overlay;  /* 只在需要时显示垂直滚动条 */
+  overflow-x: hidden;   /* 隐藏水平滚动条 */
+}
+
+body {
+  overflow-x: hidden;   /* 确保在 body 上也隐藏水平滚动 */
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #222831;  /* 暗色背景 */
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #48f0c0;  /* 主题色 */
+  background: #48f0c0;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3ad1a4;  /* 悬停时稍微暗一点 */
+  background: #3ad1a4;
 }
 
 @layer base {
