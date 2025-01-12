@@ -48,11 +48,17 @@ const About = () => {
           
           {/* Personal Introduction */}
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <p className="text-gray-300 leading-relaxed">
-              A Computer Science graduate with a minor in Mathematics from the University of Manitoba. 
-              I combine strong theoretical foundations with practical development experience to create 
-              efficient and scalable solutions. My diverse project portfolio demonstrates my ability 
-              to handle both frontend and backend development challenges.
+            <p className="text-gray-300 leading-relaxed font-mono tracking-wide">
+              A <span className="text-primary">Computer Science</span> graduate with a minor in 
+              <span className="text-primary"> Mathematics</span> from the 
+              <span className="text-primary/90"> University of Manitoba</span>. 
+              I combine <span className="text-primary">strong theoretical foundations</span> with 
+              <span className="text-primary"> practical development experience</span> to create 
+              <span className="text-primary"> efficient</span> and 
+              <span className="text-primary"> scalable</span> solutions. 
+              My <span className="text-primary">diverse project portfolio</span> demonstrates my ability 
+              to handle both <span className="text-primary/90">frontend</span> and 
+              <span className="text-primary/90"> backend</span> development challenges.
             </p>
           </div>
 

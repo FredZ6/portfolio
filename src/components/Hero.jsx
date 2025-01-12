@@ -19,10 +19,16 @@ const Hero = () => {
           <h2 className="text-xl md:text-2xl lg:text-3xl text-gray-400 mb-4 md:mb-6">
             Full Stack Developer
           </h2>
-          <p className="text-sm md:text-base text-gray-300 mb-6 md:mb-8 max-w-lg mx-auto md:mx-0">
-            A dedicated full-stack developer with a strong passion for building scalable and efficient applications. 
-            Experienced in both frontend and backend technologies, with expertise in React, TypeScript, Java, 
-            Spring Boot, and PostgreSQL.
+          <p className="text-sm md:text-base text-gray-300 mb-6 md:mb-8 max-w-lg mx-auto md:mx-0 font-mono leading-relaxed tracking-wide">
+            A dedicated full-stack developer with a strong passion for building 
+            <span className="text-primary"> scalable</span> and 
+            <span className="text-primary"> efficient</span> applications. 
+            Experienced in both frontend and backend technologies, with expertise in 
+            <span className="text-primary/90"> React</span>, 
+            <span className="text-primary/90"> TypeScript</span>, 
+            <span className="text-primary/90"> Java</span>, 
+            <span className="text-primary/90"> Spring Boot</span>, and 
+            <span className="text-primary/90"> PostgreSQL</span>.
           </p>
           
           {/* Social Links */}
