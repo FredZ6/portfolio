@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
+import { FaExternalLinkAlt } from 'react-icons/fa'
 
 const Projects = () => {
   const projects = [
@@ -65,7 +65,7 @@ const Projects = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-dark rounded-lg overflow-hidden group border border-primary/20 hover:border-primary/40 transition-colors"
+                className="bg-dark rounded-lg overflow-hidden group border-2 border-primary/20 hover:border-primary transition-colors"
               >
                 {/* Project Info */}
                 <div className="p-8">

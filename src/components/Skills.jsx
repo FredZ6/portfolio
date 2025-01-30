@@ -192,7 +192,7 @@ const Skills = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-dark p-6 rounded-lg border border-primary/20 hover:border-primary/40 transition-colors"
+                className="bg-dark p-6 rounded-lg border-2 border-primary/20 hover:border-primary transition-colors"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <h3 className="text-xl font-bold">{category.title}</h3>
