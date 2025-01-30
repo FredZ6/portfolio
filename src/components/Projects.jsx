@@ -67,35 +67,17 @@ const Projects = () => {
                 viewport={{ once: true }}
                 className="bg-dark rounded-lg overflow-hidden group border border-primary/20 hover:border-primary/40 transition-colors"
               >
-                {/* Project Image */}
-                <div className="relative overflow-hidden h-48 bg-gray-800">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-gray-600 text-sm">Image Coming Soon</span>
-                  </div>
-                  {/* Link Overlay */}
-                  <div className="absolute inset-0 bg-black/60 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-white hover:text-primary transition-colors"
-                    >
-                      <FaGithub size={24} />
-                    </a>
-                  </div>
-                </div>
-
                 {/* Project Info */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-gray-400 text-sm mb-4">{project.description}</p>
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold mb-4 text-white/90">{project.title}</h3>
+                  <p className="text-gray-400 text-sm mb-6 leading-relaxed">{project.description}</p>
                   
                   {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2 mb-6">
                     {project.tags.map(tag => (
                       <span
                         key={tag}
-                        className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full"
+                        className="px-3 py-1.5 bg-primary/10 text-primary text-xs rounded-full font-medium"
                       >
                         {tag}
                       </span>
@@ -103,9 +85,9 @@ const Projects = () => {
                   </div>
 
                   {/* Key Features */}
-                  <ul className="text-sm text-gray-400 space-y-1 list-disc list-inside">
+                  <ul className="text-sm text-gray-400 space-y-2 list-disc list-inside marker:text-primary">
                     {project.features.map((feature, i) => (
-                      <li key={i}>{feature}</li>
+                      <li key={i} className="leading-relaxed">{feature}</li>
                     ))}
                   </ul>
                 </div>
