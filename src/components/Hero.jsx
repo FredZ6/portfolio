@@ -121,7 +121,12 @@ const Hero = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Contact Me
+              <DecryptedText
+                text="Contact Me"
+                animateOn="view"
+                speed={150}
+                sequential={true}
+              />
             </motion.a>
             <motion.a
               href="#projects"
@@ -129,7 +134,12 @@ const Hero = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              View Projects
+              <DecryptedText
+                text="View Projects"
+                animateOn="view"
+                speed={150}
+                sequential={true}
+              />
             </motion.a>
           </div>
         </motion.div>
