@@ -28,63 +28,27 @@ const Hero = () => {
             <DecryptedText
               text="Full Stack Developer"
               animateOn="view"
-              speed={40}
+              speed={80}
               sequential={true}
             />
           </h2>
           <p className="text-sm md:text-base text-gray-300 mb-6 md:mb-8 max-w-lg mx-auto md:mx-0 font-mono leading-relaxed tracking-wide">
             <DecryptedText
-              text="A dedicated full-stack developer with a strong passion for building "
+              text="A dedicated full-stack developer with a strong passion for building scalable and efficient applications. Experienced in both frontend and backend technologies, with expertise in React, TypeScript, Java, Spring Boot, and PostgreSQL."
               animateOn="view"
-              speed={20}
+              speed={5}
               sequential={true}
+              highlightWords={[
+                "scalable",
+                "efficient",
+                "React",
+                "TypeScript",
+                "Java",
+                "Spring Boot",
+                "PostgreSQL"
+              ]}
+              highlightClass="text-primary"
             />
-            <span className="text-primary">
-              <DecryptedText
-                text="scalable"
-                animateOn="view"
-                speed={170}
-                sequential={true}
-                delay={1.5}
-              />
-            </span>
-            <DecryptedText text=" and " animateOn="view" speed={20} sequential={true} delay={1.8} />
-            <span className="text-primary">
-              <DecryptedText
-                text="efficient"
-                animateOn="view"
-                speed={170}
-                sequential={true}
-                delay={2}
-              />
-            </span>
-            <DecryptedText
-              text=" applications. Experienced in both frontend and backend technologies, with expertise in "
-              animateOn="view"
-              speed={20}
-              sequential={true}
-              delay={2.3}
-            />
-            <span className="text-primary/90">
-              <DecryptedText text="React" animateOn="view" speed={170} sequential={true} delay={3.5} />
-            </span>
-            <DecryptedText text=", " animateOn="view" speed={20} sequential={true} delay={3.6} />
-            <span className="text-primary/90">
-              <DecryptedText text="TypeScript" animateOn="view" speed={170} sequential={true} delay={3.7} />
-            </span>
-            <DecryptedText text=", " animateOn="view" speed={20} sequential={true} delay={3.8} />
-            <span className="text-primary/90">
-              <DecryptedText text="Java" animateOn="view" speed={170} sequential={true} delay={3.9} />
-            </span>
-            <DecryptedText text=", " animateOn="view" speed={20} sequential={true} delay={4.0} />
-            <span className="text-primary/90">
-              <DecryptedText text="Spring Boot" animateOn="view" speed={170} sequential={true} delay={4.1} />
-            </span>
-            <DecryptedText text=", and " animateOn="view" speed={20} sequential={true} delay={4.2} />
-            <span className="text-primary/90">
-              <DecryptedText text="PostgreSQL" animateOn="view" speed={170} sequential={true} delay={4.3} />
-            </span>
-            <DecryptedText text="." animateOn="view" speed={20} sequential={true} delay={4.4} />
           </p>
           
           {/* Social Links */}

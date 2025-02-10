@@ -33,6 +33,8 @@ const styles = {
  * - parentClassName?: string    (applied to parent span)
  * - encryptedClassName?: string (applied to encrypted letters)
  * - animateOn?: "view" | "hover"  (default: "hover")
+ * - highlightWords?: string[]   (list of words to highlight)
+ * - highlightClass?: string     (class to apply to highlighted words)
  */
 export default function DecryptedText({
   text,
@@ -46,6 +48,8 @@ export default function DecryptedText({
   parentClassName = '',
   encryptedClassName = '',
   animateOn = 'hover',
+  highlightWords = [],
+  highlightClass = '',
   ...props
 }) {
   const [displayText, setDisplayText] = useState(text)
@@ -226,10 +230,17 @@ export default function DecryptedText({
           const isRevealedOrDone =
             revealedIndices.has(index) || !isScrambling || !isHovering
 
+          const isHighlighted = highlightWords.some(word => {
+            const wordStart = text.indexOf(word)
+            return wordStart !== -1 && index >= wordStart && index < wordStart + word.length
+          })
+
           return (
             <span
               key={index}
-              className={isRevealedOrDone ? className : encryptedClassName}
+              className={`${isRevealedOrDone ? className : encryptedClassName} ${
+                isHighlighted ? highlightClass : ''
+              }`}
             >
               {char}
             </span>
