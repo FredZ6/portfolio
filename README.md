@@ -16,7 +16,6 @@ A personal portfolio website showcasing my work as a Full Stack Developer.
 - 🎯 Modern UI/UX
 - 🔄 Smooth Scrolling & Animations
 - 📬 Interactive Contact Form
-- 🌙 Dark/Light Mode
 - ⚡ Fast Performance
 - 🎨 Custom Components
 
