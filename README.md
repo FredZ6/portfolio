@@ -2,18 +2,21 @@
 
 A personal portfolio website showcasing my work as a Full Stack Developer.
 
-## Tech Stack
+## 🚀 Tech Stack
 
-- React
-- Tailwind CSS
-- Framer Motion
-- EmailJS
+- **Frontend:** React.js, Tailwind CSS
+- **Animation:** Framer Motion
+- **Email Service:** EmailJS
+- **Build Tool:** Vite
+- **Version Control:** Git
 
-## Features
+## ✨ Features
 
-- Responsive Design
-- Smooth Scrolling
-- Animations
-- Contact Form
+- 📱 Fully Responsive Design
+- 🎯 Modern UI/UX
+- 🔄 Smooth Scrolling & Animations
+- 📬 Interactive Contact Form
+- 🌙 Dark/Light Mode
+- ⚡ Fast Performance
+- 🎨 Custom Components
 
-## Local Development
