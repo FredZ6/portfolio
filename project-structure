@@ -1,8 +1,8 @@
 my-portfolio/
 ├── public/
-│   ├── projects/        # 项目截图
-│   ├── favicon.svg      # 网站图标
-│   └── avatar.jpg       # 你的头像
+│   ├── projects/        # Project screenshots
+│   ├── favicon.svg      # Website favicon
+│   └── avatar.jpg       # Your avatar
 ├── src/
 │   ├── components/
 │   │   ├── Navbar.jsx
