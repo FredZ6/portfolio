@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FaExternalLinkAlt } from 'react-icons/fa'
+import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa'
 
 const Projects = () => {
   const projects = [
@@ -18,17 +18,17 @@ const Projects = () => {
       ]
     },
     {
-      title: "Mobile Life Health Web Project",
-      description: "User-friendly mobile web application for health and wellness, featuring calorie tracking, recipe recommendations, and fitness goal management.",
-      image: "/projects/health-app.jpg",
-      tags: ["HTML", "CSS", "JavaScript"],
-      github: "https://github.com/FredZ6",
+      title: "Easy Card",
+      description: "A user-friendly membership card management application that helps users digitally manage various membership cards, loyalty cards, and discount cards.",
+      image: "/projects/easy-card.jpg",
+      tags: ["SwiftUI", "Core Image", "PhotosUI", "iOS"],
+      github: "https://github.com/FredZ6/EasyCard-ios",
       features: [
-        "Designed and implemented an intuitive mobile interface",
-        "Calorie tracking functionality",
-        "Recipe recommendation system",
-        "Fitness goal management tools",
-        "Enhanced user engagement through interactive navigation"
+        "Digital card management with custom colors and styles",
+        "Barcode scanning and generation using Core Image",
+        "Receipt and photo management with PhotosUI integration",
+        "Card notes function with local data persistence",
+        "Real-time data synchronization across devices"
       ]
     },
     {
@@ -85,11 +85,22 @@ const Projects = () => {
                   </div>
 
                   {/* Key Features */}
-                  <ul className="text-sm text-gray-400 space-y-2 list-disc list-inside marker:text-primary">
+                  <ul className="text-sm text-gray-400 space-y-2 list-disc list-inside marker:text-primary mb-6">
                     {project.features.map((feature, i) => (
                       <li key={i} className="leading-relaxed">{feature}</li>
                     ))}
                   </ul>
+
+                  {/* GitHub Link Button */}
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg transition-colors"
+                  >
+                    <FaGithub size={18} />
+                    <span>View on GitHub</span>
+                  </a>
                 </div>
               </motion.div>
             ))}
