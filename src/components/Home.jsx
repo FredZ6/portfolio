@@ -1,0 +1,1 @@
+<section className="section-padding pt-1 bg-secondary/10" id="home"> 

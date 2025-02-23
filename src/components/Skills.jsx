@@ -129,7 +129,7 @@ const Skills = () => {
   ]
 
   return (
-    <section className="section-padding pt-24 md:pt-20" id="skills">
+    <section className="section-padding pt-1 bg-secondary/10" id="skills">
       <div className="container-width">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
