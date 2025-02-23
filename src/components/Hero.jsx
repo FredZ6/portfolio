@@ -70,7 +70,7 @@ const Hero = () => {
               <FaLinkedin size={20} className="md:w-6 md:h-6" />
             </a>
             <a
-              href="mailto:zhanghaifeng0626@gmail.com"
+              href="mailto:fredzhang026@gmail.com"
               className="text-gray-400 hover:text-primary transition-colors"
             >
               <FaEnvelope size={20} className="md:w-6 md:h-6" />
