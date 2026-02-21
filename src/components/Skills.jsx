@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { 
   FaReact, 
   FaAws,
@@ -20,6 +20,49 @@ import {
 } from 'react-icons/si'
 
 const Skills = () => {
+  const shouldReduceMotion = useReducedMotion()
+
+  const sectionVariants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 24 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0.2 : 0.62,
+        ease: [0.22, 1, 0.36, 1],
+        when: 'beforeChildren',
+        staggerChildren: shouldReduceMotion ? 0 : 0.12,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 16 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0.2 : 0.5,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  }
+
+  const cardsGridVariants = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.1,
+      },
+    },
+  }
+
+  const getSkillLabel = (level) => {
+    if (level >= 85) return 'Advanced'
+    if (level >= 70) return 'Proficient'
+    return 'Familiar'
+  }
+
   const skillCategories = [
     {
       title: "Frontend Development",
@@ -129,22 +172,21 @@ const Skills = () => {
   ]
 
   return (
-    <section className="section-padding pt-1 bg-secondary/10" id="skills">
+    <section className="section-padding pt-1" id="skills">
       <div className="container-width">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <h2 className="heading text-center">Skills & Expertise</h2>
+          <motion.h2 variants={itemVariants} className="heading text-center">
+            Skills & Expertise
+          </motion.h2>
           
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="mb-16 text-center bg-dark p-6 rounded-lg"
+            variants={itemVariants}
+            className="mb-16 text-center glass-panel rounded-2xl p-6"
           >
             <div className="flex items-center justify-center gap-2 mb-4">
               <FaAws className="text-[#FF9900] text-2xl" />
@@ -164,7 +206,7 @@ const Skills = () => {
                     className="w-48 h-48 object-contain hover:scale-105 transition-transform"
                   />
                 </a>
-                <span className="text-gray-300">AWS Certified Developer Associate (DVA-C02)</span>
+                <span className="text-slate-600">AWS Certified Developer Associate (DVA-C02)</span>
               </div>
               <div className="flex flex-col items-center">
                 <a
@@ -179,20 +221,17 @@ const Skills = () => {
                     className="w-48 h-48 object-contain hover:scale-105 transition-transform"
                   />
                 </a>
-                <span className="text-gray-300">AWS Certified Cloud Practitioner (CLF-C02)</span>
+                <span className="text-slate-600">AWS Certified Cloud Practitioner (CLF-C02)</span>
               </div>
             </div>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {skillCategories.map((category, categoryIndex) => (
+          <motion.div variants={cardsGridVariants} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {skillCategories.map((category) => (
               <motion.div
                 key={category.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-dark p-6 rounded-lg border-2 border-primary/20 hover:border-primary transition-colors"
+                variants={itemVariants}
+                className="glass-panel rounded-2xl p-6 hover:border-primary/40 hover:shadow-lg transition-all"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <h3 className="text-xl font-bold">{category.title}</h3>
@@ -201,26 +240,26 @@ const Skills = () => {
                   {category.skills.map((skill, skillIndex) => (
                     <motion.div
                       key={skill.name}
-                      initial={{ opacity: 0, x: -20 }}
+                      initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: skillIndex * 0.1 }}
-                      viewport={{ once: true }}
+                      transition={{ duration: shouldReduceMotion ? 0.2 : 0.5, delay: shouldReduceMotion ? 0 : skillIndex * 0.1 }}
+                      viewport={{ once: true, amount: 0.3 }}
                     >
                       <div className="flex items-center gap-3 mb-2">
                         <span className="text-2xl" style={{ color: skill.color }}>
                           {skill.icon}
                         </span>
                         <span className="font-medium">{skill.name}</span>
-                        <span className="ml-auto text-sm text-gray-400">
-                          {skill.level}%
+                        <span className="ml-auto text-xs font-medium uppercase tracking-wide text-slate-500">
+                          {getSkillLabel(skill.level)}
                         </span>
                       </div>
-                      <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                      <div className="h-2 bg-white/70 rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           whileInView={{ width: `${skill.level}%` }}
-                          transition={{ duration: 1, delay: skillIndex * 0.1 }}
-                          viewport={{ once: true }}
+                          transition={{ duration: shouldReduceMotion ? 0.2 : 1, delay: shouldReduceMotion ? 0 : skillIndex * 0.1 }}
+                          viewport={{ once: true, amount: 0.4 }}
                           className="h-full rounded-full"
                           style={{ backgroundColor: skill.color }}
                         />
@@ -230,7 +269,7 @@ const Skills = () => {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

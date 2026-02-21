@@ -1,7 +1,44 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { FaGraduationCap, FaBriefcase, FaCode } from 'react-icons/fa'
 
 const About = () => {
+  const shouldReduceMotion = useReducedMotion()
+
+  const sectionVariants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 24 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0.2 : 0.6,
+        ease: [0.22, 1, 0.36, 1],
+        when: 'beforeChildren',
+        staggerChildren: shouldReduceMotion ? 0 : 0.12,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 16 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0.2 : 0.46,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  }
+
+  const listVariants = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.1,
+      },
+    },
+  }
+
   const experiences = [
     {
       icon: <FaGraduationCap className="text-2xl" />,
@@ -15,63 +52,59 @@ const About = () => {
       title: "Work Experience",
       organization: "DataAnnotation Teach",
       period: "2023 - 2024",
-      description: "Full-stack developer responsible for developing and maintaining web applications. Key achievements include implementing RESTful APIs, optimizing database performance, and enhancing user interfaces."
+      description: "Built and maintained web application features, APIs, and internal tooling with focus on reliability and code quality."
     },
     {
       icon: <FaCode className="text-2xl" />,
       title: "Personal Projects",
       organization: "Independent Development",
       period: "2022 - Present",
-      description: "Developed an Android password manager, a task management system, and an E-commerce backend administration platform."
+      description: "Delivered portfolio projects spanning mobile apps, cloud-native microservices, and full-stack commerce systems."
     }
   ]
 
   const workAchievements = [
-    "Designed and implemented scalable RESTful APIs using Spring Boot and Java",
-    "Optimized database queries and improved application performance by 40%",
-    "Developed responsive front-end interfaces using React and TypeScript",
-    "Implemented secure authentication and authorization systems",
-    "Collaborated with cross-functional teams to deliver high-quality solutions",
-    "Maintained and improved existing codebase through regular refactoring"
+    "Designed service boundaries and REST APIs using Java and Spring Boot.",
+    "Implemented event-driven workflows with RabbitMQ and outbox-based patterns.",
+    "Applied AI-assisted, spec-driven implementation to speed delivery while preserving review quality.",
+    "Automated CI/CD quality gates with linting, OpenAPI checks, and integration tests.",
+    "Provisioned AWS infrastructure using Terraform, ECS, ECR, and remote state.",
+    "Improved security and observability with JWT/RBAC, health probes, and structured logs."
   ]
 
   return (
-    <section className="section-padding pt-12 bg-secondary/10" id="about">
+    <section className="section-padding pt-12" id="about">
       <div className="container-width">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <h2 className="heading text-center">About Me</h2>
+          <motion.h2 variants={itemVariants} className="heading text-center">
+            About Me
+          </motion.h2>
           
           {/* Personal Introduction */}
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <p className="text-gray-300 leading-relaxed font-mono tracking-wide">
-              A <span className="text-primary">Computer Science</span> graduate with a minor in 
-              <span className="text-primary"> Mathematics</span> from the 
-              <span className="text-primary/90"> University of Manitoba</span>. 
-              I combine <span className="text-primary">strong theoretical foundations</span> with 
-              <span className="text-primary"> practical development experience</span> to create 
-              <span className="text-primary"> efficient</span> and 
-              <span className="text-primary"> scalable</span> solutions. 
-              My <span className="text-primary">diverse project portfolio</span> demonstrates my ability 
-              to handle both <span className="text-primary/90">frontend</span> and 
-              <span className="text-primary/90"> backend</span> development challenges.
+          <motion.div variants={itemVariants} className="max-w-3xl mx-auto text-center mb-16">
+            <p className="text-slate-600 leading-relaxed font-mono tracking-wide">
+              <span className="text-primary">Computer Science</span> graduate (minor in
+              <span className="text-primary"> Mathematics</span>) from the
+              <span className="text-primary/90"> University of Manitoba</span>.
+              I focus on building maintainable backend systems, clear API contracts, and deployable cloud infrastructure.
+              I work with <span className="text-primary">AI-assisted</span>, <span className="text-primary">spec-driven</span> engineering workflows for faster and more predictable delivery.
+              My recent work combines <span className="text-primary">microservices</span>, <span className="text-primary">AWS</span>, and
+              <span className="text-primary/90"> full-stack delivery</span>.
             </p>
-          </div>
+          </motion.div>
 
           {/* Experience Timeline */}
-          <div className="grid md:grid-cols-3 gap-8">
+          <motion.div variants={listVariants} className="grid md:grid-cols-3 gap-8">
             {experiences.map((exp, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-dark p-6 rounded-lg hover:shadow-xl transition-shadow"
+                variants={itemVariants}
+                className="glass-panel rounded-2xl p-6 hover:shadow-xl transition-shadow"
               >
                 <div className="flex items-center space-x-4 mb-4">
                   <div className="p-3 bg-primary/10 text-primary rounded-lg">
@@ -79,34 +112,31 @@ const About = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-lg">{exp.title}</h3>
-                    <p className="text-sm text-gray-400">{exp.period}</p>
+                    <p className="text-sm text-slate-500">{exp.period}</p>
                   </div>
                 </div>
                 <h4 className="font-medium text-primary mb-2">{exp.organization}</h4>
-                <p className="text-gray-400 text-sm">{exp.description}</p>
+                <p className="text-slate-600 text-sm">{exp.description}</p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Work Achievements */}
-          <div className="mt-16 bg-dark p-6 rounded-lg">
+          <motion.div variants={itemVariants} className="mt-16 glass-panel rounded-2xl p-6">
             <h3 className="text-xl font-bold mb-6 text-center">Key Achievements</h3>
-            <div className="grid md:grid-cols-2 gap-4">
+            <motion.div variants={listVariants} className="grid md:grid-cols-2 gap-4">
               {workAchievements.map((achievement, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
+                  variants={itemVariants}
                   className="flex items-start gap-2"
                 >
                   <span className="text-primary">•</span>
-                  <span className="text-gray-300">{achievement}</span>
+                  <span className="text-slate-600">{achievement}</span>
                 </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
