@@ -84,7 +84,7 @@ body {
 
 /* 添加滚动偏移量 */
 section {
-  scroll-margin-top: 5rem;  /* 80px */
+  scroll-margin-top: 8rem;  /* 128px, avoid fixed navbar overlap on anchor jumps */
 }
 
 /* 添加平滑滚动效果 */

@@ -23,26 +23,26 @@ const Skills = () => {
   const shouldReduceMotion = useReducedMotion()
 
   const sectionVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 24 },
+    hidden: { opacity: shouldReduceMotion ? 1 : 0.45, y: shouldReduceMotion ? 0 : 14 },
     show: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: shouldReduceMotion ? 0.2 : 0.62,
+        duration: shouldReduceMotion ? 0.15 : 0.44,
         ease: [0.22, 1, 0.36, 1],
         when: 'beforeChildren',
-        staggerChildren: shouldReduceMotion ? 0 : 0.12,
+        staggerChildren: shouldReduceMotion ? 0 : 0.08,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 16 },
+    hidden: { opacity: shouldReduceMotion ? 1 : 0.6, y: shouldReduceMotion ? 0 : 10 },
     show: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: shouldReduceMotion ? 0.2 : 0.5,
+        duration: shouldReduceMotion ? 0.15 : 0.34,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -52,15 +52,9 @@ const Skills = () => {
     hidden: {},
     show: {
       transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.1,
+        staggerChildren: shouldReduceMotion ? 0 : 0.07,
       },
     },
-  }
-
-  const getSkillLabel = (level) => {
-    if (level >= 85) return 'Advanced'
-    if (level >= 70) return 'Proficient'
-    return 'Familiar'
   }
 
   const skillCategories = [
@@ -70,31 +64,26 @@ const Skills = () => {
         {
           name: "React",
           icon: <FaReact />,
-          level: 90,
           color: "#61DAFB"
         },
         {
           name: "TypeScript",
           icon: <SiTypescript />,
-          level: 90,
           color: "#3178C6"
         },
         {
           name: "Next.js",
           icon: <SiNextdotjs />,
-          level: 70,
           color: "#000000"
         },
         {
           name: "Tailwind CSS",
           icon: <SiTailwindcss />,
-          level: 80,
           color: "#06B6D4"
         },
         {
           name: "Material UI",
           icon: <SiMui />,
-          level: 60,
           color: "#007FFF"
         }
       ]
@@ -105,31 +94,26 @@ const Skills = () => {
         {
           name: "Java Spring Boot",
           icon: <SiSpring />,
-          level: 90,
           color: "#6DB33F"
         },
         {
           name: "Node.js",
           icon: <FaNodeJs />,
-          level: 75,
           color: "#339933"
         },
         {
           name: "PostgreSQL",
           icon: <SiPostgresql />,
-          level: 85,
           color: "#4169E1"
         },
         {
           name: "MongoDB",
           icon: <SiMongodb />,
-          level: 85,
           color: "#47A248"
         },
         {
           name: "Redis",
           icon: <SiRedis />,
-          level: 85,
           color: "#DC382D"
         }
       ]
@@ -140,31 +124,26 @@ const Skills = () => {
         {
           name: "AWS",
           icon: <FaAws />,
-          level: 90,
           color: "#FF9900"
         },
         {
           name: "Git",
           icon: <FaGitAlt />,
-          level: 90,
           color: "#F05032"
         },
         {
           name: "Docker",
           icon: <FaDocker />,
-          level: 85,
           color: "#2496ED"
         },
         {
           name: "Kubernetes",
           icon: <SiKubernetes />,
-          level: 60,
           color: "#326CE5"
         },
         {
           name: "CI/CD",
           icon: <SiGithubactions />,
-          level: 70,
           color: "#2088FF"
         }
       ]
@@ -178,7 +157,7 @@ const Skills = () => {
           variants={sectionVariants}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.06 }}
         >
           <motion.h2 variants={itemVariants} className="heading text-center">
             Skills & Expertise
@@ -236,34 +215,27 @@ const Skills = () => {
                 <div className="flex items-center gap-3 mb-6">
                   <h3 className="text-xl font-bold">{category.title}</h3>
                 </div>
-                <div className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {category.skills.map((skill, skillIndex) => (
                     <motion.div
                       key={skill.name}
-                      initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -20 }}
+                      initial={{ opacity: shouldReduceMotion ? 1 : 0.65, x: shouldReduceMotion ? 0 : -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: shouldReduceMotion ? 0.2 : 0.5, delay: shouldReduceMotion ? 0 : skillIndex * 0.1 }}
-                      viewport={{ once: true, amount: 0.3 }}
+                      transition={{ duration: shouldReduceMotion ? 0.15 : 0.34, delay: shouldReduceMotion ? 0 : skillIndex * 0.05 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className={`group flex min-h-[88px] items-center gap-3 rounded-xl border border-white/60 bg-white/55 px-4 py-3 shadow-sm backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:bg-white/75 hover:shadow-md ${
+                        category.skills.length % 2 === 1 && skillIndex === category.skills.length - 1
+                          ? 'sm:col-span-2 sm:mx-auto sm:w-[calc(50%-0.375rem)]'
+                          : ''
+                      }`}
                     >
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className="text-2xl" style={{ color: skill.color }}>
-                          {skill.icon}
-                        </span>
-                        <span className="font-medium">{skill.name}</span>
-                        <span className="ml-auto text-xs font-medium uppercase tracking-wide text-slate-500">
-                          {getSkillLabel(skill.level)}
-                        </span>
-                      </div>
-                      <div className="h-2 bg-white/70 rounded-full overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          transition={{ duration: shouldReduceMotion ? 0.2 : 1, delay: shouldReduceMotion ? 0 : skillIndex * 0.1 }}
-                          viewport={{ once: true, amount: 0.4 }}
-                          className="h-full rounded-full"
-                          style={{ backgroundColor: skill.color }}
-                        />
-                      </div>
+                      <span
+                        className="text-2xl transition-transform duration-300 group-hover:scale-110"
+                        style={{ color: skill.color }}
+                      >
+                        {skill.icon}
+                      </span>
+                      <span className="font-medium leading-tight text-slate-800">{skill.name}</span>
                     </motion.div>
                   ))}
                 </div>

@@ -122,26 +122,26 @@ const Projects = () => {
   const shouldReduceMotion = useReducedMotion()
 
   const sectionVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 28 },
+    hidden: { opacity: shouldReduceMotion ? 1 : 0.45, y: shouldReduceMotion ? 0 : 16 },
     show: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: shouldReduceMotion ? 0.2 : 0.65,
+        duration: shouldReduceMotion ? 0.15 : 0.46,
         ease: [0.22, 1, 0.36, 1],
         when: 'beforeChildren',
-        staggerChildren: shouldReduceMotion ? 0 : 0.14,
+        staggerChildren: shouldReduceMotion ? 0 : 0.08,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 18 },
+    hidden: { opacity: shouldReduceMotion ? 1 : 0.6, y: shouldReduceMotion ? 0 : 12 },
     show: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: shouldReduceMotion ? 0.2 : 0.5,
+        duration: shouldReduceMotion ? 0.15 : 0.34,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -151,20 +151,24 @@ const Projects = () => {
     hidden: {},
     show: {
       transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.12,
-        delayChildren: shouldReduceMotion ? 0 : 0.1,
+        staggerChildren: shouldReduceMotion ? 0 : 0.08,
+        delayChildren: shouldReduceMotion ? 0 : 0.02,
       },
     },
   }
 
   const cardVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 22, scale: shouldReduceMotion ? 1 : 0.98 },
+    hidden: {
+      opacity: shouldReduceMotion ? 1 : 0.64,
+      y: shouldReduceMotion ? 0 : 14,
+      scale: shouldReduceMotion ? 1 : 0.995,
+    },
     show: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
-        duration: shouldReduceMotion ? 0.2 : 0.5,
+        duration: shouldReduceMotion ? 0.15 : 0.34,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -217,7 +221,7 @@ const Projects = () => {
           variants={sectionVariants}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.18 }}
+          viewport={{ once: true, amount: 0.06 }}
         >
           <motion.h2 variants={itemVariants} className="heading text-center">
             Projects

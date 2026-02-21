@@ -17,7 +17,7 @@ const Navbar = () => {
           <img 
             src="/portfolio/avatar.png"
             alt="Avatar" 
-            className="w-14 h-14 rounded-full ring-2 ring-white/80 shadow-sm"
+            className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/12 to-sky-200/30 p-1 ring-2 ring-primary/30 shadow-sm opacity-85 [filter:brightness(0)_saturate(100%)]"
           />
           Fred Zhang
         </a>
