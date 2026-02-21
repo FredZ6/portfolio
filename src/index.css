@@ -21,12 +21,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #48f0c0;
+  background: #0ea5a4;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3ad1a4;
+  background: #0b8c8a;
 }
 
 @layer base {
@@ -35,7 +35,7 @@ body {
   }
 
   body {
-    @apply bg-dark text-gray-100;
+    @apply bg-slate-50 text-slate-900;
   }
 }
 

@@ -87,7 +87,7 @@ const Contact = () => {
           viewport={{ once: true }}
         >
           <h2 className="heading text-center">Contact Me</h2>
-          <p className="text-gray-400 text-center max-w-2xl mx-auto mb-12">
+          <p className="text-slate-600 text-center max-w-2xl mx-auto mb-12">
             Feel free to reach out if you&apos;re looking for a developer, have a question, or just want to connect.
           </p>
 
@@ -112,7 +112,7 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 bg-dark rounded-lg border border-primary/20 focus:ring-2 focus:ring-primary outline-none"
+                  className="w-full px-4 py-2 bg-white rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none"
                 />
               </div>
               <div>
@@ -126,7 +126,7 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 bg-dark rounded-lg border border-primary/20 focus:ring-2 focus:ring-primary outline-none"
+                  className="w-full px-4 py-2 bg-white rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none"
                 />
               </div>
             </div>
@@ -142,7 +142,7 @@ const Contact = () => {
                 value={formData.subject}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 bg-dark rounded-lg border border-primary/20 focus:ring-2 focus:ring-primary outline-none"
+                className="w-full px-4 py-2 bg-white rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none"
               />
             </div>
 
@@ -157,7 +157,7 @@ const Contact = () => {
                 onChange={handleChange}
                 required
                 rows={6}
-                className="w-full px-4 py-2 bg-dark rounded-lg border border-primary/20 focus:ring-2 focus:ring-primary outline-none resize-none"
+                className="w-full px-4 py-2 bg-white rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none resize-none"
               />
             </div>
 

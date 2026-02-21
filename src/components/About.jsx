@@ -48,7 +48,7 @@ const About = () => {
           
           {/* Personal Introduction */}
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <p className="text-gray-300 leading-relaxed font-mono tracking-wide">
+            <p className="text-slate-600 leading-relaxed font-mono tracking-wide">
               A <span className="text-primary">Computer Science</span> graduate with a minor in 
               <span className="text-primary"> Mathematics</span> from the 
               <span className="text-primary/90"> University of Manitoba</span>. 
@@ -71,7 +71,7 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-dark p-6 rounded-lg hover:shadow-xl transition-shadow"
+                className="bg-dark p-6 rounded-lg border border-slate-200 shadow-sm hover:shadow-lg transition-shadow"
               >
                 <div className="flex items-center space-x-4 mb-4">
                   <div className="p-3 bg-primary/10 text-primary rounded-lg">
@@ -79,17 +79,17 @@ const About = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-lg">{exp.title}</h3>
-                    <p className="text-sm text-gray-400">{exp.period}</p>
+                    <p className="text-sm text-slate-500">{exp.period}</p>
                   </div>
                 </div>
                 <h4 className="font-medium text-primary mb-2">{exp.organization}</h4>
-                <p className="text-gray-400 text-sm">{exp.description}</p>
+                <p className="text-slate-600 text-sm">{exp.description}</p>
               </motion.div>
             ))}
           </div>
 
           {/* Work Achievements */}
-          <div className="mt-16 bg-dark p-6 rounded-lg">
+          <div className="mt-16 bg-dark p-6 rounded-lg border border-slate-200 shadow-sm">
             <h3 className="text-xl font-bold mb-6 text-center">Key Achievements</h3>
             <div className="grid md:grid-cols-2 gap-4">
               {workAchievements.map((achievement, index) => (
@@ -102,7 +102,7 @@ const About = () => {
                   className="flex items-start gap-2"
                 >
                   <span className="text-primary">•</span>
-                  <span className="text-gray-300">{achievement}</span>
+                  <span className="text-slate-600">{achievement}</span>
                 </motion.div>
               ))}
             </div>

@@ -65,12 +65,12 @@ const Projects = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-dark rounded-lg overflow-hidden group border-2 border-primary/20 hover:border-primary transition-colors"
+                className="bg-dark rounded-lg overflow-hidden group border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-lg transition-all"
               >
                 {/* Project Info */}
                 <div className="p-8">
-                  <h3 className="text-2xl font-bold mb-4 text-white/90">{project.title}</h3>
-                  <p className="text-gray-400 text-sm mb-6 leading-relaxed">{project.description}</p>
+                  <h3 className="text-2xl font-bold mb-4 text-slate-900">{project.title}</h3>
+                  <p className="text-slate-600 text-sm mb-6 leading-relaxed">{project.description}</p>
                   
                   {/* Tech Stack */}
                   <div className="flex flex-wrap gap-2 mb-6">
@@ -85,7 +85,7 @@ const Projects = () => {
                   </div>
 
                   {/* Key Features */}
-                  <ul className="text-sm text-gray-400 space-y-2 list-disc list-inside marker:text-primary mb-6">
+                  <ul className="text-sm text-slate-600 space-y-2 list-disc list-inside marker:text-primary mb-6">
                     {project.features.map((feature, i) => (
                       <li key={i} className="leading-relaxed">{feature}</li>
                     ))}

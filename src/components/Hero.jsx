@@ -19,12 +19,12 @@ const Hero = () => {
               text="Fred Zhang"
               animateOn="view"
               speed={150}
-              className="text-white"
+              className="text-slate-900"
               sequential={true}
               revealDirection="center"
             />
           </h1>
-          <h2 className="text-xl md:text-2xl lg:text-3xl text-gray-400 mb-4 md:mb-6">
+          <h2 className="text-xl md:text-2xl lg:text-3xl text-slate-500 mb-4 md:mb-6">
             <DecryptedText
               text="Full Stack Developer"
               animateOn="view"
@@ -32,7 +32,7 @@ const Hero = () => {
               sequential={true}
             />
           </h2>
-          <p className="text-sm md:text-base text-gray-300 mb-6 md:mb-8 max-w-lg mx-auto md:mx-0 font-mono leading-relaxed tracking-wide">
+          <p className="text-sm md:text-base text-slate-600 mb-6 md:mb-8 max-w-lg mx-auto md:mx-0 font-mono leading-relaxed tracking-wide">
             <DecryptedText
               text="A dedicated full-stack developer with a strong passion for building scalable and efficient applications. Experienced in both frontend and backend technologies, with expertise in React, TypeScript, Java, Spring Boot, and PostgreSQL."
               animateOn="view"
@@ -57,7 +57,7 @@ const Hero = () => {
               href="https://github.com/FredZ6"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-primary transition-colors"
+              className="text-slate-500 hover:text-primary transition-colors"
             >
               <FaGithub size={20} className="md:w-6 md:h-6" />
             </a>
@@ -65,13 +65,13 @@ const Hero = () => {
               href="https://www.linkedin.com/in/haifeng-zhang26/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-primary transition-colors"
+              className="text-slate-500 hover:text-primary transition-colors"
             >
               <FaLinkedin size={20} className="md:w-6 md:h-6" />
             </a>
             <a
               href="mailto:fredzhang026@gmail.com"
-              className="text-gray-400 hover:text-primary transition-colors"
+              className="text-slate-500 hover:text-primary transition-colors"
             >
               <FaEnvelope size={20} className="md:w-6 md:h-6" />
             </a>

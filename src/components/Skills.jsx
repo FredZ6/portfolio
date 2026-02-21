@@ -144,7 +144,7 @@ const Skills = () => {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mb-16 text-center bg-dark p-6 rounded-lg"
+            className="mb-16 text-center bg-dark p-6 rounded-lg border border-slate-200 shadow-sm"
           >
             <div className="flex items-center justify-center gap-2 mb-4">
               <FaAws className="text-[#FF9900] text-2xl" />
@@ -164,7 +164,7 @@ const Skills = () => {
                     className="w-48 h-48 object-contain hover:scale-105 transition-transform"
                   />
                 </a>
-                <span className="text-gray-300">AWS Certified Developer Associate (DVA-C02)</span>
+                <span className="text-slate-600">AWS Certified Developer Associate (DVA-C02)</span>
               </div>
               <div className="flex flex-col items-center">
                 <a
@@ -179,7 +179,7 @@ const Skills = () => {
                     className="w-48 h-48 object-contain hover:scale-105 transition-transform"
                   />
                 </a>
-                <span className="text-gray-300">AWS Certified Cloud Practitioner (CLF-C02)</span>
+                <span className="text-slate-600">AWS Certified Cloud Practitioner (CLF-C02)</span>
               </div>
             </div>
           </motion.div>
@@ -192,7 +192,7 @@ const Skills = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-dark p-6 rounded-lg border-2 border-primary/20 hover:border-primary transition-colors"
+                className="bg-dark p-6 rounded-lg border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-md transition-all"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <h3 className="text-xl font-bold">{category.title}</h3>
@@ -211,11 +211,11 @@ const Skills = () => {
                           {skill.icon}
                         </span>
                         <span className="font-medium">{skill.name}</span>
-                        <span className="ml-auto text-sm text-gray-400">
+                        <span className="ml-auto text-sm text-slate-500">
                           {skill.level}%
                         </span>
                       </div>
-                      <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                      <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           whileInView={{ width: `${skill.level}%` }}

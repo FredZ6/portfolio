@@ -18,7 +18,7 @@ const Certification = () => {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-center bg-dark p-6 rounded-lg"
+            className="text-center bg-dark p-6 rounded-lg border border-slate-200 shadow-sm"
           >
             <div className="flex items-center justify-center gap-2 mb-4">
               <FaAws className="text-[#FF9900] text-2xl" />
@@ -38,7 +38,7 @@ const Certification = () => {
                     className="w-48 h-48 object-contain hover:scale-105 transition-transform"
                   />
                 </a>
-                <span className="text-gray-300">AWS Certified Developer Associate (DVA-C02)</span>
+                <span className="text-slate-600">AWS Certified Developer Associate (DVA-C02)</span>
               </div>
               <div className="flex flex-col items-center">
                 <a
@@ -53,7 +53,7 @@ const Certification = () => {
                     className="w-48 h-48 object-contain hover:scale-105 transition-transform"
                   />
                 </a>
-                <span className="text-gray-300">AWS Certified Cloud Practitioner (CLF-C02)</span>
+                <span className="text-slate-600">AWS Certified Cloud Practitioner (CLF-C02)</span>
               </div>
             </div>
           </motion.div>
