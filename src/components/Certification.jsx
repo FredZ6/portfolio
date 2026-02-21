@@ -18,7 +18,7 @@ const Certification = () => {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-center bg-dark p-6 rounded-lg border border-slate-200 shadow-sm"
+            className="text-center glass-panel rounded-2xl p-6"
           >
             <div className="flex items-center justify-center gap-2 mb-4">
               <FaAws className="text-[#FF9900] text-2xl" />

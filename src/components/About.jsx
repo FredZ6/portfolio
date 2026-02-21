@@ -36,7 +36,7 @@ const About = () => {
   ]
 
   return (
-    <section className="section-padding pt-12 bg-secondary/10" id="about">
+    <section className="section-padding pt-12" id="about">
       <div className="container-width">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -71,7 +71,7 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-dark p-6 rounded-lg border border-slate-200 shadow-sm hover:shadow-lg transition-shadow"
+                className="glass-panel rounded-2xl p-6 hover:shadow-xl transition-shadow"
               >
                 <div className="flex items-center space-x-4 mb-4">
                   <div className="p-3 bg-primary/10 text-primary rounded-lg">
@@ -89,7 +89,7 @@ const About = () => {
           </div>
 
           {/* Work Achievements */}
-          <div className="mt-16 bg-dark p-6 rounded-lg border border-slate-200 shadow-sm">
+          <div className="mt-16 glass-panel rounded-2xl p-6">
             <h3 className="text-xl font-bold mb-6 text-center">Key Achievements</h3>
             <div className="grid md:grid-cols-2 gap-4">
               {workAchievements.map((achievement, index) => (

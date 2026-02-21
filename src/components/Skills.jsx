@@ -129,7 +129,7 @@ const Skills = () => {
   ]
 
   return (
-    <section className="section-padding pt-1 bg-secondary/10" id="skills">
+    <section className="section-padding pt-1" id="skills">
       <div className="container-width">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -144,7 +144,7 @@ const Skills = () => {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mb-16 text-center bg-dark p-6 rounded-lg border border-slate-200 shadow-sm"
+            className="mb-16 text-center glass-panel rounded-2xl p-6"
           >
             <div className="flex items-center justify-center gap-2 mb-4">
               <FaAws className="text-[#FF9900] text-2xl" />
@@ -192,7 +192,7 @@ const Skills = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-dark p-6 rounded-lg border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-md transition-all"
+                className="glass-panel rounded-2xl p-6 hover:border-primary/40 hover:shadow-lg transition-all"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <h3 className="text-xl font-bold">{category.title}</h3>
@@ -215,7 +215,7 @@ const Skills = () => {
                           {skill.level}%
                         </span>
                       </div>
-                      <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                      <div className="h-2 bg-white/70 rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           whileInView={{ width: `${skill.level}%` }}

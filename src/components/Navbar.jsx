@@ -7,8 +7,8 @@ const Navbar = () => {
   const navItems = ['Home', 'About', 'Skills', 'Projects', 'Contact']
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/80">
-      <nav className="container-width flex items-center justify-between h-20">
+    <header className="fixed top-4 left-1/2 z-50 w-[min(96%,1180px)] -translate-x-1/2 rounded-2xl glass-panel-strong">
+      <nav className="flex items-center justify-between h-20 px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <a 
           href="#home" 
@@ -17,7 +17,7 @@ const Navbar = () => {
           <img 
             src="/portfolio/avatar.png"
             alt="Avatar" 
-            className="w-16 h-16 rounded-full"
+            className="w-14 h-14 rounded-full ring-2 ring-white/80 shadow-sm"
           />
           Fred Zhang
         </a>
@@ -29,7 +29,7 @@ const Navbar = () => {
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                className="px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-white/70 hover:text-slate-900 transition-colors"
               >
                 {item}
               </a>
@@ -41,7 +41,7 @@ const Navbar = () => {
         <div className="md:hidden mr-4">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="inline-flex items-center justify-center p-2 rounded-md text-slate-700 hover:bg-slate-100 focus:outline-none"
+            className="inline-flex items-center justify-center p-2 rounded-xl text-slate-700 hover:bg-white/70 focus:outline-none transition-colors"
           >
             {isOpen ? <FaTimes /> : <FaBars />}
           </button>
@@ -50,13 +50,13 @@ const Navbar = () => {
 
       {/* Mobile Navigation Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white/90 border-t border-slate-200/80">
+        <div className="md:hidden border-t border-white/80">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                className="block px-3 py-2 rounded-xl text-base font-medium text-slate-700 hover:bg-white/70 hover:text-slate-900 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 {item}

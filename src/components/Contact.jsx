@@ -75,7 +75,7 @@ const Contact = () => {
   }
 
   return (
-    <section className="section-padding pt-1 bg-secondary/10" id="contact">
+    <section className="section-padding pt-1" id="contact">
       <div className="container-width max-w-xl mx-auto">
         {submitStatus.show && (
           <Toast type={submitStatus.type} message={submitStatus.message} />
@@ -98,7 +98,7 @@ const Contact = () => {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             onSubmit={handleSubmit}
-            className="space-y-4"
+            className="space-y-4 glass-panel rounded-2xl p-6 sm:p-8"
           >
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -112,7 +112,7 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 bg-white rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none"
+                  className="w-full px-4 py-2 glass-input rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
                 />
               </div>
               <div>
@@ -126,7 +126,7 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 bg-white rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none"
+                  className="w-full px-4 py-2 glass-input rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
                 />
               </div>
             </div>
@@ -142,7 +142,7 @@ const Contact = () => {
                 value={formData.subject}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 bg-white rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none"
+                className="w-full px-4 py-2 glass-input rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
               />
             </div>
 
@@ -157,14 +157,14 @@ const Contact = () => {
                 onChange={handleChange}
                 required
                 rows={6}
-                className="w-full px-4 py-2 bg-white rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none resize-none"
+                className="w-full px-4 py-2 glass-input rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none resize-none"
               />
             </div>
 
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
+              className="w-full glass-button py-3 rounded-xl font-medium transition-colors disabled:opacity-50"
             >
               {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>

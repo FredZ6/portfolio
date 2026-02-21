@@ -47,7 +47,7 @@ const Projects = () => {
   ]
 
   return (
-    <section className="section-padding pt-1 bg-secondary/10" id="projects">
+    <section className="section-padding pt-1" id="projects">
       <div className="container-width">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -65,7 +65,7 @@ const Projects = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-dark rounded-lg overflow-hidden group border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-lg transition-all"
+                className="glass-panel rounded-2xl overflow-hidden group hover:border-primary/40 hover:shadow-xl transition-all"
               >
                 {/* Project Info */}
                 <div className="p-8">
@@ -77,7 +77,7 @@ const Projects = () => {
                     {project.tags.map(tag => (
                       <span
                         key={tag}
-                        className="px-3 py-1.5 bg-primary/10 text-primary text-xs rounded-full font-medium"
+                        className="glass-chip px-3 py-1.5 text-xs rounded-full font-medium"
                       >
                         {tag}
                       </span>
@@ -96,7 +96,7 @@ const Projects = () => {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 glass-outline-button rounded-xl transition-colors"
                   >
                     <FaGithub size={18} />
                     <span>View on GitHub</span>

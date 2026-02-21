@@ -4,14 +4,14 @@ import DecryptedText from '../animation/DecryptedText'
 
 const Hero = () => {
   return (
-    <section className="min-h-screen flex items-center justify-center section-padding pt-24 md:pt-20" id="home">
+    <section className="min-h-screen flex items-center justify-center section-padding pt-28 md:pt-24" id="home">
       <div className="container-width grid md:grid-cols-2 gap-4 md:gap-8 items-center">
         {/* Text Content */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center md:text-left"
+          className="glass-panel rounded-3xl p-6 sm:p-8 text-center md:text-left"
         >
           <h2 className="text-primary font-medium text-base md:text-lg mb-2">Hello, I&apos;m</h2>
           <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -57,7 +57,7 @@ const Hero = () => {
               href="https://github.com/FredZ6"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-500 hover:text-primary transition-colors"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl glass-panel text-slate-500 hover:text-primary transition-colors"
             >
               <FaGithub size={20} className="md:w-6 md:h-6" />
             </a>
@@ -65,13 +65,13 @@ const Hero = () => {
               href="https://www.linkedin.com/in/haifeng-zhang26/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-500 hover:text-primary transition-colors"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl glass-panel text-slate-500 hover:text-primary transition-colors"
             >
               <FaLinkedin size={20} className="md:w-6 md:h-6" />
             </a>
             <a
               href="mailto:fredzhang026@gmail.com"
-              className="text-slate-500 hover:text-primary transition-colors"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl glass-panel text-slate-500 hover:text-primary transition-colors"
             >
               <FaEnvelope size={20} className="md:w-6 md:h-6" />
             </a>
@@ -81,7 +81,7 @@ const Hero = () => {
           <div className="flex flex-row justify-center md:justify-start space-x-4">
             <motion.a
               href="#contact"
-              className="bg-primary text-white px-3 sm:px-4 md:px-6 py-2 md:py-3 rounded-lg inline-block hover:bg-primary/90 transition-colors text-sm md:text-base w-32 sm:w-auto text-center"
+              className="glass-button px-3 sm:px-4 md:px-6 py-2 md:py-3 rounded-xl inline-block transition-colors text-sm md:text-base w-32 sm:w-auto text-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -94,7 +94,7 @@ const Hero = () => {
             </motion.a>
             <motion.a
               href="#projects"
-              className="border border-primary text-primary px-3 sm:px-4 md:px-6 py-2 md:py-3 rounded-lg inline-block hover:bg-primary/10 transition-colors text-sm md:text-base w-32 sm:w-auto text-center"
+              className="glass-outline-button px-3 sm:px-4 md:px-6 py-2 md:py-3 rounded-xl inline-block transition-colors text-sm md:text-base w-32 sm:w-auto text-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -115,12 +115,12 @@ const Hero = () => {
           transition={{ duration: 0.5 }}
           className="relative mt-8 md:mt-0"
         >
-          <div className="w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] md:w-[532px] md:h-[532px] lg:w-[760px] lg:h-[760px] mx-auto relative">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-primary/50 blur-2xl opacity-30" />
+          <div className="w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] md:w-[532px] md:h-[532px] lg:w-[760px] lg:h-[760px] mx-auto relative glass-panel rounded-full p-3">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-primary/50 blur-2xl opacity-35" />
             <img
               src="/portfolio/avatar.png"
               alt="Profile Picture"
-              className="rounded-full w-full h-full object-cover relative z-10"
+              className="rounded-full w-full h-full object-cover relative z-10 ring-2 ring-white/75"
             />
           </div>
         </motion.div>
