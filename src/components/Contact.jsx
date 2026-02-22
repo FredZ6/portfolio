@@ -49,6 +49,7 @@ const Contact = () => {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState({ show: false, type: '', message: '' })
+  const hideStatus = () => setSubmitStatus({ show: false, type: '', message: '' })
 
   // Initialize EmailJS
   useEffect(() => {
@@ -58,7 +59,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
-    setSubmitStatus({ show: false, type: '', message: '' })
+    hideStatus()
     
     try {
       await emailjs.send(
@@ -98,7 +99,7 @@ const Contact = () => {
       
       // Hide status message after 5 seconds
       setTimeout(() => {
-        setSubmitStatus({ show: false, type: '', message: '' })
+        hideStatus()
       }, 5000)
     }
   }
@@ -115,7 +116,7 @@ const Contact = () => {
     <section className="section-padding pt-1" id="contact">
       <div className="container-width max-w-xl mx-auto">
         {submitStatus.show && (
-          <Toast type={submitStatus.type} message={submitStatus.message} />
+          <Toast type={submitStatus.type} message={submitStatus.message} onClose={hideStatus} />
         )}
         <motion.div
           variants={sectionVariants}

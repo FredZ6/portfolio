@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
+import PropTypes from 'prop-types'
 
 const styles = {
   wrapper: {
@@ -249,4 +250,20 @@ export default function DecryptedText({
       </span>
     </motion.span>
   )
+}
+
+DecryptedText.propTypes = {
+  text: PropTypes.string.isRequired,
+  speed: PropTypes.number,
+  maxIterations: PropTypes.number,
+  sequential: PropTypes.bool,
+  revealDirection: PropTypes.oneOf(['start', 'end', 'center']),
+  useOriginalCharsOnly: PropTypes.bool,
+  characters: PropTypes.string,
+  className: PropTypes.string,
+  parentClassName: PropTypes.string,
+  encryptedClassName: PropTypes.string,
+  animateOn: PropTypes.oneOf(['view', 'hover']),
+  highlightWords: PropTypes.arrayOf(PropTypes.string),
+  highlightClass: PropTypes.string,
 }

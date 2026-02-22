@@ -9,12 +9,23 @@ const Toast = ({ message, type = 'success', onClose }) => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 50 }}
-          className={`fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg ${
+          role="status"
+          aria-live="polite"
+          className={`fixed bottom-4 right-4 flex items-center gap-3 rounded-lg px-6 py-3 text-white shadow-lg ${
             type === 'success' ? 'bg-green-500' : 'bg-red-500'
           }`}
-          onClick={onClose}
         >
-          {message}
+          <span>{message}</span>
+          {onClose && (
+            <button
+              type="button"
+              aria-label="Dismiss notification"
+              onClick={onClose}
+              className="rounded-md px-2 py-1 text-xs font-medium text-white/90 transition-colors hover:bg-white/15 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+            >
+              Dismiss
+            </button>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
@@ -24,7 +35,7 @@ const Toast = ({ message, type = 'success', onClose }) => {
 Toast.propTypes = {
   message: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['success', 'error']),
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func
 }
 
 Toast.defaultProps = {

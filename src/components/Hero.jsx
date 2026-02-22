@@ -92,7 +92,8 @@ const Hero = () => {
               href="https://github.com/FredZ6"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl glass-panel text-slate-500 hover:text-primary transition-colors"
+              aria-label="Open Fred Zhang's GitHub profile"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl glass-panel text-slate-500 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white/70"
               whileHover={{ y: shouldReduceMotion ? 0 : -2, scale: shouldReduceMotion ? 1 : 1.04 }}
             >
               <FaGithub size={20} className="md:w-6 md:h-6" />
@@ -101,14 +102,16 @@ const Hero = () => {
               href="https://www.linkedin.com/in/haifeng-zhang26/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl glass-panel text-slate-500 hover:text-primary transition-colors"
+              aria-label="Open Fred Zhang's LinkedIn profile"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl glass-panel text-slate-500 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white/70"
               whileHover={{ y: shouldReduceMotion ? 0 : -2, scale: shouldReduceMotion ? 1 : 1.04 }}
             >
               <FaLinkedin size={20} className="md:w-6 md:h-6" />
             </motion.a>
             <motion.a
               href="mailto:fredzhang026@gmail.com"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl glass-panel text-slate-500 hover:text-primary transition-colors"
+              aria-label="Send email to Fred Zhang"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl glass-panel text-slate-500 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white/70"
               whileHover={{ y: shouldReduceMotion ? 0 : -2, scale: shouldReduceMotion ? 1 : 1.04 }}
             >
               <FaEnvelope size={20} className="md:w-6 md:h-6" />
@@ -119,7 +122,7 @@ const Hero = () => {
           <motion.div variants={heroItemVariants} className="flex flex-wrap justify-center md:justify-start gap-3">
             <motion.a
               href="#contact"
-              className="glass-button px-3 sm:px-4 md:px-6 py-2 md:py-3 rounded-xl inline-block transition-colors text-sm md:text-base w-32 sm:w-auto text-center"
+              className="glass-button inline-block w-32 rounded-xl px-3 py-2 text-center text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white/70 sm:w-auto sm:px-4 md:px-6 md:py-3 md:text-base"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -132,7 +135,7 @@ const Hero = () => {
             </motion.a>
             <motion.a
               href="#projects"
-              className="glass-outline-button px-3 sm:px-4 md:px-6 py-2 md:py-3 rounded-xl inline-block transition-colors text-sm md:text-base w-32 sm:w-auto text-center"
+              className="glass-outline-button inline-block w-32 rounded-xl px-3 py-2 text-center text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white/70 sm:w-auto sm:px-4 md:px-6 md:py-3 md:text-base"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -145,7 +148,7 @@ const Hero = () => {
             </motion.a>
             <motion.a
               href="mailto:fredzhang026@gmail.com?subject=Resume%20Request"
-              className="glass-outline-button px-3 sm:px-4 md:px-6 py-2 md:py-3 rounded-xl inline-block transition-colors text-sm md:text-base w-36 sm:w-auto text-center"
+              className="glass-outline-button inline-block w-36 rounded-xl px-3 py-2 text-center text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white/70 sm:w-auto sm:px-4 md:px-6 md:py-3 md:text-base"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
