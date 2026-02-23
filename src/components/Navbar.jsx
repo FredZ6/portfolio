@@ -16,11 +16,13 @@ const Navbar = () => {
           href="#home" 
           className="text-2xl font-bold flex items-center gap-2 text-slate-900"
         >
-          <img 
-            src="/portfolio/avatar.png"
-            alt="Avatar" 
-            className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/12 to-sky-200/30 p-1 ring-2 ring-primary/30 shadow-sm opacity-85 [filter:brightness(0)_saturate(100%)]"
-          />
+          <span className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-primary/12 to-sky-200/30 ring-2 ring-primary/30 shadow-sm">
+            <img
+              src="/portfolio/avatar.png"
+              alt="Avatar"
+              className="h-full w-full scale-[1.4] opacity-85 [filter:brightness(0)_saturate(100%)]"
+            />
+          </span>
           Fred Zhang
         </a>
 
