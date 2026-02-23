@@ -39,7 +39,7 @@ const Hero = () => {
           variants={heroTextVariants}
           initial="hidden"
           animate="show"
-          className="glass-panel rounded-3xl p-6 sm:p-8 text-center md:text-left"
+          className="w-full glass-panel rounded-3xl p-6 sm:p-8 text-center md:text-left"
         >
           <motion.h2 variants={heroItemVariants} className="text-primary font-medium text-base md:text-lg mb-2">
             Hello, I&apos;m
@@ -162,10 +162,10 @@ const Hero = () => {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: shouldReduceMotion ? 0.2 : 0.65, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mt-8 md:mt-0 lg:translate-x-6"
+          className="relative mt-8 md:mt-0 flex justify-center md:justify-end"
         >
           <motion.div
-            className="w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] md:w-[420px] md:h-[420px] lg:w-[520px] lg:h-[520px] xl:w-[560px] xl:h-[560px] mx-auto relative glass-panel rounded-full p-3 will-change-transform"
+            className="w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] md:w-[420px] md:h-[420px] lg:w-[520px] lg:h-[520px] xl:w-[560px] xl:h-[560px] mx-auto md:mx-0 relative glass-panel rounded-full p-3 will-change-transform"
             animate={
               shouldReduceMotion
                 ? undefined

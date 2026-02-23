@@ -215,7 +215,7 @@ const Skills = () => {
                 <div className="flex items-center gap-3 mb-6">
                   <h3 className="text-xl font-bold">{category.title}</h3>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3">
                   {category.skills.map((skill, skillIndex) => (
                     <motion.div
                       key={skill.name}
@@ -223,11 +223,7 @@ const Skills = () => {
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: shouldReduceMotion ? 0.15 : 0.34, delay: shouldReduceMotion ? 0 : skillIndex * 0.05 }}
                       viewport={{ once: true, amount: 0.1 }}
-                      className={`group flex min-h-[88px] items-center gap-3 rounded-xl border border-white/60 bg-white/55 px-4 py-3 shadow-sm backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:bg-white/75 hover:shadow-md ${
-                        category.skills.length % 2 === 1 && skillIndex === category.skills.length - 1
-                          ? 'sm:col-span-2 sm:mx-auto sm:w-[calc(50%-0.375rem)]'
-                          : ''
-                      }`}
+                      className="group flex min-h-[88px] w-full items-center gap-3 rounded-xl border border-white/60 bg-white/55 px-4 py-3 shadow-sm backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:bg-white/75 hover:shadow-md"
                     >
                       <span
                         className="text-2xl transition-transform duration-300 group-hover:scale-110"
