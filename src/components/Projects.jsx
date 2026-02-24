@@ -41,20 +41,26 @@ const Projects = () => {
     enter: (direction) => ({
       opacity: shouldReduceMotion ? 1 : 0,
       x: shouldReduceMotion ? 0 : direction > 0 ? 54 : -54,
+      scale: shouldReduceMotion ? 1 : 0.985,
+      rotateY: shouldReduceMotion ? 0 : direction > 0 ? -7 : 7,
     }),
     center: {
       opacity: 1,
       x: 0,
+      scale: 1,
+      rotateY: 0,
       transition: {
-        duration: shouldReduceMotion ? 0.15 : 0.38,
+        duration: shouldReduceMotion ? 0.15 : 0.46,
         ease: [0.22, 1, 0.36, 1],
       },
     },
     exit: (direction) => ({
       opacity: shouldReduceMotion ? 1 : 0,
       x: shouldReduceMotion ? 0 : direction > 0 ? -54 : 54,
+      scale: shouldReduceMotion ? 1 : 0.985,
+      rotateY: shouldReduceMotion ? 0 : direction > 0 ? 7 : -7,
       transition: {
-        duration: shouldReduceMotion ? 0.15 : 0.28,
+        duration: shouldReduceMotion ? 0.15 : 0.34,
         ease: [0.22, 1, 0.36, 1],
       },
     }),
@@ -283,6 +289,7 @@ const Projects = () => {
                 initial="enter"
                 animate="center"
                 exit="exit"
+                style={shouldReduceMotion ? undefined : { transformPerspective: 1400, transformStyle: 'preserve-3d' }}
                 className="glass-panel rounded-3xl p-4 sm:p-6 lg:p-8"
               >
                 <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">

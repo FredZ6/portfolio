@@ -226,10 +226,10 @@ const Skills = () => {
                       className="group flex min-h-[88px] w-full items-center gap-3 rounded-xl border border-white/60 bg-white/55 px-4 py-3 shadow-sm backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:bg-white/75 hover:shadow-md"
                     >
                       <span
-                        className="text-2xl transition-transform duration-300 group-hover:scale-110"
-                        style={{ color: skill.color }}
+                        className="skill-icon-wrap text-2xl transition-transform duration-300 group-hover:scale-110"
+                        style={{ color: skill.color, '--skill-color': skill.color }}
                       >
-                        {skill.icon}
+                        <span className="skill-icon-glyph">{skill.icon}</span>
                       </span>
                       <span className="font-medium leading-tight text-slate-800">{skill.name}</span>
                     </motion.div>
