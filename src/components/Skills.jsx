@@ -101,8 +101,8 @@ const SkillBubbleField = ({ skills, iconAnchors, shouldReduceMotion, nodeIndex }
     const fitByWidth = (availableWidth - spacing * (cols - 1)) / cols
     const fitByHeight = (availableHeight - spacing * (rows - 1)) / rows
     const desiredBubble = Math.min(width, height) * 0.38
-    const bubbleDiameter = clampNumber(Math.min(desiredBubble, fitByWidth, fitByHeight), 42, 90)
-    const iconSize = clampNumber(bubbleDiameter * 0.56, 24, 38)
+    const bubbleDiameter = clampNumber(Math.min(desiredBubble, fitByWidth, fitByHeight), 24, 90)
+    const iconSize = clampNumber(bubbleDiameter * 0.56, 12, 38)
     const radius = bubbleDiameter / 2
     const collisionGap = clampNumber(Math.min(width, height) * 0.015, 2, 5)
     const centerX = width / 2
@@ -481,8 +481,6 @@ const Skills = () => {
             style={{
               width: 'min(96vw, 920px)',
               height: 'min(96vw, 920px)',
-              minWidth: 440,
-              minHeight: 440,
             }}
           >
             <motion.div
@@ -519,8 +517,8 @@ const Skills = () => {
                   <motion.article
                     className="overflow-hidden rounded-full border border-white/85 bg-white/75 p-3 shadow-[0_14px_30px_-18px_rgba(15,23,42,0.45)] backdrop-blur-xl"
                     style={{
-                      width: 'clamp(220px, 31vw, 340px)',
-                      height: 'clamp(220px, 31vw, 340px)',
+                      width: 'clamp(104px, 31vw, 340px)',
+                      height: 'clamp(104px, 31vw, 340px)',
                     }}
                     animate={
                       shouldReduceMotion
