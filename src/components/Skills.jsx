@@ -289,6 +289,7 @@ const SkillBubbleField = ({ skills, iconAnchors, shouldReduceMotion, nodeIndex }
 
 const Skills = () => {
   const shouldReduceMotion = useReducedMotion()
+  const [activeNodeIndex, setActiveNodeIndex] = useState(null)
   const smallOrbitRadiusPct = 24
 
   const getNodeAnchor = (angleDeg) => {
@@ -297,6 +298,11 @@ const Skills = () => {
       left: `${50 + smallOrbitRadiusPct * Math.cos(rad)}%`,
       top: `${50 + smallOrbitRadiusPct * Math.sin(rad)}%`,
     }
+  }
+
+  const getNodeScale = (index) => {
+    if (activeNodeIndex === null) return 1
+    return activeNodeIndex === index ? 1.08 : 0.9
   }
 
   const sectionVariants = {
@@ -483,43 +489,56 @@ const Skills = () => {
                 className="absolute z-20 -translate-x-1/2 -translate-y-1/2"
                 style={getNodeAnchor(node.angleDeg)}
               >
-                <motion.article
-                  className="overflow-hidden rounded-full border border-white/85 bg-white/75 p-3 shadow-[0_14px_30px_-18px_rgba(15,23,42,0.45)] backdrop-blur-xl"
-                  style={{
-                    width: 'clamp(220px, 31vw, 340px)',
-                    height: 'clamp(220px, 31vw, 340px)',
+                <motion.div
+                  className="will-change-transform"
+                  onMouseEnter={() => setActiveNodeIndex(index)}
+                  onMouseLeave={() => setActiveNodeIndex((current) => (current === index ? null : current))}
+                  animate={{ scale: getNodeScale(index) }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 280,
+                    damping: 24,
+                    mass: 0.9,
                   }}
-                  animate={
-                    shouldReduceMotion
-                      ? { x: 0, y: 0 }
-                      : {
-                          x: node.drift.x,
-                          y: node.drift.y,
-                        }
-                  }
-                  transition={
-                    shouldReduceMotion
-                      ? undefined
-                      : {
-                          duration: node.drift.duration,
-                          repeat: Infinity,
-                          ease: 'easeInOut',
-                          repeatType: 'mirror',
-                          delay: node.drift.delay + index * 0.12,
-                        }
-                  }
                 >
-                  <h3 className="text-center text-base sm:text-lg font-semibold text-slate-900">
-                    {node.title}
-                  </h3>
+                  <motion.article
+                    className="overflow-hidden rounded-full border border-white/85 bg-white/75 p-3 shadow-[0_14px_30px_-18px_rgba(15,23,42,0.45)] backdrop-blur-xl"
+                    style={{
+                      width: 'clamp(220px, 31vw, 340px)',
+                      height: 'clamp(220px, 31vw, 340px)',
+                    }}
+                    animate={
+                      shouldReduceMotion
+                        ? { x: 0, y: 0 }
+                        : {
+                            x: node.drift.x,
+                            y: node.drift.y,
+                          }
+                    }
+                    transition={
+                      shouldReduceMotion
+                        ? undefined
+                        : {
+                            duration: node.drift.duration,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                            repeatType: 'mirror',
+                            delay: node.drift.delay + index * 0.12,
+                          }
+                    }
+                  >
+                    <h3 className="text-center text-base sm:text-lg font-semibold text-slate-900">
+                      {node.title}
+                    </h3>
 
-                  <SkillBubbleField
-                    skills={node.skills}
-                    iconAnchors={node.iconAnchors}
-                    shouldReduceMotion={shouldReduceMotion}
-                    nodeIndex={index}
-                  />
-                </motion.article>
+                    <SkillBubbleField
+                      skills={node.skills}
+                      iconAnchors={node.iconAnchors}
+                      shouldReduceMotion={shouldReduceMotion}
+                      nodeIndex={index}
+                    />
+                  </motion.article>
+                </motion.div>
               </div>
             ))}
           </motion.div>
