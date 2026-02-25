@@ -430,6 +430,21 @@ const Skills = () => {
     },
   ]
 
+  const certifications = [
+    {
+      name: 'AWS Certified Developer Associate (DVA-C02)',
+      image: '/portfolio/dvac02.png',
+      link: 'https://www.credly.com/badges/f68690b3-1e68-46d8-ae56-366bd880c0e5/linked_in_profile',
+      alt: 'AWS Certified Developer Associate badge',
+    },
+    {
+      name: 'AWS Certified Cloud Practitioner (CLF-C02)',
+      image: '/portfolio/clf-c02.png',
+      link: 'https://www.credly.com/badges/ff21fdcd-97e7-42a1-9e15-ddf052af8c57/linked_in_profile',
+      alt: 'AWS Certified Cloud Practitioner badge',
+    },
+  ]
+
   return (
     <section className="section-padding pt-1" id="skills">
       <div className="container-width">
@@ -541,6 +556,34 @@ const Skills = () => {
                 </motion.div>
               </div>
             ))}
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="mt-14 glass-panel rounded-3xl p-6 sm:p-8">
+            <div className="mb-6 flex items-center justify-center gap-3">
+              <FaAws className="text-2xl text-[#FF9900]" />
+              <h3 className="text-2xl font-bold text-slate-900">Certification</h3>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2">
+              {certifications.map((certification) => (
+                <div key={certification.name} className="flex flex-col items-center text-center">
+                  <a
+                    href={certification.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex rounded-2xl p-2 transition-transform"
+                    aria-label={`Open credential link for ${certification.name}`}
+                  >
+                    <img
+                      src={certification.image}
+                      alt={certification.alt}
+                      className="h-44 w-44 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-52 sm:w-52"
+                    />
+                  </a>
+                  <p className="mt-3 text-lg text-slate-600">{certification.name}</p>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </div>
