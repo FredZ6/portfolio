@@ -76,14 +76,20 @@ const Hero = () => {
               revealDirection="center"
             />
           </motion.h1>
-          <motion.h2 variants={heroItemVariants} className="text-xl md:text-2xl lg:text-3xl text-slate-500 mb-4 md:mb-6">
+          <motion.h2 variants={heroItemVariants} className="text-xl md:text-2xl lg:text-3xl text-slate-500 mb-1.5 md:mb-2">
             <DecryptedText
-              text="Backend & Cloud Engineer"
+              text="Modern Software Developer"
               animateOn="view"
               speed={80}
               sequential={true}
             />
           </motion.h2>
+          <motion.p
+            variants={heroItemVariants}
+            className="text-[11px] sm:text-xs md:text-sm uppercase tracking-[0.12em] text-primary/85 mb-4 md:mb-6"
+          >
+            AI-native dev workflow
+          </motion.p>
           <motion.p
             variants={heroItemVariants}
             className="text-sm md:text-base text-slate-600 mb-6 md:mb-8 max-w-lg mx-auto md:mx-0 font-mono leading-relaxed tracking-wide"
