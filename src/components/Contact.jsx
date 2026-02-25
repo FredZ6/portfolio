@@ -7,26 +7,26 @@ const Contact = () => {
   const shouldReduceMotion = useReducedMotion()
 
   const sectionVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 24 },
+    hidden: { opacity: shouldReduceMotion ? 1 : 0.45, y: shouldReduceMotion ? 0 : 14 },
     show: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: shouldReduceMotion ? 0.2 : 0.6,
+        duration: shouldReduceMotion ? 0.15 : 0.42,
         ease: [0.22, 1, 0.36, 1],
         when: 'beforeChildren',
-        staggerChildren: shouldReduceMotion ? 0 : 0.12,
+        staggerChildren: shouldReduceMotion ? 0 : 0.08,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 14 },
+    hidden: { opacity: shouldReduceMotion ? 1 : 0.6, y: shouldReduceMotion ? 0 : 10 },
     show: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: shouldReduceMotion ? 0.2 : 0.46,
+        duration: shouldReduceMotion ? 0.15 : 0.32,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -36,7 +36,7 @@ const Contact = () => {
     hidden: {},
     show: {
       transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.08,
+        staggerChildren: shouldReduceMotion ? 0 : 0.05,
       },
     },
   }
@@ -49,6 +49,7 @@ const Contact = () => {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState({ show: false, type: '', message: '' })
+  const hideStatus = () => setSubmitStatus({ show: false, type: '', message: '' })
 
   // Initialize EmailJS
   useEffect(() => {
@@ -58,7 +59,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
-    setSubmitStatus({ show: false, type: '', message: '' })
+    hideStatus()
     
     try {
       await emailjs.send(
@@ -98,7 +99,7 @@ const Contact = () => {
       
       // Hide status message after 5 seconds
       setTimeout(() => {
-        setSubmitStatus({ show: false, type: '', message: '' })
+        hideStatus()
       }, 5000)
     }
   }
@@ -115,13 +116,13 @@ const Contact = () => {
     <section className="section-padding pt-1" id="contact">
       <div className="container-width max-w-xl mx-auto">
         {submitStatus.show && (
-          <Toast type={submitStatus.type} message={submitStatus.message} />
+          <Toast type={submitStatus.type} message={submitStatus.message} onClose={hideStatus} />
         )}
         <motion.div
           variants={sectionVariants}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.06 }}
         >
           <motion.h2 variants={itemVariants} className="heading text-center">
             Contact Me

@@ -84,10 +84,87 @@ body {
 
 /* 添加滚动偏移量 */
 section {
-  scroll-margin-top: 5rem;  /* 80px */
+  scroll-margin-top: 8rem;  /* 128px, avoid fixed navbar overlap on anchor jumps */
 }
 
 /* 添加平滑滚动效果 */
 html {
   scroll-behavior: smooth;
+}
+
+@keyframes skillGlowPulse {
+  0%, 100% {
+    opacity: 0.18;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.42;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes skillTrailSweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-52%) scaleX(0.3);
+  }
+  28% {
+    opacity: 0.72;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scaleX(1.12);
+  }
+}
+
+.skill-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 9999px;
+  isolation: isolate;
+}
+
+.skill-icon-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -0.24rem;
+  border-radius: 9999px;
+  background: var(--skill-color);
+  opacity: 0.18;
+  filter: blur(9px);
+  transform: scale(0.9);
+  transition: opacity 220ms ease;
+  z-index: 0;
+}
+
+.skill-icon-wrap::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1.9rem;
+  height: 0.2rem;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, transparent, var(--skill-color), transparent);
+  opacity: 0;
+  transform: translateX(-52%) scaleX(0.3);
+  filter: blur(1px);
+  z-index: 0;
+}
+
+.skill-icon-glyph {
+  position: relative;
+  z-index: 1;
+}
+
+.group:hover .skill-icon-wrap::before {
+  animation: skillGlowPulse 1.15s ease-in-out infinite;
+}
+
+.group:hover .skill-icon-wrap::after {
+  animation: skillTrailSweep 0.72s ease-out;
 }
