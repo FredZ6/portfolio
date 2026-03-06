@@ -159,6 +159,26 @@ html {
   }
 }
 
+@keyframes skillOrbitSpin {
+  from {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+  }
+
+  to {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+
+@keyframes skillOrbitCounterSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes skillTrailSweep {
   0% {
     opacity: 0;
@@ -173,6 +193,21 @@ html {
     opacity: 0;
     transform: translateX(-50%) scaleX(1.12);
   }
+}
+
+.skill-orbit-ring {
+  transform: translate3d(-50%, -50%, 0);
+  animation: skillOrbitSpin var(--orbit-duration, 40s) linear infinite;
+  animation-direction: var(--orbit-direction, normal);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.skill-orbit-counter {
+  animation: skillOrbitCounterSpin var(--orbit-duration, 40s) linear infinite;
+  animation-direction: var(--orbit-direction, normal);
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .skill-icon-wrap {

@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { useReducedMotion } from 'framer-motion'
 import {
   FaReact,
   FaAws,
@@ -90,19 +90,28 @@ const skillsData = [
 
 const OrbitRing = ({ radius, duration, reverse, skills, color }) => {
   const shouldReduceMotion = useReducedMotion()
+  const orbitRotationStyle = shouldReduceMotion
+    ? { animation: 'none' }
+    : {
+        '--orbit-duration': `${duration}s`,
+        '--orbit-direction': reverse ? 'reverse' : 'normal'
+      }
+  const iconRotationStyle = shouldReduceMotion
+    ? { animation: 'none' }
+    : {
+        '--orbit-duration': `${duration}s`,
+        '--orbit-direction': reverse ? 'normal' : 'reverse'
+      }
 
   return (
-    <motion.div
-      className="absolute top-1/2 left-1/2 rounded-full border border-dashed border-white/10 pointer-events-none"
+    <div
+      className="skill-orbit-ring absolute top-1/2 left-1/2 rounded-full border border-dashed border-white/10 pointer-events-none"
       style={{
         width: radius * 2,
         height: radius * 2,
-        x: '-50%',
-        y: '-50%',
-        boxShadow: `0 0 40px ${color} inset`
+        boxShadow: `0 0 40px ${color} inset`,
+        ...orbitRotationStyle
       }}
-      animate={shouldReduceMotion ? undefined : { rotate: reverse ? -360 : 360 }}
-      transition={shouldReduceMotion ? undefined : { duration, repeat: Infinity, ease: 'linear' }}
     >
       {skills.map((skill, index) => {
         const angle = (index / skills.length) * 360
@@ -114,27 +123,25 @@ const OrbitRing = ({ radius, duration, reverse, skills, color }) => {
               transform: `rotate(${angle}deg) translateX(${radius}px) rotate(-${angle}deg)`
             }}
           >
-            <motion.div
-              animate={shouldReduceMotion ? undefined : { rotate: reverse ? 360 : -360 }}
-              transition={shouldReduceMotion ? undefined : { duration, repeat: Infinity, ease: 'linear' }}
-              className="group relative flex items-center justify-center w-12 h-12 md:w-16 md:h-16 -ml-6 -mt-6 md:-ml-8 md:-mt-8 rounded-full glass-panel-strong shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(56,189,248,0.58)] hover:scale-125 transition-all cursor-pointer z-20"
-            >
-              <div
-                className="text-xl md:text-2xl drop-shadow-md"
-                style={{ color: skill.color }}
-              >
-                {skill.icon}
-              </div>
+            <div className="skill-orbit-counter" style={iconRotationStyle}>
+              <div className="group relative flex items-center justify-center w-12 h-12 md:w-16 md:h-16 -ml-6 -mt-6 md:-ml-8 md:-mt-8 rounded-full glass-panel-strong shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(56,189,248,0.58)] hover:scale-125 transition-all cursor-pointer z-20">
+                <div
+                  className="text-xl md:text-2xl drop-shadow-md"
+                  style={{ color: skill.color }}
+                >
+                  {skill.icon}
+                </div>
 
-              {/* Tooltip */}
-              <div className="absolute -bottom-8 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/80 backdrop-blur border border-white/20 text-white text-[10px] sm:text-xs px-2 py-1 rounded whitespace-nowrap z-50 shadow-xl font-bold tracking-widest">
-                {skill.name}
+                {/* Tooltip */}
+                <div className="absolute -bottom-8 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/80 backdrop-blur border border-white/20 text-white text-[10px] sm:text-xs px-2 py-1 rounded whitespace-nowrap z-50 shadow-xl font-bold tracking-widest">
+                  {skill.name}
+                </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         )
       })}
-    </motion.div>
+    </div>
   )
 }
 
