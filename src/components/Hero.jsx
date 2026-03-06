@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaEnvelope, FaTimes, FaExternalLinkAlt } from 'react-icons/fa'
+import { Github, Linkedin, Mail, X, ExternalLink, FileText } from 'lucide-react'
+import Tilt from 'react-parallax-tilt'
 import DecryptedText from '../animation/DecryptedText'
 
 const Hero = () => {
@@ -8,44 +9,31 @@ const Hero = () => {
   const [isResumeOpen, setIsResumeOpen] = useState(false)
   const resumePdfUrl = '/portfolio/resume/FredCV-2025%20codex.pdf'
 
-  const heroTextVariants = {
-    hidden: { opacity: 0, x: shouldReduceMotion ? 0 : -44 },
-    show: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: shouldReduceMotion ? 0.2 : 0.7,
-        ease: [0.22, 1, 0.36, 1],
-        when: 'beforeChildren',
-        staggerChildren: shouldReduceMotion ? 0 : 0.08,
-      },
-    },
-  }
-
   const heroItemVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 18 },
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 30 },
     show: {
       opacity: 1,
       y: 0,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+    },
+  }
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
       transition: {
-        duration: shouldReduceMotion ? 0.2 : 0.45,
-        ease: [0.22, 1, 0.36, 1],
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
       },
     },
   }
 
   useEffect(() => {
     if (!isResumeOpen) return
-
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        setIsResumeOpen(false)
-      }
-    }
-
+    const handleKeyDown = (event) => event.key === 'Escape' && setIsResumeOpen(false)
     window.addEventListener('keydown', handleKeyDown)
     return () => {
       document.body.style.overflow = previousOverflow
@@ -54,220 +42,188 @@ const Hero = () => {
   }, [isResumeOpen])
 
   return (
-    <section className="min-h-screen flex items-center justify-center section-padding pt-28 md:pt-24" id="home">
-      <div className="container-width grid md:grid-cols-2 gap-4 md:gap-8 items-center">
-        {/* Text Content */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-10" id="home">
+
+      {/* Background 3D Abstract Element (Replacing standard right-side avatar) */}
+      <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none select-none">
         <motion.div
-          variants={heroTextVariants}
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 0.35, scale: 1 }}
+          transition={{ duration: 1.5, ease: 'easeOut' }}
+          className="relative perspective-1000 mix-blend-screen"
+        >
+          <Tilt
+            tiltMaxAngleX={20}
+            tiltMaxAngleY={20}
+            perspective={1000}
+            transitionSpeed={3000}
+            gyroscope={true}
+            className="w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] md:w-[700px] md:h-[700px] relative"
+          >
+            {/* Outer Orbit */}
+            <motion.div
+              className="absolute inset-0 rounded-full border border-primary/20 shadow-[0_0_80px_rgba(99,102,241,0.2)]"
+              animate={shouldReduceMotion ? undefined : { rotateZ: 360, rotateX: 70, scale: [1, 1.1, 1] }}
+              transition={shouldReduceMotion ? undefined : { duration: 20, repeat: Infinity, ease: 'linear' }}
+            />
+            {/* Inner Orbit */}
+            <motion.div
+              className="absolute inset-10 rounded-full border border-secondary/30 shadow-[0_0_60px_rgba(13,244,230,0.3)]"
+              animate={shouldReduceMotion ? undefined : { rotateZ: -360, rotateY: 70, scale: [1.1, 1, 1.1] }}
+              transition={shouldReduceMotion ? undefined : { duration: 25, repeat: Infinity, ease: 'linear' }}
+            />
+            {/* Central Hologram Core */}
+            <motion.div
+              className="absolute inset-x-20 inset-y-20 rounded-full p-4 flex items-center justify-center"
+              animate={shouldReduceMotion ? undefined : { y: [0, -30, 0] }}
+              transition={shouldReduceMotion ? undefined : { duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <img
+                src="/portfolio/avatar.png"
+                alt="Profile Avatar Hologram"
+                className="w-full h-full object-cover rounded-full mix-blend-lighten blur-[2px] opacity-80"
+                style={{ filter: 'drop-shadow(0 0 40px rgba(99,102,241,0.8))' }}
+              />
+            </motion.div>
+          </Tilt>
+        </motion.div>
+      </div>
+
+      {/* Foreground Text Content */}
+      <div className="container-width relative z-10 flex flex-col items-center text-center">
+        <motion.div
+          variants={staggerContainer}
           initial="hidden"
           animate="show"
-          className="w-full glass-panel rounded-3xl p-6 sm:p-8 text-center md:text-left"
+          className="flex flex-col items-center w-full"
         >
-          <motion.h2 variants={heroItemVariants} className="text-primary font-medium text-base md:text-lg mb-2">
-            Hello, I&apos;m
-          </motion.h2>
-          <motion.h1 variants={heroItemVariants} className="text-3xl md:text-4xl lg:text-6xl font-bold mb-2 md:mb-4">
-            <DecryptedText
-              text="Fred Zhang"
-              animateOn="view"
-              speed={150}
-              className="text-slate-900"
-              sequential={true}
-              revealDirection="center"
-            />
+          <motion.div variants={heroItemVariants} className="mb-4">
+            <span className="glass-chip px-5 py-2 text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-primary">
+              <DecryptedText text="System Loaded" speed={100} />
+            </span>
+          </motion.div>
+
+          <motion.h1
+            variants={heroItemVariants}
+            className="text-[14vw] sm:text-[11vw] md:text-[9vw] font-black leading-[0.85] tracking-tighter mb-4 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-transparent drop-shadow-[0_0_40px_rgba(255,255,255,0.2)] mix-blend-plus-lighter"
+          >
+            FRED ZHANG
           </motion.h1>
-          <motion.h2 variants={heroItemVariants} className="text-xl md:text-2xl lg:text-3xl text-slate-500 mb-1.5 md:mb-2">
+
+          <motion.h2
+            variants={heroItemVariants}
+            className="text-xl sm:text-3xl md:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent mb-8"
+          >
             <DecryptedText
-              text="Modern Software Developer"
+              text="Software Engineer & Architect"
               animateOn="view"
               speed={80}
               sequential={true}
             />
           </motion.h2>
+
           <motion.p
             variants={heroItemVariants}
-            className="text-[11px] sm:text-xs md:text-sm uppercase tracking-[0.12em] text-primary/85 mb-4 md:mb-6"
+            className="max-w-xl text-sm sm:text-base md:text-lg text-slate-300 font-medium leading-relaxed tracking-wide mb-12 glass-panel p-5 rounded-2xl"
           >
-            AI-native dev workflow
+            I build <span className="text-white font-bold">reliable backend systems</span> with Java, Spring Boot, and AWS infrastructure. I use <span className="text-secondary font-bold">AI-assisted, spec-driven</span> workflows to ship faster while keeping quality gates strict.
           </motion.p>
-          <motion.p
+
+          {/* Social Links & Action Buttons - Floating Pill */}
+          <motion.div
             variants={heroItemVariants}
-            className="text-sm md:text-base text-slate-600 mb-6 md:mb-8 max-w-lg mx-auto md:mx-0 font-mono leading-relaxed tracking-wide"
+            className="glass-panel-strong rounded-full p-2 flex flex-wrap items-center justify-center gap-2 sm:gap-3 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(99,102,241,0.2)]"
           >
-            <DecryptedText
-              text="I build reliable backend systems with Java, Spring Boot, event-driven workflows, and AWS infrastructure. I use AI-assisted, spec-driven workflows to ship faster while keeping CI/CD quality gates strict."
-              animateOn="view"
-              speed={5}
-              sequential={true}
-              highlightWords={[
-                "Java",
-                "Spring Boot",
-                "AI-assisted",
-                "spec-driven",
-                "AWS",
-                "CI/CD"
-              ]}
-              highlightClass="text-primary"
-            />
-          </motion.p>
-          <motion.p variants={heroItemVariants} className="text-xs sm:text-sm text-slate-500 mb-6 md:mb-8">
-            Open to Software Engineer opportunities (Backend / Platform / Full-Stack).
-          </motion.p>
-          
-          {/* Social Links */}
-          <motion.div variants={heroItemVariants} className="flex justify-center md:justify-start space-x-4 mb-6 md:mb-8">
             <motion.a
               href="https://github.com/FredZ6"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Open Fred Zhang's GitHub profile"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl glass-panel text-slate-500 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white/70"
-              whileHover={{ y: shouldReduceMotion ? 0 : -2, scale: shouldReduceMotion ? 1 : 1.04 }}
+              aria-label="GitHub Profile"
+              className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+              whileHover={{ scale: 1.1, y: -4 }}
             >
-              <FaGithub size={20} className="md:w-6 md:h-6" />
+              <Github size={22} className="sm:w-6 sm:h-6" />
             </motion.a>
             <motion.a
               href="https://www.linkedin.com/in/haifeng-zhang26/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Open Fred Zhang's LinkedIn profile"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl glass-panel text-slate-500 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white/70"
-              whileHover={{ y: shouldReduceMotion ? 0 : -2, scale: shouldReduceMotion ? 1 : 1.04 }}
+              aria-label="LinkedIn Profile"
+              className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-white/5 text-slate-300 hover:text-secondary hover:bg-secondary/20 transition-colors"
+              whileHover={{ scale: 1.1, y: -4 }}
             >
-              <FaLinkedin size={20} className="md:w-6 md:h-6" />
+              <Linkedin size={22} className="sm:w-6 sm:h-6" />
             </motion.a>
             <motion.a
               href="mailto:fredzhang026@gmail.com"
-              aria-label="Send email to Fred Zhang"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl glass-panel text-slate-500 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white/70"
-              whileHover={{ y: shouldReduceMotion ? 0 : -2, scale: shouldReduceMotion ? 1 : 1.04 }}
+              aria-label="Send Email"
+              className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-white/5 text-slate-300 hover:text-accent hover:bg-accent/20 transition-colors"
+              whileHover={{ scale: 1.1, y: -4 }}
             >
-              <FaEnvelope size={20} className="md:w-6 md:h-6" />
+              <Mail size={22} className="sm:w-6 sm:h-6" />
             </motion.a>
-          </motion.div>
-          
-          {/* CTA Buttons */}
-          <motion.div variants={heroItemVariants} className="flex flex-wrap justify-center md:justify-start gap-3">
-            <motion.a
-              href="#contact"
-              className="glass-button inline-block w-32 rounded-xl px-3 py-2 text-center text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white/70 sm:w-auto sm:px-4 md:px-6 md:py-3 md:text-base"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <DecryptedText
-                text="Contact Me"
-                animateOn="view"
-                speed={150}
-                sequential={true}
-              />
-            </motion.a>
+
+            <div className="w-px h-8 bg-white/20 mx-2 hidden sm:block"></div>
+
             <motion.button
               type="button"
               onClick={() => setIsResumeOpen(true)}
-              aria-label="Open resume fullscreen preview"
-              className="glass-outline-button inline-block w-36 rounded-xl px-3 py-2 text-center text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white/70 sm:w-auto sm:px-4 md:px-6 md:py-3 md:text-base"
+              className="flex items-center gap-2 px-6 h-12 sm:h-14 rounded-full bg-primary/20 text-primary font-bold tracking-widest uppercase text-xs sm:text-sm hover:bg-primary hover:text-white transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <DecryptedText
-                text="Request Resume"
-                animateOn="view"
-                speed={150}
-                sequential={true}
-              />
+              <FileText size={18} />
+              <span>Resume</span>
             </motion.button>
-          </motion.div>
-        </motion.div>
-
-        {/* Profile Image */}
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: shouldReduceMotion ? 0.2 : 0.65, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mt-8 md:mt-0 flex justify-center md:justify-end"
-        >
-          <motion.div
-            className="w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] md:w-[420px] md:h-[420px] lg:w-[520px] lg:h-[520px] xl:w-[560px] xl:h-[560px] mx-auto md:mx-0 relative glass-panel rounded-full p-3 will-change-transform"
-            animate={
-              shouldReduceMotion
-                ? undefined
-                : { y: [0, -12, 0], rotate: [0, 0.7, 0, -0.7, 0], scale: [1, 1.01, 1] }
-            }
-            transition={shouldReduceMotion ? undefined : { duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <motion.div
-              className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-primary/50 blur-2xl opacity-30"
-              animate={shouldReduceMotion ? undefined : { opacity: [0.24, 0.4, 0.24], scale: [0.98, 1.02, 0.98] }}
-              transition={shouldReduceMotion ? undefined : { duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}
-            />
-            <img
-              src="/portfolio/avatar.png"
-              alt="Profile Picture"
-              className="rounded-full w-full h-full object-cover relative z-10 ring-2 ring-white/75"
-            />
           </motion.div>
         </motion.div>
       </div>
 
+      {/* Resume Modal */}
       <AnimatePresence>
         {isResumeOpen && (
           <motion.div
-            className="fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur-sm p-3 sm:p-6"
+            className="fixed inset-0 z-[120] bg-black/90 backdrop-blur-md p-4 sm:p-8 flex items-center justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsResumeOpen(false)}
             role="dialog"
             aria-modal="true"
-            aria-label="Resume fullscreen preview"
           >
             <motion.div
-              className="relative mx-auto h-full w-full max-w-6xl rounded-2xl border border-white/25 bg-slate-900/45 shadow-2xl"
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.985, y: 8 }}
+              className="relative w-full h-full max-w-6xl glass-panel-strong rounded-2xl overflow-hidden flex flex-col"
+              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.95, y: 20 }}
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
-              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.985, y: 8 }}
-              transition={{ duration: shouldReduceMotion ? 0.12 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 20 }}
               onClick={(event) => event.stopPropagation()}
             >
-              <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between border-b border-white/20 bg-slate-950/45 px-3 py-2.5 backdrop-blur sm:px-4">
-                <p className="text-sm font-medium text-white/90">Fred Zhang Resume</p>
-                <div className="flex items-center gap-2">
+              {/* Modal Header */}
+              <div className="flex-none flex items-center justify-between border-b border-white/10 bg-white/5 px-4 lg:px-6 py-3">
+                <p className="text-sm font-bold text-primary tracking-widest uppercase">Fred Zhang Resume</p>
+                <div className="flex items-center gap-3">
                   <a
                     href={resumePdfUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition-colors hover:bg-white/20"
-                    aria-label="Open resume in new tab"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 hover:bg-primary hover:text-white transition-colors"
                   >
-                    <FaExternalLinkAlt size={14} />
+                    <ExternalLink size={16} />
                   </a>
                   <button
                     type="button"
                     onClick={() => setIsResumeOpen(false)}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition-colors hover:bg-white/20"
-                    aria-label="Close resume preview"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 hover:bg-rose-500 hover:text-white transition-colors"
                   >
-                    <FaTimes size={16} />
+                    <X size={18} />
                   </button>
                 </div>
               </div>
-
-              <div className="h-full w-full pt-14">
-                <object data={resumePdfUrl} type="application/pdf" className="h-full w-full rounded-b-2xl">
+              {/* Modal Body */}
+              <div className="flex-grow w-full relative">
+                <object data={resumePdfUrl} type="application/pdf" className="absolute inset-0 w-full h-full">
                   <div className="flex h-full items-center justify-center px-6 text-center text-white/90">
-                    <p className="text-sm sm:text-base">
-                      PDF preview is not supported on this device.
-                      {' '}
-                      <a
-                        href={resumePdfUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-semibold text-primary underline underline-offset-4"
-                      >
-                        Open resume in a new tab
-                      </a>
-                      .
-                    </p>
+                    <p>PDF preview is not supported on this device. <a href={resumePdfUrl} target="_blank" rel="noopener noreferrer" className="text-primary underline">Open in new tab</a>.</p>
                   </div>
                 </object>
               </div>
@@ -279,4 +235,4 @@ const Hero = () => {
   )
 }
 
-export default Hero 
+export default Hero
