@@ -182,15 +182,15 @@ const Skills = () => {
 
       {/* Certs Section at the bottom */}
       <div className="absolute bottom-6 sm:bottom-8 w-full z-10 flex flex-col items-center justify-center px-4">
-        <div className="flex gap-4 glass-panel-strong rounded-full px-6 py-3 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
-          <a href="https://www.credly.com/badges/f68690b3-1e68-46d8-ae56-366bd880c0e5/linked_in_profile" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition-opacity flex items-center gap-2">
-            <img src="/portfolio/dvac02.png" alt="AWS DVA" className="w-8 h-8 rounded-full shadow-lg" />
-            <span className="text-xs text-white font-bold tracking-widest hidden sm:inline">DVA-C02</span>
+        <div className="flex gap-4 glass-panel-strong rounded-full px-7 py-4 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+          <a href="https://www.credly.com/badges/f68690b3-1e68-46d8-ae56-366bd880c0e5/linked_in_profile" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition-opacity flex items-center gap-3">
+            <img src="/portfolio/dvac02.png" alt="AWS DVA" className="w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-lg" />
+            <span className="text-xs sm:text-sm text-white font-bold tracking-widest hidden sm:inline">DVA-C02</span>
           </a>
           <div className="w-px bg-white/20 mx-2"></div>
-          <a href="https://www.credly.com/badges/ff21fdcd-97e7-42a1-9e15-ddf052af8c57/linked_in_profile" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition-opacity flex items-center gap-2">
-            <img src="/portfolio/clf-c02.png" alt="AWS CLF" className="w-8 h-8 rounded-full shadow-lg" />
-            <span className="text-xs text-white font-bold tracking-widest hidden sm:inline">CLF-C02</span>
+          <a href="https://www.credly.com/badges/ff21fdcd-97e7-42a1-9e15-ddf052af8c57/linked_in_profile" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition-opacity flex items-center gap-3">
+            <img src="/portfolio/clf-c02.png" alt="AWS CLF" className="w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-lg" />
+            <span className="text-xs sm:text-sm text-white font-bold tracking-widest hidden sm:inline">CLF-C02</span>
           </a>
         </div>
       </div>

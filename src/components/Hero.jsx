@@ -63,13 +63,13 @@ const Hero = () => {
             {/* Outer Orbit */}
             <motion.div
               className="absolute inset-0 rounded-full border border-primary/20 shadow-[0_0_80px_rgba(56,189,248,0.24)]"
-              animate={shouldReduceMotion ? undefined : { rotateZ: 360, rotateX: 70, scale: [1, 1.1, 1] }}
+              animate={shouldReduceMotion ? undefined : { rotateZ: 360 }}
               transition={shouldReduceMotion ? undefined : { duration: 20, repeat: Infinity, ease: 'linear' }}
             />
             {/* Inner Orbit */}
             <motion.div
               className="absolute inset-10 rounded-full border border-secondary/30 shadow-[0_0_60px_rgba(13,244,230,0.3)]"
-              animate={shouldReduceMotion ? undefined : { rotateZ: -360, rotateY: 70, scale: [1.1, 1, 1.1] }}
+              animate={shouldReduceMotion ? undefined : { rotateZ: -360 }}
               transition={shouldReduceMotion ? undefined : { duration: 25, repeat: Infinity, ease: 'linear' }}
             />
             {/* Central Hologram Core */}
@@ -126,7 +126,7 @@ const Hero = () => {
             variants={heroItemVariants}
             className="max-w-xl text-sm sm:text-base md:text-lg text-slate-300 font-medium leading-relaxed tracking-wide mb-12 glass-panel p-5 rounded-2xl"
           >
-            I build <span className="text-white font-bold">reliable backend systems</span> with Java, Spring Boot, and AWS infrastructure. I use <span className="text-secondary font-bold">AI-assisted, spec-driven</span> workflows to ship faster while keeping quality gates strict.
+            I build <span className="text-white font-bold">reliable backend systems</span> with Java, Spring Boot, and AWS infrastructure. I use <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-bold">AI-assisted, spec-driven</span> workflows to ship faster while keeping quality gates strict.
           </motion.p>
 
           {/* Social Links & Action Buttons - Floating Pill */}
