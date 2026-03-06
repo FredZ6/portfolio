@@ -17,7 +17,7 @@ const PROJECTS = [
       { src: '/portfolio/projects/cloud-order/cloud_01_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_01_full.png', caption: 'System Screen 1' },
       { src: '/portfolio/projects/cloud-order/cloud_02_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_02_full.png', caption: 'System Screen 2' }
     ],
-    accent: 'from-blue-500 to-indigo-600',
+    accent: 'from-sky-400 to-blue-600',
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ const PROJECTS = [
       { src: '/portfolio/projects/ecommerce/product_16x10.png', fullSrc: '/portfolio/projects/ecommerce/product.png', caption: 'Products Page' },
       { src: '/portfolio/projects/ecommerce/manage_16x10.png', fullSrc: '/portfolio/projects/ecommerce/manage.png', caption: 'Admin Management' },
     ],
-    accent: 'from-emerald-400 to-cyan-500',
+    accent: 'from-cyan-400 to-sky-500',
   },
 ]
 
@@ -94,7 +94,7 @@ const Projects = () => {
             <h2 className="text-5xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] mix-blend-plus-lighter">
               FEATURED<br />SYSTEMS
             </h2>
-            <p className="mt-4 text-slate-300 font-medium tracking-wide border-l-2 border-primary pl-4 uppercase text-xs sm:text-sm shadow-[inset_1px_0_10px_rgba(99,102,241,0.1)] py-1">
+            <p className="mt-4 text-slate-300 font-medium tracking-wide border-l-2 border-primary pl-4 uppercase text-xs sm:text-sm shadow-[inset_1px_0_10px_rgba(56,189,248,0.12)] py-1">
               Swipe or use buttons to explore<br /> architectural implementations.
             </p>
           </motion.div>
@@ -132,7 +132,7 @@ const Projects = () => {
                     rel="noopener noreferrer"
                     className="flex flex-col items-center gap-4 group cursor-pointer"
                   >
-                    <div className="w-24 h-24 rounded-full glass-panel-strong flex items-center justify-center text-white transition-all group-hover:bg-primary group-hover:scale-110 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_40px_rgba(99,102,241,0.6)]">
+                    <div className="w-24 h-24 rounded-full glass-panel-strong flex items-center justify-center text-white transition-all group-hover:bg-primary group-hover:scale-110 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_40px_rgba(56,189,248,0.6)]">
                       <ExternalLink size={32} />
                     </div>
                     <span className="text-white font-bold tracking-widest uppercase text-sm opacity-50 group-hover:opacity-100 transition-opacity">View All Repos</span>
@@ -149,14 +149,14 @@ const Projects = () => {
           >
             <button
               onClick={scrollPrev}
-              className="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-white hover:bg-primary transition-all shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(99,102,241,0.6)]"
+              className="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-white hover:bg-primary transition-all shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(56,189,248,0.58)]"
               aria-label="Scroll Previous"
             >
               <ChevronLeft size={28} />
             </button>
             <button
               onClick={scrollNext}
-              className="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-white hover:bg-primary transition-all shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(99,102,241,0.6)]"
+              className="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-white hover:bg-primary transition-all shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(56,189,248,0.58)]"
               aria-label="Scroll Next"
             >
               <ChevronRight size={28} />

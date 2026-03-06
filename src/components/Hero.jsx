@@ -62,7 +62,7 @@ const Hero = () => {
           >
             {/* Outer Orbit */}
             <motion.div
-              className="absolute inset-0 rounded-full border border-primary/20 shadow-[0_0_80px_rgba(99,102,241,0.2)]"
+              className="absolute inset-0 rounded-full border border-primary/20 shadow-[0_0_80px_rgba(56,189,248,0.24)]"
               animate={shouldReduceMotion ? undefined : { rotateZ: 360, rotateX: 70, scale: [1, 1.1, 1] }}
               transition={shouldReduceMotion ? undefined : { duration: 20, repeat: Infinity, ease: 'linear' }}
             />
@@ -82,7 +82,7 @@ const Hero = () => {
                 src="/portfolio/avatar.png"
                 alt="Profile Avatar Hologram"
                 className="w-full h-full object-cover rounded-full mix-blend-lighten blur-[2px] opacity-80"
-                style={{ filter: 'drop-shadow(0 0 40px rgba(99,102,241,0.8))' }}
+                style={{ filter: 'drop-shadow(0 0 40px rgba(56,189,248,0.82))' }}
               />
             </motion.div>
           </Tilt>
@@ -132,7 +132,7 @@ const Hero = () => {
           {/* Social Links & Action Buttons - Floating Pill */}
           <motion.div
             variants={heroItemVariants}
-            className="glass-panel-strong rounded-full p-2 flex flex-wrap items-center justify-center gap-2 sm:gap-3 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(99,102,241,0.2)]"
+            className="glass-panel-strong rounded-full p-2 flex flex-wrap items-center justify-center gap-2 sm:gap-3 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(56,189,248,0.2)]"
           >
             <motion.a
               href="https://github.com/FredZ6"

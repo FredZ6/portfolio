@@ -110,7 +110,7 @@ const About = () => {
           <div className="w-full lg:w-5/12 p-8 sm:p-10 border-b lg:border-b-0 lg:border-r border-white/10 bg-black/20 overflow-y-auto custom-scrollbar relative">
 
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 rounded-full glass-panel flex items-center justify-center border border-primary/50 overflow-hidden shadow-[0_0_20px_rgba(99,102,241,0.3)] shrink-0">
+              <div className="w-16 h-16 rounded-full glass-panel flex items-center justify-center border border-primary/50 overflow-hidden shadow-[0_0_20px_rgba(56,189,248,0.32)] shrink-0">
                 <img src="/portfolio/avatar.png" alt="Avatar" className="w-full h-full object-cover scale-150 mix-blend-screen" />
               </div>
               <div>
@@ -132,7 +132,7 @@ const About = () => {
               <span className="text-secondary font-mono text-sm opacity-70">&gt; CAT /var/log/experience_timeline</span>
               {experiences.map((exp, idx) => (
                 <div key={idx} className="relative pl-6 border-l border-primary/30 group">
-                  <div className="absolute w-3 h-3 rounded-full bg-black border-2 border-primary -left-[6.5px] top-1 group-hover:bg-primary group-hover:shadow-[0_0_10px_rgba(99,102,241,0.8)] transition-all" />
+                  <div className="absolute w-3 h-3 rounded-full bg-black border-2 border-primary -left-[6.5px] top-1 group-hover:bg-primary group-hover:shadow-[0_0_10px_rgba(56,189,248,0.82)] transition-all" />
                   <p className="text-xs font-bold tracking-widest uppercase text-slate-500 mb-1">{exp.period}</p>
                   <h4 className="font-bold text-white text-base tracking-wide flex items-center gap-2">
                     {exp.icon} {exp.title}
@@ -206,7 +206,7 @@ const About = () => {
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto px-8 py-4 rounded-xl glass-button flex items-center justify-center gap-3 mt-6 disabled:opacity-50 group hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl glass-button flex items-center justify-center gap-3 mt-6 disabled:opacity-50 group hover:shadow-[0_0_20px_rgba(56,189,248,0.42)] transition-all"
                 whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
               >

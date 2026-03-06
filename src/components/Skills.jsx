@@ -45,7 +45,7 @@ const skillsData = [
       { name: 'Next.js', icon: <SiNextdotjs />, color: '#ffffff' },
       { name: 'Tailwind', icon: <SiTailwindcss />, color: '#06B6D4' },
       { name: 'Vue', icon: <SiVuedotjs />, color: '#42B883' },
-      { name: 'Redux', icon: <SiRedux />, color: '#764ABC' },
+      { name: 'Redux', icon: <SiRedux />, color: '#3B82F6' },
       { name: 'HTML5', icon: <FaHtml5 />, color: '#E34F26' },
       { name: 'CSS3', icon: <FaCss3Alt />, color: '#1572B6' },
     ],
@@ -79,7 +79,7 @@ const skillsData = [
       { name: 'Docker', icon: <FaDocker />, color: '#2496ED' },
       { name: 'Kubernetes', icon: <SiKubernetes />, color: '#326CE5' },
       { name: 'Git Actions', icon: <SiGithubactions />, color: '#2088FF' },
-      { name: 'Terraform', icon: <SiTerraform />, color: '#7B42BC' },
+      { name: 'Terraform', icon: <SiTerraform />, color: '#38BDF8' },
       { name: 'Linux', icon: <FaLinux />, color: '#aaaaaa' },
       { name: 'Nginx', icon: <SiNginx />, color: '#009639' },
       { name: 'Jenkins', icon: <SiJenkins />, color: '#D24939' },
@@ -117,7 +117,7 @@ const OrbitRing = ({ radius, duration, reverse, skills, color }) => {
             <motion.div
               animate={shouldReduceMotion ? undefined : { rotate: reverse ? 360 : -360 }}
               transition={shouldReduceMotion ? undefined : { duration, repeat: Infinity, ease: 'linear' }}
-              className="group relative flex items-center justify-center w-12 h-12 md:w-16 md:h-16 -ml-6 -mt-6 md:-ml-8 md:-mt-8 rounded-full glass-panel-strong shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(99,102,241,0.6)] hover:scale-125 transition-all cursor-pointer z-20"
+              className="group relative flex items-center justify-center w-12 h-12 md:w-16 md:h-16 -ml-6 -mt-6 md:-ml-8 md:-mt-8 rounded-full glass-panel-strong shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(56,189,248,0.58)] hover:scale-125 transition-all cursor-pointer z-20"
             >
               <div
                 className="text-xl md:text-2xl drop-shadow-md"
@@ -152,7 +152,7 @@ const Skills = () => {
 
       {/* Absolute headers so they don't break the orbital centering */}
       <div className="absolute top-1 sm:top-3 left-1/2 -translate-x-1/2 text-center z-10 w-full px-4">
-        <h2 className="text-4xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_15px_rgba(99,102,241,0.4)] mix-blend-plus-lighter mb-4">
+        <h2 className="text-4xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_15px_rgba(56,189,248,0.42)] mix-blend-plus-lighter mb-4">
           TECHNICAL CORE
         </h2>
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-2 text-center">
