@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { ExternalLink, Github, Image as ImageIcon, X, ChevronRight, ChevronLeft } from 'lucide-react'
-import Tilt from 'react-parallax-tilt'
 import PropTypes from 'prop-types'
 
 const PROJECTS = [
@@ -15,7 +14,11 @@ const PROJECTS = [
     images: [
       { src: '/portfolio/projects/cloud-order/dashboard_16x10.png', fullSrc: '/portfolio/projects/cloud-order/dashboard_full.png', caption: 'Dashboard' },
       { src: '/portfolio/projects/cloud-order/cloud_01_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_01_full.png', caption: 'System Screen 1' },
-      { src: '/portfolio/projects/cloud-order/cloud_02_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_02_full.png', caption: 'System Screen 2' }
+      { src: '/portfolio/projects/cloud-order/cloud_02_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_02_full.png', caption: 'System Screen 2' },
+      { src: '/portfolio/projects/cloud-order/cloud_03_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_03_full.png', caption: 'System Screen 3' },
+      { src: '/portfolio/projects/cloud-order/cloud_04_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_04_full.png', caption: 'System Screen 4' },
+      { src: '/portfolio/projects/cloud-order/cloud_05_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_05_full.png', caption: 'System Screen 5' },
+      { src: '/portfolio/projects/cloud-order/cloud_06_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_06_full.png', caption: 'System Screen 6' }
     ],
     accent: 'from-sky-400 to-blue-600',
   },
@@ -29,6 +32,7 @@ const PROJECTS = [
     images: [
       { src: '/portfolio/projects/ecommerce/home_16x10.png', fullSrc: '/portfolio/projects/ecommerce/home.png', caption: 'Home Page' },
       { src: '/portfolio/projects/ecommerce/product_16x10.png', fullSrc: '/portfolio/projects/ecommerce/product.png', caption: 'Products Page' },
+      { src: '/portfolio/projects/ecommerce/product_detail_16x10.png', fullSrc: '/portfolio/projects/ecommerce/product_detail.png', caption: 'Product Detail' },
       { src: '/portfolio/projects/ecommerce/manage_16x10.png', fullSrc: '/portfolio/projects/ecommerce/manage.png', caption: 'Admin Management' },
     ],
     accent: 'from-cyan-400 to-sky-500',
@@ -175,20 +179,22 @@ const Projects = () => {
             className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 sm:p-8"
             onClick={closeLightbox}
           >
-            <div className="relative w-full max-w-6xl aspect-[16/10] sm:aspect-video rounded-3xl overflow-hidden glass-panel-strong" onClick={(e) => e.stopPropagation()}>
-              <div className="absolute top-4 right-4 z-50 flex gap-2">
-                <button onClick={closeLightbox} className="w-12 h-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-rose-500 transition-colors">
-                  <X size={24} />
-                </button>
+            <div className="flex w-full max-w-6xl flex-col items-center gap-6" onClick={(e) => e.stopPropagation()}>
+              <div className="relative w-full aspect-[16/10] sm:aspect-video rounded-3xl overflow-hidden glass-panel-strong">
+                <div className="absolute top-4 right-4 z-50 flex gap-2">
+                  <button onClick={closeLightbox} className="w-12 h-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-rose-500 transition-colors">
+                    <X size={24} />
+                  </button>
+                </div>
+
+                <img
+                  src={lightboxData[activeImageIndex].fullSrc || lightboxData[activeImageIndex].src}
+                  alt={lightboxData[activeImageIndex].caption}
+                  className="w-full h-full object-contain bg-black/50"
+                />
               </div>
 
-              <img
-                src={lightboxData[activeImageIndex].fullSrc || lightboxData[activeImageIndex].src}
-                alt={lightboxData[activeImageIndex].caption}
-                className="w-full h-full object-contain bg-black/50"
-              />
-
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 glass-panel rounded-full px-6 py-3 flex items-center gap-6 z-10">
+              <div className="glass-panel rounded-full px-6 py-3 flex items-center gap-6 z-10 shadow-[0_16px_40px_rgba(0,0,0,0.45)]">
                 <button
                   disabled={activeImageIndex === 0}
                   onClick={() => setActiveImageIndex(prev => prev - 1)}
@@ -217,15 +223,8 @@ const Projects = () => {
 
 const ProjectCard = ({ project, index, onOpenLightbox }) => {
   return (
-    <div className="w-[85vw] sm:w-[60vw] lg:w-[45vw] h-[65vh] shrink-0 relative perspective-1000">
-      <Tilt
-        tiltMaxAngleX={10}
-        tiltMaxAngleY={10}
-        perspective={1500}
-        scale={1.02}
-        transitionSpeed={2000}
-        className="w-full h-full glass-panel-strong rounded-[2.5rem] p-6 sm:p-10 flex flex-col relative overflow-hidden group shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.2)]"
-      >
+    <div className="w-[85vw] sm:w-[60vw] lg:w-[45vw] h-[65vh] shrink-0 relative">
+      <div className="w-full h-full rounded-[2.5rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(2,8,23,0.92),rgba(2,6,23,0.84))] p-6 sm:p-10 flex flex-col relative overflow-hidden group isolate transform-gpu transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_34px_70px_rgba(0,0,0,0.84),inset_0_1px_5px_rgba(255,255,255,0.18),0_0_24px_rgba(56,189,248,0.18)] shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.16),0_0_20px_rgba(56,189,248,0.08)]">
         {/* Number Watermark */}
         <div className="absolute -bottom-10 -right-4 text-[15rem] font-black text-white/[0.03] leading-none pointer-events-none select-none z-0">
           0{index + 1}
@@ -278,7 +277,7 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
             <span className="text-slate-500 font-mono text-xs hidden sm:block">STATUS: COMPLETED</span>
           </div>
         </div>
-      </Tilt>
+      </div>
     </div>
   )
 }

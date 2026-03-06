@@ -173,7 +173,7 @@ const Skills = () => {
       </div>
 
       {/* Orbital Star System */}
-      <div className="relative w-full max-w-[1000px] aspect-square flex items-center justify-center mt-20 sm:mt-24 scale-[0.6] sm:scale-75 md:scale-90 lg:scale-100">
+      <div className="relative w-full max-w-[1000px] aspect-square flex items-center justify-center mt-20 sm:mt-24 scale-[0.46] sm:scale-75 md:scale-90 lg:scale-100">
 
         {/* Core AI/Me Node */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-24 h-24 sm:w-32 sm:h-32 glass-panel-strong rounded-full flex flex-col items-center justify-center shadow-[0_0_50px_rgba(13,244,230,0.5),inset_0_0_20px_rgba(255,255,255,0.5)]">

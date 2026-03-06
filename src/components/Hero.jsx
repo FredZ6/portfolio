@@ -42,7 +42,7 @@ const Hero = () => {
   }, [isResumeOpen])
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-10" id="home">
+    <section className="relative min-h-[100svh] sm:min-h-screen flex items-center justify-center overflow-hidden pt-4 sm:pt-10 md:pt-6 lg:pt-4" id="home">
 
       {/* Background 3D Abstract Element (Replacing standard right-side avatar) */}
       <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none select-none">
@@ -58,7 +58,7 @@ const Hero = () => {
             perspective={1000}
             transitionSpeed={3000}
             gyroscope={true}
-            className="w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] md:w-[700px] md:h-[700px] relative"
+            className="w-[272px] h-[272px] sm:w-[500px] sm:h-[500px] md:w-[700px] md:h-[700px] relative"
           >
             {/* Outer Orbit */}
             <motion.div
@@ -68,20 +68,20 @@ const Hero = () => {
             />
             {/* Inner Orbit */}
             <motion.div
-              className="absolute inset-10 rounded-full border border-secondary/30 shadow-[0_0_60px_rgba(13,244,230,0.3)]"
+              className="absolute inset-8 sm:inset-10 rounded-full border border-secondary/30 shadow-[0_0_60px_rgba(13,244,230,0.3)]"
               animate={shouldReduceMotion ? undefined : { rotateZ: -360 }}
               transition={shouldReduceMotion ? undefined : { duration: 25, repeat: Infinity, ease: 'linear' }}
             />
             {/* Central Hologram Core */}
             <motion.div
-              className="absolute inset-x-20 inset-y-20 rounded-full p-4 flex items-center justify-center"
+              className="absolute inset-16 sm:inset-20 rounded-full p-3 sm:p-4 flex items-center justify-center"
               animate={shouldReduceMotion ? undefined : { y: [0, -30, 0] }}
               transition={shouldReduceMotion ? undefined : { duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             >
               <img
                 src="/portfolio/avatar.png"
                 alt="Profile Avatar Hologram"
-                className="w-full h-full object-cover rounded-full mix-blend-lighten blur-[2px] opacity-80"
+                className="w-full h-full object-cover rounded-full mix-blend-lighten scale-[1.18] sm:scale-100 blur-[1px] sm:blur-[2px] opacity-90 sm:opacity-80"
                 style={{ filter: 'drop-shadow(0 0 40px rgba(56,189,248,0.82))' }}
               />
             </motion.div>
@@ -90,14 +90,14 @@ const Hero = () => {
       </div>
 
       {/* Foreground Text Content */}
-      <div className="container-width relative z-10 flex flex-col items-center text-center">
+      <div className="container-width relative z-10 flex w-full flex-col items-center px-4 text-center sm:px-0">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           animate="show"
           className="flex flex-col items-center w-full"
         >
-          <motion.div variants={heroItemVariants} className="mb-4">
+          <motion.div variants={heroItemVariants} className="mb-3 sm:mb-4">
             <span className="glass-chip px-5 py-2 text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-primary">
               <DecryptedText text="System Loaded" speed={100} />
             </span>
@@ -105,14 +105,14 @@ const Hero = () => {
 
           <motion.h1
             variants={heroItemVariants}
-            className="text-[14vw] sm:text-[11vw] md:text-[9vw] font-black leading-[0.85] tracking-tighter mb-4 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-transparent drop-shadow-[0_0_40px_rgba(255,255,255,0.2)] mix-blend-plus-lighter"
+            className="text-[14vw] sm:text-[11vw] md:text-[9vw] font-black leading-[0.85] tracking-tighter mb-3 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-transparent drop-shadow-[0_0_40px_rgba(255,255,255,0.2)] mix-blend-plus-lighter"
           >
             FRED ZHANG
           </motion.h1>
 
           <motion.h2
             variants={heroItemVariants}
-            className="text-xl sm:text-3xl md:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent mb-8"
+            className="text-xl sm:text-3xl md:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent mb-6 sm:mb-8"
           >
             <DecryptedText
               text="Software Engineer & Architect"
@@ -124,7 +124,7 @@ const Hero = () => {
 
           <motion.p
             variants={heroItemVariants}
-            className="max-w-xl text-sm sm:text-base md:text-lg text-slate-300 font-medium leading-relaxed tracking-wide mb-12 glass-panel p-5 rounded-2xl"
+            className="w-full max-w-xl text-sm sm:text-base md:text-lg text-slate-300 font-medium leading-relaxed tracking-wide mb-10 sm:mb-12 glass-panel p-4 sm:p-5 rounded-2xl"
           >
             I build <span className="text-white font-bold">reliable backend systems</span> with Java, Spring Boot, and AWS infrastructure. I use <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-bold">AI-assisted, spec-driven</span> workflows to ship faster while keeping quality gates strict.
           </motion.p>
