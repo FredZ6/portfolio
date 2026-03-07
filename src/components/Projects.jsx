@@ -1,577 +1,299 @@
-import { useEffect, useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { FaChevronLeft, FaChevronRight, FaExternalLinkAlt, FaGithub, FaTimes } from 'react-icons/fa'
+import { useRef, useState } from 'react'
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import { ExternalLink, Github, Image as ImageIcon, X, ChevronRight, ChevronLeft } from 'lucide-react'
+import PropTypes from 'prop-types'
+
+const PROJECTS = [
+  {
+    id: 1,
+    title: 'Event-Driven Order & Inventory Microservices',
+    description: 'Cloud-native order platform built on AWS with microservices, Terraform IaC, and CI/CD quality gates. Delivered 6 services across auth, catalog, ordering, inventory, payment, and notifications.',
+    impact: '6 microservices | 3 saga workflows | 6 required CI checks',
+    techStack: ['Java 17', 'Spring Boot', 'Microservices', 'AWS', 'Terraform'],
+    githubUrl: 'https://github.com/FredZ6/cloud-project',
+    images: [
+      { src: '/portfolio/projects/cloud-order/dashboard_16x10.png', fullSrc: '/portfolio/projects/cloud-order/dashboard_full.png', caption: 'Dashboard' },
+      { src: '/portfolio/projects/cloud-order/cloud_01_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_01_full.png', caption: 'System Screen 1' },
+      { src: '/portfolio/projects/cloud-order/cloud_02_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_02_full.png', caption: 'System Screen 2' },
+      { src: '/portfolio/projects/cloud-order/cloud_03_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_03_full.png', caption: 'System Screen 3' },
+      { src: '/portfolio/projects/cloud-order/cloud_04_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_04_full.png', caption: 'System Screen 4' },
+      { src: '/portfolio/projects/cloud-order/cloud_05_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_05_full.png', caption: 'System Screen 5' },
+      { src: '/portfolio/projects/cloud-order/cloud_06_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_06_full.png', caption: 'System Screen 6' }
+    ],
+    accent: 'from-sky-400 to-blue-600',
+  },
+  {
+    id: 2,
+    title: 'E-Commerce Platform',
+    description: 'Full-stack e-commerce system (React + Spring Boot + PostgreSQL) covering login, catalog, cart, checkout, and admin order operations.',
+    impact: '39 tests | 4 CI/E2E workflows | Docker demo with 6 seeded products',
+    techStack: ['React', 'Vite', 'Spring Security', 'JWT', 'PostgreSQL', 'Docker'],
+    githubUrl: 'https://github.com/FredZ6/e-commerce',
+    images: [
+      { src: '/portfolio/projects/ecommerce/home_16x10.png', fullSrc: '/portfolio/projects/ecommerce/home.png', caption: 'Home Page' },
+      { src: '/portfolio/projects/ecommerce/product_16x10.png', fullSrc: '/portfolio/projects/ecommerce/product.png', caption: 'Products Page' },
+      { src: '/portfolio/projects/ecommerce/product_detail_16x10.png', fullSrc: '/portfolio/projects/ecommerce/product_detail.png', caption: 'Product Detail' },
+      { src: '/portfolio/projects/ecommerce/manage_16x10.png', fullSrc: '/portfolio/projects/ecommerce/manage.png', caption: 'Admin Management' },
+    ],
+    accent: 'from-cyan-400 to-sky-500',
+  },
+]
 
 const Projects = () => {
-  const shouldReduceMotion = useReducedMotion()
+  const targetRef = useRef(null)
+  const scrollContainerRef = useRef(null)
 
-  const [activeProjectIndex, setActiveProjectIndex] = useState(0)
-  const [projectDirection, setProjectDirection] = useState(1)
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ['start end', 'end end']
+  })
+
+  // Cinematic Entry Animations mapped to vertical scroll progress
+  const titleX = useTransform(scrollYProgress, [0.08, 0.48], ['-30vw', '0vw'])
+  const titleOpacity = useTransform(scrollYProgress, [0.08, 0.3], [0, 1])
+
+  const cardsX = useTransform(scrollYProgress, [0.12, 0.72], ['-50vw', '0vw'])
+  const cardsOpacity = useTransform(scrollYProgress, [0.12, 0.44], [0, 1])
+
+  const buttonsX = useTransform(scrollYProgress, [0.16, 0.76], ['-30vw', '0vw'])
+  const buttonsOpacity = useTransform(scrollYProgress, [0.16, 0.48], [0, 1])
+
+  const scrollPrev = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -window.innerWidth * 0.6, behavior: 'smooth' })
+    }
+  }
+
+  const scrollNext = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: window.innerWidth * 0.6, behavior: 'smooth' })
+    }
+  }
+
+  const [lightboxData, setLightboxData] = useState(null)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
-  const [imageDirection, setImageDirection] = useState(1)
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
 
-  const sectionVariants = {
-    hidden: { opacity: shouldReduceMotion ? 1 : 0.45, y: shouldReduceMotion ? 0 : 16 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: shouldReduceMotion ? 0.15 : 0.42,
-        ease: [0.22, 1, 0.36, 1],
-        when: 'beforeChildren',
-        staggerChildren: shouldReduceMotion ? 0 : 0.08,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: shouldReduceMotion ? 1 : 0.6, y: shouldReduceMotion ? 0 : 12 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: shouldReduceMotion ? 0.15 : 0.32,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  }
-
-  const projectSlideVariants = {
-    enter: (direction) => ({
-      opacity: shouldReduceMotion ? 1 : 0,
-      x: shouldReduceMotion ? 0 : direction > 0 ? 54 : -54,
-      scale: shouldReduceMotion ? 1 : 0.985,
-      rotateY: shouldReduceMotion ? 0 : direction > 0 ? -7 : 7,
-    }),
-    center: {
-      opacity: 1,
-      x: 0,
-      scale: 1,
-      rotateY: 0,
-      transition: {
-        duration: shouldReduceMotion ? 0.15 : 0.46,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-    exit: (direction) => ({
-      opacity: shouldReduceMotion ? 1 : 0,
-      x: shouldReduceMotion ? 0 : direction > 0 ? -54 : 54,
-      scale: shouldReduceMotion ? 1 : 0.985,
-      rotateY: shouldReduceMotion ? 0 : direction > 0 ? 7 : -7,
-      transition: {
-        duration: shouldReduceMotion ? 0.15 : 0.34,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    }),
-  }
-
-  const imageSlideVariants = {
-    enter: (direction) => ({
-      opacity: shouldReduceMotion ? 1 : 0,
-      x: shouldReduceMotion ? 0 : direction > 0 ? 26 : -26,
-      scale: shouldReduceMotion ? 1 : 0.99,
-    }),
-    center: {
-      opacity: 1,
-      x: 0,
-      scale: 1,
-      transition: {
-        duration: shouldReduceMotion ? 0.15 : 0.3,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-    exit: (direction) => ({
-      opacity: shouldReduceMotion ? 1 : 0,
-      x: shouldReduceMotion ? 0 : direction > 0 ? -26 : 26,
-      scale: shouldReduceMotion ? 1 : 0.99,
-      transition: {
-        duration: shouldReduceMotion ? 0.15 : 0.24,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    }),
-  }
-
-  const projects = [
-    {
-      title: 'Event-Driven Order & Inventory Microservices Platform',
-      description: 'Cloud-native order platform built on AWS with microservices, Terraform IaC, and CI/CD quality gates.',
-      impact: '6 microservices | 3 saga workflows | 6 required CI checks',
-      tags: ['Java 17', 'Spring Boot', 'Microservices', 'AWS', 'Terraform'],
-      github: 'https://github.com/FredZ6/cloud-project',
-      features: [
-        'Delivered 6 services across auth, catalog, ordering, inventory, payment, and notifications.',
-        'Implemented Saga + Outbox flows for cross-service consistency and compensation handling.',
-        'Provisioned AWS (ECS/ECR + Terraform remote state) with GitHub OIDC CI/CD and spec validation checks.',
-      ],
-      images: [
-        {
-          src: '/portfolio/projects/cloud-order/dashboard_16x10.png',
-          fullSrc: '/portfolio/projects/cloud-order/dashboard_full.png',
-          alt: 'Cloud Order platform dashboard',
-          caption: 'Dashboard',
-        },
-        {
-          src: '/portfolio/projects/cloud-order/cloud_01_16x10.png',
-          fullSrc: '/portfolio/projects/cloud-order/cloud_01_full.png',
-          alt: 'Cloud Order platform screen 1',
-          caption: 'System Screen 1',
-        },
-        {
-          src: '/portfolio/projects/cloud-order/cloud_02_16x10.png',
-          fullSrc: '/portfolio/projects/cloud-order/cloud_02_full.png',
-          alt: 'Cloud Order platform screen 2',
-          caption: 'System Screen 2',
-        },
-        {
-          src: '/portfolio/projects/cloud-order/cloud_03_16x10.png',
-          fullSrc: '/portfolio/projects/cloud-order/cloud_03_full.png',
-          alt: 'Cloud Order platform screen 3',
-          caption: 'System Screen 3',
-        },
-        {
-          src: '/portfolio/projects/cloud-order/cloud_04_16x10.png',
-          fullSrc: '/portfolio/projects/cloud-order/cloud_04_full.png',
-          alt: 'Cloud Order platform screen 4',
-          caption: 'System Screen 4',
-        },
-        {
-          src: '/portfolio/projects/cloud-order/cloud_05_16x10.png',
-          fullSrc: '/portfolio/projects/cloud-order/cloud_05_full.png',
-          alt: 'Cloud Order platform screen 5',
-          caption: 'System Screen 5',
-        },
-        {
-          src: '/portfolio/projects/cloud-order/cloud_06_16x10.png',
-          fullSrc: '/portfolio/projects/cloud-order/cloud_06_full.png',
-          alt: 'Cloud Order platform screen 6',
-          caption: 'System Screen 6',
-        },
-      ],
-    },
-    {
-      title: 'E-Commerce Platform',
-      description:
-        'Full-stack e-commerce system (React + Spring Boot + PostgreSQL) covering login, catalog, cart, checkout, and admin order operations.',
-      impact: '39 tests | 4 CI/E2E workflows | Docker demo with 6 seeded products',
-      tags: ['React', 'Vite', 'Tailwind', 'Spring Security', 'JWT', 'PostgreSQL', 'Docker', 'Playwright'],
-      github: 'https://github.com/FredZ6/e-commerce',
-      features: [
-        'Implemented end-to-end user flow: auth, product browsing, cart, checkout, and order history.',
-        'Built admin controls for product management, order status updates, and protected APIs with JWT + role-based access.',
-        'Established quality and operations baseline with unit/frontend/E2E tests, GitHub Actions checks, health endpoints, request-ID tracing, and performance baseline records.',
-      ],
-      images: [
-        {
-          src: '/portfolio/projects/ecommerce/home_16x10.png',
-          fullSrc: '/portfolio/projects/ecommerce/home.png',
-          alt: 'E-Commerce home page with hero and featured collections',
-          caption: 'Home Page',
-          tone: 'from-violet-100/80 via-fuchsia-100/70 to-rose-100/80',
-        },
-        {
-          src: '/portfolio/projects/ecommerce/product_16x10.png',
-          fullSrc: '/portfolio/projects/ecommerce/product.png',
-          alt: 'E-Commerce product list page with searchable catalog cards',
-          caption: 'Products Page',
-          tone: 'from-slate-100/80 via-zinc-100/75 to-stone-100/80',
-        },
-        {
-          src: '/portfolio/projects/ecommerce/product_detail_16x10.png',
-          fullSrc: '/portfolio/projects/ecommerce/product_detail.png',
-          alt: 'E-Commerce product detail page with add-to-cart section',
-          caption: 'Product Detail',
-          tone: 'from-amber-100/80 via-orange-100/70 to-yellow-100/80',
-        },
-        {
-          src: '/portfolio/projects/ecommerce/manage_16x10.png',
-          fullSrc: '/portfolio/projects/ecommerce/manage.png',
-          alt: 'E-Commerce admin product management dashboard',
-          caption: 'Admin Management',
-          tone: 'from-sky-100/80 via-cyan-100/75 to-teal-100/80',
-        },
-      ],
-    },
-  ]
-
-  const currentProject = projects[activeProjectIndex]
-  const currentImages = currentProject.images.length
-    ? currentProject.images
-    : [{
-        src: '',
-        fullSrc: '',
-        alt: 'Project image placeholder',
-        caption: 'Preview Placeholder',
-        tone: 'from-slate-200/70 to-slate-300/70',
-      }]
-  const currentImage = currentImages[activeImageIndex]
-
-  const changeProject = (direction) => {
-    setProjectDirection(direction)
-    setActiveProjectIndex((prev) => (prev + direction + projects.length) % projects.length)
+  const openLightbox = (projectImages) => {
+    setLightboxData(projectImages)
     setActiveImageIndex(0)
-    setImageDirection(1)
-    setIsLightboxOpen(false)
-  }
-
-  const changeImage = (direction) => {
-    if (currentImages.length <= 1) return
-    setImageDirection(direction)
-    setActiveImageIndex((prev) => (prev + direction + currentImages.length) % currentImages.length)
-  }
-
-  useEffect(() => {
-    if (!isLightboxOpen) return
-
-    const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+  }
 
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        setIsLightboxOpen(false)
-        return
-      }
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault()
-        changeImage(-1)
-        return
-      }
-      if (event.key === 'ArrowRight') {
-        event.preventDefault()
-        changeImage(1)
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => {
-      document.body.style.overflow = previousOverflow
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [isLightboxOpen, activeProjectIndex, currentImages.length])
+  const closeLightbox = () => {
+    setLightboxData(null)
+    document.body.style.overflow = ''
+  }
 
   return (
-    <section className="section-padding pt-1" id="projects">
-      <div className="container-width">
-        <motion.div
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.06 }}
-        >
-          <motion.h2 variants={itemVariants} className="heading text-center">
-            Projects
-          </motion.h2>
+    <>
+      <section ref={targetRef} className="relative mt-0 sm:-mt-[18vh] lg:-mt-[20vh] h-[152vh] bg-transparent" id="projects">
+        {/* Sticky wrapper */}
+        <div className="sticky top-0 h-screen w-full flex items-center overflow-hidden">
 
-          <motion.div variants={itemVariants} className="relative">
-            <button
-              type="button"
-              onClick={() => changeProject(-1)}
-              aria-label="Previous project"
-              className="hidden md:inline-flex absolute left-0 top-1/2 z-20 -translate-y-1/2 -translate-x-[130%] h-11 w-11 items-center justify-center rounded-full glass-panel text-slate-700 hover:text-primary hover:border-primary/40 transition-colors"
-            >
-              <FaChevronLeft size={16} />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => changeProject(1)}
-              aria-label="Next project"
-              className="hidden md:inline-flex absolute right-0 top-1/2 z-20 -translate-y-1/2 translate-x-[130%] h-11 w-11 items-center justify-center rounded-full glass-panel text-slate-700 hover:text-primary hover:border-primary/40 transition-colors"
-            >
-              <FaChevronRight size={16} />
-            </button>
-
-            <AnimatePresence mode="wait" custom={projectDirection}>
-              <motion.article
-                key={currentProject.title}
-                custom={projectDirection}
-                variants={projectSlideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                style={shouldReduceMotion ? undefined : { transformPerspective: 1400, transformStyle: 'preserve-3d' }}
-                className="glass-panel rounded-3xl p-4 sm:p-6 lg:p-8"
-              >
-                <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
-                  <div className="flex flex-col">
-                    <div className="mb-3 flex items-center justify-between">
-                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/90">
-                        Project {activeProjectIndex + 1} / {projects.length}
-                      </p>
-                      <div className="md:hidden flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => changeProject(-1)}
-                          aria-label="Previous project"
-                          className="inline-flex h-9 w-9 items-center justify-center rounded-full glass-panel text-slate-700 hover:text-primary hover:border-primary/40 transition-colors"
-                        >
-                          <FaChevronLeft size={14} />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => changeProject(1)}
-                          aria-label="Next project"
-                          className="inline-flex h-9 w-9 items-center justify-center rounded-full glass-panel text-slate-700 hover:text-primary hover:border-primary/40 transition-colors"
-                        >
-                          <FaChevronRight size={14} />
-                        </button>
-                      </div>
-                    </div>
-
-                    <h3 className="text-2xl sm:text-3xl font-bold mb-3 text-slate-900">{currentProject.title}</h3>
-                    <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-4">{currentProject.description}</p>
-
-                    {currentProject.impact && (
-                      <p className="text-xs font-semibold uppercase tracking-[0.13em] text-primary/90 mb-4">
-                        {currentProject.impact}
-                      </p>
-                    )}
-
-                    <div className="flex flex-wrap gap-2 mb-5">
-                      {currentProject.tags.map((tag) => (
-                        <span key={tag} className="glass-chip px-3 py-1.5 text-xs rounded-full font-medium">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <ul className="text-sm text-slate-600 space-y-2 list-disc list-inside marker:text-primary mb-5">
-                      {currentProject.features.map((feature, index) => (
-                        <li key={index} className="leading-relaxed">
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-
-                    <a
-                      href={currentProject.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-auto inline-flex w-fit items-center gap-2 px-4 py-2 glass-outline-button rounded-xl transition-colors"
-                    >
-                      <FaGithub size={18} />
-                      <span>View on GitHub</span>
-                    </a>
-                  </div>
-
-                  <div className="flex h-full flex-col justify-center">
-                    <div
-                      role={currentImage.src ? 'button' : undefined}
-                      tabIndex={currentImage.src ? 0 : -1}
-                      onClick={() => currentImage.src && setIsLightboxOpen(true)}
-                      onKeyDown={(event) => {
-                        if (!currentImage.src) return
-                        if (event.key === 'Enter' || event.key === ' ') {
-                          event.preventDefault()
-                          setIsLightboxOpen(true)
-                        }
-                      }}
-                      className="relative w-full overflow-hidden rounded-2xl border border-white/80 bg-white/45 shadow-sm backdrop-blur-xl aspect-[16/10] cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
-                    >
-                      <AnimatePresence mode="wait" custom={imageDirection}>
-                        <motion.div
-                          key={`${currentProject.title}-${activeImageIndex}`}
-                          custom={imageDirection}
-                          variants={imageSlideVariants}
-                          initial="enter"
-                          animate="center"
-                          exit="exit"
-                          className="h-full w-full"
-                        >
-                          {currentImage.src ? (
-                            <img
-                              src={currentImage.src}
-                              alt={currentImage.alt}
-                              className="h-full w-full object-cover"
-                            />
-                          ) : (
-                            <div
-                              className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${currentImage.tone}`}
-                            >
-                              <div className="mx-6 rounded-2xl border border-white/80 bg-white/65 px-6 py-4 text-center shadow-sm backdrop-blur">
-                                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 mb-2">
-                                  Preview Placeholder
-                                </p>
-                                <p className="text-sm sm:text-base font-semibold text-slate-700">
-                                  {currentImage.caption}
-                                </p>
-                              </div>
-                            </div>
-                          )}
-                        </motion.div>
-                      </AnimatePresence>
-
-                      <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-3">
-                        <button
-                          type="button"
-                          onClick={(event) => {
-                            event.stopPropagation()
-                            changeImage(-1)
-                          }}
-                          aria-label="Previous image"
-                          disabled={currentImages.length <= 1}
-                          className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/80 border border-white/90 text-slate-700 shadow-sm backdrop-blur transition-colors hover:text-primary disabled:opacity-45 disabled:cursor-not-allowed"
-                        >
-                          <FaChevronLeft size={14} />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={(event) => {
-                            event.stopPropagation()
-                            changeImage(1)
-                          }}
-                          aria-label="Next image"
-                          disabled={currentImages.length <= 1}
-                          className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/80 border border-white/90 text-slate-700 shadow-sm backdrop-blur transition-colors hover:text-primary disabled:opacity-45 disabled:cursor-not-allowed"
-                        >
-                          <FaChevronRight size={14} />
-                        </button>
-                      </div>
-
-                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-white/85 bg-white/75 px-3 py-1 text-xs font-medium text-slate-600 backdrop-blur">
-                        {activeImageIndex + 1} / {currentImages.length}
-                      </div>
-                    </div>
-
-                    <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-                      {currentImages.map((image, index) => (
-                        <button
-                          key={`${image.caption}-${index}`}
-                          type="button"
-                          onClick={() => {
-                            if (index === activeImageIndex) return
-                            setImageDirection(index > activeImageIndex ? 1 : -1)
-                            setActiveImageIndex(index)
-                          }}
-                          className={`h-2.5 rounded-full transition-all ${
-                            index === activeImageIndex
-                              ? 'w-7 bg-primary/90'
-                              : 'w-2.5 bg-slate-300 hover:bg-slate-400'
-                          }`}
-                          aria-label={`Go to image ${index + 1}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.article>
-            </AnimatePresence>
+          {/* Background Title (Animated) */}
+          <motion.div
+            style={{ x: titleX, opacity: titleOpacity }}
+            className="absolute top-[28%] left-8 md:top-[29%] md:left-16 lg:top-[30%] lg:left-24 z-10 w-full max-w-sm pointer-events-none"
+          >
+            <h2 className="text-5xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] mix-blend-plus-lighter">
+              FEATURED<br />SYSTEMS
+            </h2>
+            <p className="mt-4 text-slate-300 font-medium tracking-wide border-l-2 border-primary pl-4 uppercase text-xs sm:text-sm shadow-[inset_1px_0_10px_rgba(56,189,248,0.12)] py-1">
+              Swipe or use buttons to explore<br /> architectural implementations.
+            </p>
           </motion.div>
 
-          <AnimatePresence>
-            {isLightboxOpen && (
+          {/* Native Horizontal Scroll Container (Animated Entry) */}
+          <motion.div
+            className="absolute inset-0 w-full h-full pt-12 sm:pt-16 lg:pt-24"
+            initial={false}
+          >
+            <div
+              ref={scrollContainerRef}
+              className="h-full w-full overflow-x-auto overflow-y-hidden relative z-20 custom-scrollbar"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
               <motion.div
-                className="fixed inset-0 z-[80] bg-slate-950/85 backdrop-blur-sm p-4 sm:p-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setIsLightboxOpen(false)}
-                role="dialog"
-                aria-modal="true"
-                aria-label={`${currentProject.title} image viewer`}
+                style={{ x: cardsX, opacity: cardsOpacity }}
+                className="flex items-center h-full w-max min-w-full gap-8 sm:gap-16 lg:gap-24 px-[10vw] sm:px-[20vw] lg:px-[30vw] snap-x snap-mandatory"
+                initial={false}
               >
-                <div className="h-full w-full flex items-center justify-center">
-                  <motion.div
-                    className="relative w-full max-w-6xl"
-                    initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.985, y: 8 }}
-                    animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
-                    exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.985, y: 8 }}
-                    transition={{ duration: shouldReduceMotion ? 0.12 : 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    onClick={(event) => event.stopPropagation()}
+                {PROJECTS.map((project, index) => (
+                  <div key={project.id} className="snap-center shrink-0 flex items-center h-full">
+                    <ProjectCard
+                      project={project}
+                      index={index}
+                      onOpenLightbox={() => openLightbox(project.images)}
+                    />
+                  </div>
+                ))}
+
+                {/* End Cap */}
+                <div className="snap-center shrink-0 w-[85vw] sm:w-[50vw] lg:w-[30vw] flex items-center justify-center">
+                  <a
+                    href="https://github.com/FredZ6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-4 group cursor-pointer"
                   >
-                    <button
-                      type="button"
-                      onClick={() => setIsLightboxOpen(false)}
-                      aria-label="Close fullscreen preview"
-                      className="absolute -top-12 right-0 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20"
-                    >
-                      <FaTimes size={16} />
-                    </button>
-
-                    <div className="relative overflow-hidden rounded-2xl border border-white/20 bg-black/80 shadow-2xl aspect-[16/10]">
-                      <AnimatePresence mode="wait" custom={imageDirection}>
-                        <motion.div
-                          key={`lightbox-${currentProject.title}-${activeImageIndex}`}
-                          custom={imageDirection}
-                          variants={imageSlideVariants}
-                          initial="enter"
-                          animate="center"
-                          exit="exit"
-                          className="h-full w-full"
-                        >
-                          {currentImage.src ? (
-                            <img
-                              src={currentImage.fullSrc || currentImage.src}
-                              alt={currentImage.alt}
-                              className="h-full w-full object-contain"
-                            />
-                          ) : (
-                            <div
-                              className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${currentImage.tone}`}
-                            >
-                              <p className="text-white/90 font-semibold tracking-wide px-6 text-center">
-                                {currentImage.caption}
-                              </p>
-                            </div>
-                          )}
-                        </motion.div>
-                      </AnimatePresence>
-
-                      <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-4">
-                        <button
-                          type="button"
-                          onClick={(event) => {
-                            event.stopPropagation()
-                            changeImage(-1)
-                          }}
-                          aria-label="Previous image"
-                          disabled={currentImages.length <= 1}
-                          className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/15 text-white shadow-sm backdrop-blur transition-colors hover:bg-white/25 disabled:opacity-45 disabled:cursor-not-allowed"
-                        >
-                          <FaChevronLeft size={16} />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={(event) => {
-                            event.stopPropagation()
-                            changeImage(1)
-                          }}
-                          aria-label="Next image"
-                          disabled={currentImages.length <= 1}
-                          className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/15 text-white shadow-sm backdrop-blur transition-colors hover:bg-white/25 disabled:opacity-45 disabled:cursor-not-allowed"
-                        >
-                          <FaChevronRight size={16} />
-                        </button>
-                      </div>
+                    <div className="w-24 h-24 rounded-full glass-panel-strong flex items-center justify-center text-white transition-all group-hover:bg-primary group-hover:scale-110 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_40px_rgba(56,189,248,0.6)]">
+                      <ExternalLink size={32} />
                     </div>
-
-                    <div className="mt-3 flex items-center justify-between gap-3 text-white/90">
-                      <p className="text-sm font-medium truncate">{currentImage.caption}</p>
-                      <span className="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur">
-                        {activeImageIndex + 1} / {currentImages.length}
-                      </span>
-                    </div>
-                  </motion.div>
+                    <span className="text-white font-bold tracking-widest uppercase text-sm opacity-50 group-hover:opacity-100 transition-opacity">View All Repos</span>
+                  </a>
                 </div>
               </motion.div>
-            )}
-          </AnimatePresence>
+            </div>
+          </motion.div>
 
-          <motion.div variants={itemVariants} className="text-center mt-10">
+          {/* Manual Navigation Console (Animated Entry) */}
+          <motion.div
+            style={{ x: buttonsX, opacity: buttonsOpacity }}
+            className="absolute bottom-8 right-8 md:bottom-12 md:right-12 z-50 flex gap-4"
+          >
+            <button
+              onClick={scrollPrev}
+              className="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-white hover:bg-primary transition-all shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(56,189,248,0.58)]"
+              aria-label="Scroll Previous"
+            >
+              <ChevronLeft size={28} />
+            </button>
+            <button
+              onClick={scrollNext}
+              className="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-white hover:bg-primary transition-all shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(56,189,248,0.58)]"
+              aria-label="Scroll Next"
+            >
+              <ChevronRight size={28} />
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {lightboxData && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 sm:p-8"
+            onClick={closeLightbox}
+          >
+            <div className="flex w-full max-w-6xl flex-col items-center gap-6" onClick={(e) => e.stopPropagation()}>
+              <div className="relative w-full aspect-[16/10] sm:aspect-video rounded-3xl overflow-hidden glass-panel-strong">
+                <div className="absolute top-4 right-4 z-50 flex gap-2">
+                  <button onClick={closeLightbox} className="w-12 h-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-rose-500 transition-colors">
+                    <X size={24} />
+                  </button>
+                </div>
+
+                <img
+                  src={lightboxData[activeImageIndex].fullSrc || lightboxData[activeImageIndex].src}
+                  alt={lightboxData[activeImageIndex].caption}
+                  className="w-full h-full object-contain bg-black/50"
+                />
+              </div>
+
+              <div className="glass-panel rounded-full px-6 py-3 flex items-center gap-6 z-10 shadow-[0_16px_40px_rgba(0,0,0,0.45)]">
+                <button
+                  disabled={activeImageIndex === 0}
+                  onClick={() => setActiveImageIndex(prev => prev - 1)}
+                  className="text-white hover:text-primary disabled:opacity-30 disabled:hover:text-white"
+                >
+                  <ChevronLeft size={24} />
+                </button>
+                <span className="text-white font-bold text-sm tracking-widest">
+                  {activeImageIndex + 1} / {lightboxData.length}
+                </span>
+                <button
+                  disabled={activeImageIndex === lightboxData.length - 1}
+                  onClick={() => setActiveImageIndex(prev => prev + 1)}
+                  className="text-white hover:text-primary disabled:opacity-30 disabled:hover:text-white"
+                >
+                  <ChevronRight size={24} />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  )
+}
+
+const ProjectCard = ({ project, index, onOpenLightbox }) => {
+  return (
+    <div className="w-[85vw] sm:w-[60vw] lg:w-[45vw] h-[65vh] shrink-0 relative">
+      <div className="w-full h-full rounded-[2.5rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(2,8,23,0.92),rgba(2,6,23,0.84))] p-6 sm:p-10 flex flex-col relative overflow-hidden group isolate transform-gpu transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_34px_70px_rgba(0,0,0,0.84),inset_0_1px_5px_rgba(255,255,255,0.18),0_0_24px_rgba(56,189,248,0.18)] shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.16),0_0_20px_rgba(56,189,248,0.08)]">
+        {/* Number Watermark */}
+        <div className="absolute -bottom-10 -right-4 text-[15rem] font-black text-white/[0.03] leading-none pointer-events-none select-none z-0">
+          0{index + 1}
+        </div>
+
+        {/* Hover Gradient Overlay */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none mix-blend-overlay`} />
+
+        <div className="relative z-10 flex-grow flex flex-col">
+          <div className="flex justify-between items-start mb-6">
+            <h3 className="text-3xl sm:text-4xl font-bold text-white max-w-[80%] leading-tight drop-shadow-md">
+              {project.title}
+            </h3>
             <a
-              href="https://github.com/FredZ6"
+              href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+              className="w-12 h-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0"
+              aria-label="View Source on GitHub"
             >
-              <span>View More Projects</span>
-              <FaExternalLinkAlt size={14} />
+              <Github size={20} />
             </a>
-          </motion.div>
-        </motion.div>
+          </div>
+
+          <p className="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed max-w-xl">
+            {project.description}
+          </p>
+
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-6 border-b border-primary/20 pb-4 inline-block self-start">
+            {project.impact}
+          </p>
+
+          <div className="flex flex-wrap gap-2 mb-auto">
+            {project.techStack.map(tech => (
+              <span key={tech} className="glass-panel px-3 py-1.5 text-[10px] sm:text-xs rounded-full font-semibold uppercase tracking-wider text-slate-200">
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          {/* Action Area */}
+          <div className="mt-8 pt-6 flex justify-between items-end">
+            <button
+              onClick={onOpenLightbox}
+              className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 hover:bg-primary text-white font-bold tracking-widest text-xs uppercase transition-all shadow-[0_10px_20px_rgba(0,0,0,0.2)]"
+            >
+              <ImageIcon size={16} />
+              <span>View Gallery</span>
+            </button>
+            <span className="text-slate-500 font-mono text-xs hidden sm:block">STATUS: COMPLETED</span>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
   )
+}
+
+ProjectCard.propTypes = {
+  project: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    impact: PropTypes.string.isRequired,
+    techStack: PropTypes.arrayOf(PropTypes.string).isRequired,
+    githubUrl: PropTypes.string.isRequired,
+    accent: PropTypes.string.isRequired,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+  onOpenLightbox: PropTypes.func.isRequired,
 }
 
 export default Projects
