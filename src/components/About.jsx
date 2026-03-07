@@ -88,7 +88,7 @@ const About = () => {
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true, margin: "-100px" }}
-        className="relative z-10 w-full max-w-6xl rounded-[2rem] overflow-hidden flex flex-col border border-white/[0.08] bg-black/12 backdrop-blur-[18px] shadow-[0_26px_55px_rgba(0,0,0,0.65),inset_0_1px_4px_rgba(255,255,255,0.12)]"
+        className="relative z-10 w-full max-w-6xl rounded-[2rem] overflow-hidden flex flex-col border border-white/[0.06] bg-black/6 backdrop-blur-[10px] shadow-[0_18px_40px_rgba(0,0,0,0.45),inset_0_1px_3px_rgba(255,255,255,0.08)]"
       >
         {/* Terminal Header */}
         <div className="h-12 bg-white/5 border-b border-white/10 flex items-center px-6 relative">

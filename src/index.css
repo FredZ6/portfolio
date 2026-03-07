@@ -19,8 +19,8 @@ html {
   /* 只在需要时显示垂直滚动条 */
   overflow-x: hidden;
   /* 隐藏水平滚动条 */
-  scrollbar-width: thin;
-  scrollbar-color: rgba(45, 212, 191, 0.82) rgba(2, 6, 23, 0.22);
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
   background-color: #020617;
   color-scheme: dark;
 }
@@ -29,21 +29,53 @@ body {
   overflow-x: hidden;
   /* 确保在 body 上也隐藏水平滚动 */
   background-color: #020617;
+  scrollbar-width: none;
 }
 
 ::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-left: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: transparent;
+  box-shadow: none;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(45, 212, 191, 0.82) rgba(2, 6, 23, 0.22);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
   width: var(--scrollbar-size);
   height: var(--scrollbar-size);
 }
 
-::-webkit-scrollbar-track {
+.custom-scrollbar::-webkit-scrollbar-track {
   background:
     linear-gradient(180deg, rgba(2, 6, 23, 0.16), var(--scrollbar-track)),
     linear-gradient(180deg, transparent, var(--scrollbar-track-edge), transparent);
   border-left: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-::-webkit-scrollbar-thumb {
+.custom-scrollbar::-webkit-scrollbar-thumb {
   border: 2px solid var(--scrollbar-thumb-border);
   border-radius: 9999px;
   background: linear-gradient(
@@ -58,7 +90,7 @@ body {
   background-clip: padding-box;
 }
 
-::-webkit-scrollbar-thumb:hover {
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(
     180deg,
     rgba(191, 219, 254, 0.96) 0%,
@@ -70,13 +102,8 @@ body {
     0 0 24px rgba(34, 211, 238, 0.28);
 }
 
-::-webkit-scrollbar-corner {
+.custom-scrollbar::-webkit-scrollbar-corner {
   background: transparent;
-}
-
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(45, 212, 191, 0.82) rgba(2, 6, 23, 0.22);
 }
 
 @layer base {
