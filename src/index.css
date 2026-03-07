@@ -211,6 +211,7 @@ html {
   animation-direction: var(--orbit-direction, normal);
   will-change: transform;
   backface-visibility: hidden;
+  transform-origin: center center;
 }
 
 .skill-icon-wrap {

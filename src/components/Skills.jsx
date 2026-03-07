@@ -123,18 +123,20 @@ const OrbitRing = ({ radius, duration, reverse, skills, color }) => {
               transform: `rotate(${angle}deg) translateX(${radius}px) rotate(-${angle}deg)`
             }}
           >
-            <div className="skill-orbit-counter" style={iconRotationStyle}>
-              <div className="group relative flex items-center justify-center w-12 h-12 md:w-16 md:h-16 -ml-6 -mt-6 md:-ml-8 md:-mt-8 rounded-full glass-panel-strong shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(56,189,248,0.58)] hover:scale-125 transition-all cursor-pointer z-20">
-                <div
-                  className="text-xl md:text-2xl drop-shadow-md"
-                  style={{ color: skill.color }}
-                >
-                  {skill.icon}
-                </div>
+            <div className="relative h-12 w-12 -translate-x-1/2 -translate-y-1/2 md:h-16 md:w-16">
+              <div className="skill-orbit-counter flex h-full w-full items-center justify-center" style={iconRotationStyle}>
+                <div className="group relative flex h-full w-full items-center justify-center rounded-full glass-panel-strong shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(56,189,248,0.58)] hover:scale-125 transition-all cursor-pointer z-20">
+                  <div
+                    className="text-xl md:text-2xl drop-shadow-md"
+                    style={{ color: skill.color }}
+                  >
+                    {skill.icon}
+                  </div>
 
-                {/* Tooltip */}
-                <div className="absolute -bottom-8 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/80 backdrop-blur border border-white/20 text-white text-[10px] sm:text-xs px-2 py-1 rounded whitespace-nowrap z-50 shadow-xl font-bold tracking-widest">
-                  {skill.name}
+                  {/* Tooltip */}
+                  <div className="absolute -bottom-8 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/80 backdrop-blur border border-white/20 text-white text-[10px] sm:text-xs px-2 py-1 rounded whitespace-nowrap z-50 shadow-xl font-bold tracking-widest">
+                    {skill.name}
+                  </div>
                 </div>
               </div>
             </div>
