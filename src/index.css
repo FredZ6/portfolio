@@ -21,11 +21,14 @@ html {
   /* 隐藏水平滚动条 */
   scrollbar-width: thin;
   scrollbar-color: rgba(45, 212, 191, 0.82) rgba(2, 6, 23, 0.22);
+  background-color: #020617;
+  color-scheme: dark;
 }
 
 body {
   overflow-x: hidden;
   /* 确保在 body 上也隐藏水平滚动 */
+  background-color: #020617;
 }
 
 ::-webkit-scrollbar {

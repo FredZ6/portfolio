@@ -88,7 +88,7 @@ const About = () => {
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true, margin: "-100px" }}
-        className="relative z-10 w-full max-w-6xl glass-panel-strong rounded-[2rem] overflow-hidden flex flex-col shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.2)]"
+        className="relative z-10 w-full max-w-6xl rounded-[2rem] overflow-hidden flex flex-col border border-white/[0.08] bg-black/12 backdrop-blur-[18px] shadow-[0_26px_55px_rgba(0,0,0,0.65),inset_0_1px_4px_rgba(255,255,255,0.12)]"
       >
         {/* Terminal Header */}
         <div className="h-12 bg-white/5 border-b border-white/10 flex items-center px-6 relative">
@@ -107,7 +107,7 @@ const About = () => {
         <div className="flex flex-col lg:flex-row h-full lg:h-[700px]">
 
           {/* Left Panel: Profile & Timeline */}
-          <div className="w-full lg:w-5/12 p-8 sm:p-10 border-b lg:border-b-0 lg:border-r border-white/10 bg-black/20 overflow-y-auto custom-scrollbar relative">
+          <div className="w-full lg:w-5/12 p-8 sm:p-10 border-b lg:border-b-0 lg:border-r border-white/10 bg-black/10 overflow-y-auto custom-scrollbar relative">
 
             <div className="flex items-center gap-4 mb-10">
               <div className="w-16 h-16 rounded-full glass-panel flex items-center justify-center border border-primary/50 overflow-hidden shadow-[0_0_20px_rgba(56,189,248,0.32)] shrink-0">
@@ -145,7 +145,7 @@ const About = () => {
           </div>
 
           {/* Right Panel: Contact Interface */}
-          <div id="contact" className="w-full lg:w-7/12 p-8 sm:p-10 bg-gradient-to-br from-white/[0.02] to-transparent relative flex flex-col justify-center">
+          <div id="contact" className="w-full lg:w-7/12 p-8 sm:p-10 bg-gradient-to-br from-white/[0.015] via-black/[0.03] to-transparent relative flex flex-col justify-center">
 
             <div className="mb-10">
               <span className="text-secondary font-mono text-sm opacity-70">&gt; INIT direct_transmission_protocol</span>

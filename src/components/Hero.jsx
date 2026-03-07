@@ -58,7 +58,7 @@ const Hero = () => {
             perspective={1000}
             transitionSpeed={3000}
             gyroscope={true}
-            className="w-[272px] h-[272px] sm:w-[500px] sm:h-[500px] md:w-[700px] md:h-[700px] relative"
+            className="w-[348px] h-[348px] sm:w-[500px] sm:h-[500px] md:w-[700px] md:h-[700px] relative"
           >
             {/* Outer Orbit */}
             <motion.div
@@ -68,20 +68,20 @@ const Hero = () => {
             />
             {/* Inner Orbit */}
             <motion.div
-              className="absolute inset-8 sm:inset-10 rounded-full border border-secondary/30 shadow-[0_0_60px_rgba(13,244,230,0.3)]"
+              className="absolute inset-5 sm:inset-10 rounded-full border border-secondary/30 shadow-[0_0_60px_rgba(13,244,230,0.3)]"
               animate={shouldReduceMotion ? undefined : { rotateZ: -360 }}
               transition={shouldReduceMotion ? undefined : { duration: 25, repeat: Infinity, ease: 'linear' }}
             />
             {/* Central Hologram Core */}
             <motion.div
-              className="absolute inset-16 sm:inset-20 rounded-full p-3 sm:p-4 flex items-center justify-center"
+              className="absolute inset-10 sm:inset-20 rounded-full p-3 sm:p-4 flex items-center justify-center"
               animate={shouldReduceMotion ? undefined : { y: [0, -30, 0] }}
               transition={shouldReduceMotion ? undefined : { duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             >
               <img
                 src="/portfolio/avatar.png"
                 alt="Profile Avatar Hologram"
-                className="w-full h-full object-cover rounded-full mix-blend-lighten scale-[1.18] sm:scale-100 blur-[1px] sm:blur-[2px] opacity-90 sm:opacity-80"
+                className="w-full h-full object-cover rounded-full mix-blend-lighten scale-[1.7] sm:scale-[1.44] blur-[1px] sm:blur-[2px] opacity-90 sm:opacity-80"
                 style={{ filter: 'drop-shadow(0 0 40px rgba(56,189,248,0.82))' }}
               />
             </motion.div>
@@ -112,7 +112,7 @@ const Hero = () => {
 
           <motion.h2
             variants={heroItemVariants}
-            className="text-xl sm:text-3xl md:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent mb-6 sm:mb-8"
+            className="relative z-10 isolate overflow-visible text-xl sm:text-3xl md:text-5xl font-bold leading-[1.12] md:leading-[1.08] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent mb-6 sm:mb-8 pb-[0.08em]"
           >
             <DecryptedText
               text="Software Engineer & Architect"
