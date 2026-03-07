@@ -107,7 +107,7 @@ const About = () => {
         <div className="flex flex-col lg:flex-row h-full lg:h-[700px]">
 
           {/* Left Panel: Profile & Timeline */}
-          <div className="w-full lg:w-5/12 p-8 sm:p-10 border-b lg:border-b-0 lg:border-r border-white/10 bg-black/10 overflow-y-auto custom-scrollbar relative">
+          <div className="w-full lg:w-5/12 p-8 sm:p-10 border-b lg:border-b-0 lg:border-r border-white/10 bg-black/10 overflow-y-auto scrollbar-none relative">
 
             <div className="flex items-center gap-4 mb-10">
               <div className="w-16 h-16 rounded-full glass-panel flex items-center justify-center border border-primary/50 overflow-hidden shadow-[0_0_20px_rgba(56,189,248,0.32)] shrink-0">

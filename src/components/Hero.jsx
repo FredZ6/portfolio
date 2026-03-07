@@ -42,7 +42,7 @@ const Hero = () => {
   }, [isResumeOpen])
 
   return (
-    <section className="relative min-h-[100svh] sm:min-h-screen flex items-center justify-center overflow-hidden pt-4 sm:pt-10 md:pt-6 lg:pt-4" id="home">
+    <section className="relative min-h-[100dvh] sm:min-h-screen flex items-center justify-start sm:justify-center overflow-hidden pt-[calc(env(safe-area-inset-top)+2rem)] pb-[calc(env(safe-area-inset-bottom)+8.5rem)] sm:pt-10 sm:pb-0 md:pt-6 lg:pt-4" id="home">
 
       {/* Background 3D Abstract Element (Replacing standard right-side avatar) */}
       <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none select-none">

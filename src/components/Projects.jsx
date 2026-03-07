@@ -86,7 +86,7 @@ const Projects = () => {
 
   return (
     <>
-      <section ref={targetRef} className="relative -mt-[16vh] sm:-mt-[18vh] lg:-mt-[20vh] h-[152vh] bg-transparent" id="projects">
+      <section ref={targetRef} className="relative mt-0 sm:-mt-[18vh] lg:-mt-[20vh] h-[152vh] bg-transparent" id="projects">
         {/* Sticky wrapper */}
         <div className="sticky top-0 h-screen w-full flex items-center overflow-hidden">
 

@@ -19,17 +19,23 @@ html {
   /* 只在需要时显示垂直滚动条 */
   overflow-x: hidden;
   /* 隐藏水平滚动条 */
+  min-height: 100%;
   scrollbar-width: none;
   scrollbar-color: transparent transparent;
-  background-color: #020617;
+  background-color: #08111f;
   color-scheme: dark;
 }
 
 body {
   overflow-x: hidden;
   /* 确保在 body 上也隐藏水平滚动 */
-  background-color: #020617;
+  min-height: 100%;
+  background-color: #08111f;
   scrollbar-width: none;
+}
+
+#root {
+  min-height: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -106,6 +112,17 @@ body {
   background: transparent;
 }
 
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -113,6 +130,7 @@ body {
 
   body {
     @apply bg-deep-space text-slate-200 antialiased font-sans m-0 overflow-x-hidden;
+    min-height: 100dvh;
     background-attachment: fixed;
   }
 }
