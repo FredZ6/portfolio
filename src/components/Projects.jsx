@@ -9,6 +9,17 @@ const PROJECTS = [
     title: 'Event-Driven Order & Inventory Microservices',
     description: 'Cloud-native order platform built on AWS with microservices, Terraform IaC, and CI/CD quality gates. Delivered 6 services across auth, catalog, ordering, inventory, payment, and notifications.',
     impact: '6 microservices | 3 saga workflows | 6 required CI checks',
+    delivery: [
+      'Delivered auth, catalog, ordering, inventory, payment, and notification services.',
+      'Implemented saga orchestration across order, payment, and inventory lifecycles.',
+      'Locked releases behind mandatory CI checks and Terraform-driven infrastructure updates.',
+    ],
+    stats: [
+      { value: '6', label: 'Services' },
+      { value: '3', label: 'Sagas' },
+      { value: '6', label: 'Checks' },
+    ],
+    status: 'Completed',
     techStack: ['Java 17', 'Spring Boot', 'Microservices', 'AWS', 'Terraform'],
     githubUrl: 'https://github.com/FredZ6/cloud-project',
     images: [
@@ -27,6 +38,17 @@ const PROJECTS = [
     title: 'E-Commerce Platform',
     description: 'Full-stack e-commerce system (React + Spring Boot + PostgreSQL) covering login, catalog, cart, checkout, and admin order operations.',
     impact: '39 tests | 4 CI/E2E workflows | Docker demo with 6 seeded products',
+    delivery: [
+      'Shipped customer flows for auth, browsing, cart, checkout, and order management.',
+      'Built admin tooling for product maintenance and operational order handling.',
+      'Backed the demo with seeded catalog data, Docker orchestration, and CI/E2E automation.',
+    ],
+    stats: [
+      { value: '39', label: 'Tests' },
+      { value: '4', label: 'Flows' },
+      { value: '6', label: 'Products' },
+    ],
+    status: 'Completed',
     techStack: ['React', 'Vite', 'Spring Security', 'JWT', 'PostgreSQL', 'Docker'],
     githubUrl: 'https://github.com/FredZ6/e-commerce',
     images: [
@@ -58,17 +80,43 @@ const Projects = () => {
   const buttonsX = useTransform(scrollYProgress, [0.16, 0.76], ['-30vw', '0vw'])
   const buttonsOpacity = useTransform(scrollYProgress, [0.16, 0.48], [0, 1])
 
-  const scrollPrev = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -window.innerWidth * 0.6, behavior: 'smooth' })
-    }
+  const getScrollTargets = () => {
+    if (!scrollContainerRef.current) return []
+
+    return Array.from(scrollContainerRef.current.querySelectorAll('[data-scroll-card]'))
   }
 
-  const scrollNext = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: window.innerWidth * 0.6, behavior: 'smooth' })
-    }
+  const scrollToCard = (direction) => {
+    const container = scrollContainerRef.current
+    if (!container) return
+
+    const targets = getScrollTargets()
+    if (!targets.length) return
+
+    const viewportCenter = container.scrollLeft + container.clientWidth / 2
+    const currentIndex = targets.reduce((closestIndex, target, index) => {
+      const targetCenter = target.offsetLeft + target.offsetWidth / 2
+      const closestTarget = targets[closestIndex]
+      const closestCenter = closestTarget.offsetLeft + closestTarget.offsetWidth / 2
+
+      return Math.abs(targetCenter - viewportCenter) < Math.abs(closestCenter - viewportCenter)
+        ? index
+        : closestIndex
+    }, 0)
+
+    const nextIndex = Math.min(Math.max(currentIndex + direction, 0), targets.length - 1)
+    const nextTarget = targets[nextIndex]
+    const nextLeft = nextTarget.offsetLeft - (container.clientWidth - nextTarget.offsetWidth) / 2
+
+    container.scrollTo({
+      left: Math.max(0, nextLeft),
+      behavior: 'smooth',
+    })
   }
+
+  const scrollPrev = () => scrollToCard(-1)
+
+  const scrollNext = () => scrollToCard(1)
 
   const [lightboxData, setLightboxData] = useState(null)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
@@ -110,16 +158,16 @@ const Projects = () => {
           >
             <div
               ref={scrollContainerRef}
-              className="h-full w-full overflow-x-auto overflow-y-hidden relative z-20 custom-scrollbar"
+              className="h-full w-full overflow-x-auto overflow-y-hidden relative z-20 custom-scrollbar snap-x snap-mandatory"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               <motion.div
                 style={{ x: cardsX, opacity: cardsOpacity }}
-                className="flex items-center h-full w-max min-w-full gap-8 sm:gap-16 lg:gap-24 px-[10vw] sm:px-[20vw] lg:px-[30vw] snap-x snap-mandatory"
+                className="flex items-center h-full w-max min-w-full gap-8 sm:gap-16 lg:gap-24 px-[10vw] sm:px-[20vw] lg:px-[30vw]"
                 initial={false}
               >
                 {PROJECTS.map((project, index) => (
-                  <div key={project.id} className="snap-center shrink-0 flex items-center h-full">
+                  <div key={project.id} data-scroll-card className="snap-center shrink-0 flex items-center h-full">
                     <ProjectCard
                       project={project}
                       index={index}
@@ -129,7 +177,7 @@ const Projects = () => {
                 ))}
 
                 {/* End Cap */}
-                <div className="snap-center shrink-0 w-[85vw] sm:w-[50vw] lg:w-[30vw] flex items-center justify-center">
+                <div data-scroll-card className="snap-center shrink-0 w-[85vw] sm:w-[50vw] lg:w-[30vw] flex items-center justify-center">
                   <a
                     href="https://github.com/FredZ6"
                     target="_blank"
@@ -222,22 +270,85 @@ const Projects = () => {
 }
 
 const ProjectCard = ({ project, index, onOpenLightbox }) => {
-  return (
-    <div className="w-[85vw] sm:w-[60vw] lg:w-[45vw] h-[65vh] shrink-0 relative">
-      <div className="w-full h-full rounded-[2.5rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(2,8,23,0.92),rgba(2,6,23,0.84))] p-6 sm:p-10 flex flex-col relative overflow-hidden group isolate transform-gpu transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_34px_70px_rgba(0,0,0,0.84),inset_0_1px_5px_rgba(255,255,255,0.18),0_0_24px_rgba(56,189,248,0.18)] shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.16),0_0_20px_rgba(56,189,248,0.08)]">
-        {/* Number Watermark */}
-        <div className="absolute -bottom-10 -right-4 text-[15rem] font-black text-white/[0.03] leading-none pointer-events-none select-none z-0">
-          0{index + 1}
+  const projectNumber = `0${index + 1}`
+  const [activeMobilePanel, setActiveMobilePanel] = useState('delivery')
+  const deliverySummary = project.stats.map((stat) => `${stat.value} ${stat.label.toLowerCase()}`).join(' / ')
+  const stackSummary = project.techStack.slice(0, 3).join(' / ')
+  const mobilePanels = [
+    {
+      id: 'delivery',
+      title: 'What shipped',
+      summary: '3 delivery highlights',
+      content: (
+        <ul className="space-y-3">
+          {project.delivery.map((item) => (
+            <li key={item} className="flex gap-3">
+              <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-gradient-to-br from-primary via-sky-300 to-secondary shadow-[0_0_12px_rgba(56,189,248,0.4)]" />
+              <span className="text-sm leading-relaxed text-slate-300">{item}</span>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+    {
+      id: 'stats',
+      title: 'Delivery signal',
+      summary: deliverySummary,
+      content: (
+        <div className="grid grid-cols-3 gap-3">
+          {project.stats.map((stat) => (
+            <div key={stat.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-3 py-3 text-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+              <p className="text-lg font-black leading-none text-white">
+                {stat.value}
+              </p>
+              <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+                {stat.label}
+              </p>
+            </div>
+          ))}
         </div>
+      ),
+    },
+    {
+      id: 'stack',
+      title: 'Stack focus',
+      summary: stackSummary,
+      content: (
+        <div className="flex flex-wrap gap-2">
+          {project.techStack.map((tech) => (
+            <span key={tech} className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+              {tech}
+            </span>
+          ))}
+        </div>
+      ),
+    },
+  ]
 
+  return (
+    <div className="w-[88vw] sm:w-[60vw] lg:w-[45vw] h-auto sm:h-[66vh] lg:h-[65vh] shrink-0 relative">
+      <div className="w-full h-full rounded-[2.5rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(2,8,23,0.97),rgba(2,6,23,0.95))] sm:bg-[linear-gradient(180deg,rgba(2,8,23,0.92),rgba(2,6,23,0.84))] p-5 sm:p-10 flex flex-col relative overflow-hidden group isolate transform-gpu transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_34px_70px_rgba(0,0,0,0.84),inset_0_1px_5px_rgba(255,255,255,0.18),0_0_24px_rgba(56,189,248,0.18)] shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.16),0_0_20px_rgba(56,189,248,0.08)]">
         {/* Hover Gradient Overlay */}
         <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none mix-blend-overlay`} />
+        <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+        <div className="pointer-events-none absolute -right-12 top-20 h-44 w-44 rounded-full bg-primary/10 blur-3xl opacity-60" />
 
-        <div className="relative z-10 flex-grow flex flex-col">
-          <div className="flex justify-between items-start mb-6">
-            <h3 className="text-3xl sm:text-4xl font-bold text-white max-w-[80%] leading-tight drop-shadow-md">
-              {project.title}
-            </h3>
+        <div className="relative z-10 flex h-full flex-col">
+          <div className="flex items-start justify-between gap-4 border-b border-white/[0.08] pb-5 sm:pb-6">
+            <div className="max-w-[82%] sm:max-w-[80%]">
+              <div className="mb-3 sm:mb-4 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-400">
+                <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-slate-300">
+                  Featured Build
+                </span>
+                <span className="text-primary/80">{projectNumber}</span>
+              </div>
+              <h3 className="text-[2.45rem] leading-[0.95] sm:text-4xl font-bold text-white drop-shadow-md">
+                {project.title}
+              </h3>
+              <p className="mt-4 sm:mt-5 max-w-2xl text-sm sm:text-base leading-relaxed text-slate-300">
+                {project.description}
+              </p>
+            </div>
             <a
               href={project.githubUrl}
               target="_blank"
@@ -249,32 +360,131 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
             </a>
           </div>
 
-          <p className="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed max-w-xl">
-            {project.description}
-          </p>
-
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-6 border-b border-primary/20 pb-4 inline-block self-start">
-            {project.impact}
-          </p>
-
-          <div className="flex flex-wrap gap-2 mb-auto">
-            {project.techStack.map(tech => (
-              <span key={tech} className="glass-panel px-3 py-1.5 text-[10px] sm:text-xs rounded-full font-semibold uppercase tracking-wider text-slate-200">
-                {tech}
-              </span>
-            ))}
+          <div className="mt-4 sm:mt-5 flex items-start sm:items-center justify-between gap-4">
+            <p className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.24em] sm:tracking-[0.28em] text-primary leading-relaxed">
+              {project.impact}
+            </p>
+            <span className="hidden lg:inline-flex rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+              {project.images.length} Frames
+            </span>
           </div>
 
-          {/* Action Area */}
-          <div className="mt-8 pt-6 flex justify-between items-end">
+          <div className="mt-4 space-y-3 sm:hidden">
+            {mobilePanels.map((panel) => {
+              const isOpen = activeMobilePanel === panel.id
+
+              return (
+                <section key={panel.id} className="rounded-[1.55rem] border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_14px_30px_rgba(0,0,0,0.16)]">
+                  <button
+                    type="button"
+                    onClick={() => setActiveMobilePanel(panel.id)}
+                    aria-expanded={isOpen}
+                    className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left"
+                  >
+                    <div className="min-w-0">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-400">
+                        {panel.title}
+                      </p>
+                      <p className="mt-2 truncate text-[11px] font-medium uppercase tracking-[0.16em] text-primary/80">
+                        {panel.summary}
+                      </p>
+                    </div>
+                    <ChevronRight
+                      size={18}
+                      className={`shrink-0 text-slate-300 transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: 'easeOut' }}
+                        className="overflow-hidden"
+                      >
+                        <div className="border-t border-white/[0.08] px-4 py-4">
+                          {panel.content}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </section>
+              )
+            })}
+          </div>
+
+          <div className="mt-5 hidden sm:grid flex-1 gap-4 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
+            <section className="rounded-[1.8rem] border border-white/[0.08] bg-white/[0.03] p-4 sm:p-5 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_18px_40px_rgba(0,0,0,0.2)]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-400">
+                What shipped
+              </p>
+              <ul className="mt-4 space-y-4">
+                {project.delivery.map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-gradient-to-br from-primary via-sky-300 to-secondary shadow-[0_0_12px_rgba(56,189,248,0.4)]" />
+                    <span className="text-sm leading-relaxed text-slate-300">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <div className="grid gap-4">
+              <section className="rounded-[1.8rem] border border-white/[0.08] bg-black/20 p-4 sm:p-5 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_16px_32px_rgba(0,0,0,0.18)]">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-400">
+                  Delivery signal
+                </p>
+                <div className="mt-4 grid grid-cols-3 gap-3">
+                  {project.stats.map((stat) => (
+                    <div key={stat.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-3 py-3 text-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+                      <p className="text-lg sm:text-xl font-black leading-none text-white">
+                        {stat.value}
+                      </p>
+                      <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+                        {stat.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="rounded-[1.8rem] border border-white/[0.08] bg-black/20 p-4 sm:p-5 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_16px_32px_rgba(0,0,0,0.18)]">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-400">
+                  Stack focus
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {project.techStack.map((tech) => (
+                    <span key={tech} className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <div className="mt-4 sm:mt-5 flex items-end justify-between gap-4 border-t border-white/[0.08] pt-4 sm:pt-5">
             <button
               onClick={onOpenLightbox}
-              className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 hover:bg-primary text-white font-bold tracking-widest text-xs uppercase transition-all shadow-[0_10px_20px_rgba(0,0,0,0.2)]"
+              className="flex items-center gap-3 px-5 sm:px-6 py-3 rounded-full bg-white/10 hover:bg-primary text-white font-bold tracking-[0.18em] text-[11px] sm:text-xs uppercase transition-all shadow-[0_10px_20px_rgba(0,0,0,0.2)]"
             >
               <ImageIcon size={16} />
               <span>View Gallery</span>
             </button>
-            <span className="text-slate-500 font-mono text-xs hidden sm:block">STATUS: COMPLETED</span>
+
+            <div className="flex items-end gap-4 sm:gap-6 text-right">
+              <div className="hidden sm:block">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">Gallery</p>
+                <p className="mt-1 text-xs font-semibold text-slate-300">{project.images.length} screens</p>
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">Status</p>
+                <p className="mt-1 text-xs font-semibold text-slate-300">{project.status}</p>
+              </div>
+              <div className="pb-0.5">
+                <p className="text-[2rem] sm:text-[2.5rem] font-black leading-none text-white/[0.08]">{projectNumber}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -288,8 +498,23 @@ ProjectCard.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     impact: PropTypes.string.isRequired,
+    delivery: PropTypes.arrayOf(PropTypes.string).isRequired,
+    stats: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.string.isRequired,
+        label: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    status: PropTypes.string.isRequired,
     techStack: PropTypes.arrayOf(PropTypes.string).isRequired,
     githubUrl: PropTypes.string.isRequired,
+    images: PropTypes.arrayOf(
+      PropTypes.shape({
+        src: PropTypes.string.isRequired,
+        fullSrc: PropTypes.string,
+        caption: PropTypes.string.isRequired,
+      })
+    ).isRequired,
     accent: PropTypes.string.isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,

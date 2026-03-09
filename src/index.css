@@ -3,22 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --scrollbar-size: 12px;
-  --scrollbar-track: rgba(2, 6, 23, 0.34);
-  --scrollbar-track-edge: rgba(99, 102, 241, 0.12);
-  --scrollbar-thumb-start: rgba(147, 197, 253, 0.92);
-  --scrollbar-thumb-mid: rgba(45, 212, 191, 0.88);
-  --scrollbar-thumb-end: rgba(99, 102, 241, 0.84);
-  --scrollbar-thumb-border: rgba(2, 6, 23, 0.82);
-  --scrollbar-thumb-glow: rgba(45, 212, 191, 0.22);
+  --scrollbar-size: 11px;
+  --page-scrollbar-track: transparent;
+  --page-scrollbar-thumb-start: rgba(191, 219, 254, 0.94);
+  --page-scrollbar-thumb-top: rgba(147, 197, 253, 0.9);
+  --page-scrollbar-thumb-mid: rgba(96, 165, 250, 0.9);
+  --page-scrollbar-thumb-core: rgba(59, 130, 246, 0.84);
+  --page-scrollbar-thumb-end: rgba(67, 56, 202, 0.78);
+  --page-scrollbar-thumb-border: rgba(191, 219, 254, 0.18);
+  --page-scrollbar-thumb-shadow: rgba(15, 23, 42, 0.34);
+  --page-scrollbar-thumb-glow: rgba(37, 99, 235, 0.14);
+  --custom-scrollbar-track: rgba(2, 6, 23, 0.34);
+  --custom-scrollbar-track-edge: rgba(99, 102, 241, 0.12);
+  --custom-scrollbar-thumb-start: rgba(147, 197, 253, 0.92);
+  --custom-scrollbar-thumb-mid: rgba(45, 212, 191, 0.88);
+  --custom-scrollbar-thumb-end: rgba(99, 102, 241, 0.84);
+  --custom-scrollbar-thumb-border: rgba(2, 6, 23, 0.82);
+  --custom-scrollbar-thumb-glow: rgba(45, 212, 191, 0.22);
 }
 
 /* 自定义滚动条样式 */
 html {
-  overflow-y: overlay;
-  /* 只在需要时显示垂直滚动条 */
+  overflow-y: auto;
   overflow-x: hidden;
-  /* 隐藏水平滚动条 */
   min-height: 100%;
   scrollbar-width: none;
   scrollbar-color: transparent transparent;
@@ -28,39 +35,37 @@ html {
 
 body {
   overflow-x: hidden;
-  /* 确保在 body 上也隐藏水平滚动 */
   min-height: 100%;
   background-color: #08111f;
-  scrollbar-width: none;
 }
 
 #root {
   min-height: 100%;
 }
 
-::-webkit-scrollbar {
+html::-webkit-scrollbar {
   width: 0;
   height: 0;
   background: transparent;
 }
 
-::-webkit-scrollbar-track {
+html::-webkit-scrollbar-track {
   background: transparent;
   border-left: 0;
 }
 
-::-webkit-scrollbar-thumb {
+html::-webkit-scrollbar-thumb {
   border: 0;
   background: transparent;
   box-shadow: none;
 }
 
-::-webkit-scrollbar-thumb:hover {
+html::-webkit-scrollbar-thumb:hover {
   background: transparent;
   box-shadow: none;
 }
 
-::-webkit-scrollbar-corner {
+html::-webkit-scrollbar-corner {
   background: transparent;
 }
 
@@ -76,23 +81,23 @@ body {
 
 .custom-scrollbar::-webkit-scrollbar-track {
   background:
-    linear-gradient(180deg, rgba(2, 6, 23, 0.16), var(--scrollbar-track)),
-    linear-gradient(180deg, transparent, var(--scrollbar-track-edge), transparent);
+    linear-gradient(180deg, rgba(2, 6, 23, 0.16), var(--custom-scrollbar-track)),
+    linear-gradient(180deg, transparent, var(--custom-scrollbar-track-edge), transparent);
   border-left: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  border: 2px solid var(--scrollbar-thumb-border);
+  border: 2px solid var(--custom-scrollbar-thumb-border);
   border-radius: 9999px;
   background: linear-gradient(
     180deg,
-    var(--scrollbar-thumb-start) 0%,
-    var(--scrollbar-thumb-mid) 48%,
-    var(--scrollbar-thumb-end) 100%
+    var(--custom-scrollbar-thumb-start) 0%,
+    var(--custom-scrollbar-thumb-mid) 48%,
+    var(--custom-scrollbar-thumb-end) 100%
   );
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 0 18px var(--scrollbar-thumb-glow);
+    0 0 18px var(--custom-scrollbar-thumb-glow);
   background-clip: padding-box;
 }
 
