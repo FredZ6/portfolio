@@ -64,6 +64,8 @@ const PROJECTS = [
 const Projects = () => {
   const targetRef = useRef(null)
   const scrollContainerRef = useRef(null)
+  const [activeMobileProjectIndex, setActiveMobileProjectIndex] = useState(0)
+  const activeMobileProject = PROJECTS[activeMobileProjectIndex]
 
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -117,6 +119,8 @@ const Projects = () => {
   const scrollPrev = () => scrollToCard(-1)
 
   const scrollNext = () => scrollToCard(1)
+  const showPreviousMobileProject = () => setActiveMobileProjectIndex((current) => Math.max(current - 1, 0))
+  const showNextMobileProject = () => setActiveMobileProjectIndex((current) => Math.min(current + 1, PROJECTS.length - 1))
 
   const [lightboxData, setLightboxData] = useState(null)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
@@ -148,13 +152,55 @@ const Projects = () => {
               FEATURED<br />SYSTEMS
             </h2>
             <p className="mt-3 text-[11px] text-slate-300 font-medium tracking-wide border-l-2 border-primary pl-4 uppercase sm:mt-4 sm:text-sm shadow-[inset_1px_0_10px_rgba(56,189,248,0.12)] py-1">
-              Swipe or use buttons to explore<br /> architectural implementations.
+              <span className="sm:hidden">Use buttons to explore<br /> architectural implementations.</span>
+              <span className="hidden sm:inline">Swipe or use buttons to explore<br /> architectural implementations.</span>
             </p>
           </motion.div>
 
+          <div className="w-full sm:hidden">
+            <div className="mx-auto w-[92vw]">
+              <div className="mb-4 flex items-center justify-between gap-3 rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-3 shadow-[0_14px_30px_rgba(0,0,0,0.18)]">
+                <button
+                  type="button"
+                  onClick={showPreviousMobileProject}
+                  aria-label="Show previous project"
+                  disabled={activeMobileProjectIndex === 0}
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full glass-panel text-white transition-colors disabled:cursor-not-allowed disabled:opacity-35"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+
+                <div className="min-w-0 flex-1 text-center">
+                  <p className="text-[9px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+                    Project {String(activeMobileProjectIndex + 1).padStart(2, '0')} / {String(PROJECTS.length).padStart(2, '0')}
+                  </p>
+                  <p className="mt-1 truncate text-[10px] font-medium uppercase tracking-[0.14em] text-primary/80">
+                    {activeMobileProject.title}
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={showNextMobileProject}
+                  aria-label="Show next project"
+                  disabled={activeMobileProjectIndex === PROJECTS.length - 1}
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full glass-panel text-white transition-colors disabled:cursor-not-allowed disabled:opacity-35"
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </div>
+
+              <ProjectCard
+                project={activeMobileProject}
+                index={activeMobileProjectIndex}
+                onOpenLightbox={() => openLightbox(activeMobileProject.images)}
+              />
+            </div>
+          </div>
+
           {/* Native Horizontal Scroll Container (Animated Entry) */}
           <motion.div
-            className="relative w-full sm:absolute sm:inset-0 sm:h-full sm:pt-20 lg:pt-28"
+            className="hidden sm:block sm:absolute sm:inset-0 sm:h-full sm:pt-20 lg:pt-28"
             initial={false}
           >
             <div

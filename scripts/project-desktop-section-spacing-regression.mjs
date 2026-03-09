@@ -6,7 +6,7 @@ const skillsSource = readFileSync(new URL('../src/components/Skills.jsx', import
 
 const requiredProjectTokens = [
   'sm:-mt-[8vh] sm:h-[138vh] sm:pt-0 sm:pb-0 lg:-mt-[10vh] lg:h-[134vh]',
-  'className="relative w-full sm:absolute sm:inset-0 sm:h-full sm:pt-20 lg:pt-28"',
+  'className="hidden sm:block sm:absolute sm:inset-0 sm:h-full sm:pt-20 lg:pt-28"',
 ]
 
 const removedProjectTokens = [
