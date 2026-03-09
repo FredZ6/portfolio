@@ -115,8 +115,9 @@ const About = () => {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-white tracking-widest">USER_ID: FRED_ZHANG</h3>
-                <p className="text-primary text-xs font-mono uppercase tracking-[0.2em] flex items-center gap-1">
-                  <ShieldCheck size={12} /> Status: Online
+                <p className="text-xs font-mono uppercase tracking-[0.2em] flex items-center gap-1">
+                  <ShieldCheck size={12} className="text-emerald-400" />
+                  <span className="text-emerald-400">Status: Online</span>
                 </p>
               </div>
             </div>

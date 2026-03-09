@@ -134,40 +134,41 @@ const Projects = () => {
 
   return (
     <>
-      <section ref={targetRef} className="relative mt-0 sm:-mt-[18vh] lg:-mt-[20vh] h-[152vh] bg-transparent" id="projects">
+      <section ref={targetRef} className="relative mt-0 bg-transparent pt-[calc(env(safe-area-inset-top)+2rem)] pb-[calc(env(safe-area-inset-bottom)+10rem)] sm:-mt-[8vh] sm:h-[138vh] sm:pt-0 sm:pb-0 lg:-mt-[10vh] lg:h-[134vh]" id="projects">
         {/* Sticky wrapper */}
-        <div className="sticky top-0 h-screen w-full flex items-center overflow-hidden">
+        <div className="relative w-full overflow-visible sm:sticky sm:top-0 sm:flex sm:h-screen sm:items-center sm:overflow-hidden">
+          <div className="pointer-events-none absolute inset-x-0 bottom-[6vh] h-[18vh] bg-[radial-gradient(ellipse_at_center,rgba(12,40,78,0.2)_0%,rgba(8,17,31,0.14)_42%,rgba(8,17,31,0)_78%)] blur-3xl" />
 
           {/* Background Title (Animated) */}
           <motion.div
             style={{ x: titleX, opacity: titleOpacity }}
-            className="absolute top-[28%] left-8 md:top-[29%] md:left-16 lg:top-[30%] lg:left-24 z-10 w-full max-w-sm pointer-events-none"
+            className="relative z-10 mx-auto mb-5 w-[92vw] max-w-sm px-1 pointer-events-none sm:absolute sm:top-[29%] sm:left-16 sm:mb-0 sm:w-full sm:max-w-sm sm:px-0 md:top-[29%] md:left-16 lg:top-[30%] lg:left-24"
           >
-            <h2 className="text-5xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] mix-blend-plus-lighter">
+            <h2 className="text-4xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] mix-blend-plus-lighter">
               FEATURED<br />SYSTEMS
             </h2>
-            <p className="mt-4 text-slate-300 font-medium tracking-wide border-l-2 border-primary pl-4 uppercase text-xs sm:text-sm shadow-[inset_1px_0_10px_rgba(56,189,248,0.12)] py-1">
+            <p className="mt-3 text-[11px] text-slate-300 font-medium tracking-wide border-l-2 border-primary pl-4 uppercase sm:mt-4 sm:text-sm shadow-[inset_1px_0_10px_rgba(56,189,248,0.12)] py-1">
               Swipe or use buttons to explore<br /> architectural implementations.
             </p>
           </motion.div>
 
           {/* Native Horizontal Scroll Container (Animated Entry) */}
           <motion.div
-            className="absolute inset-0 w-full h-full pt-12 sm:pt-16 lg:pt-24"
+            className="relative w-full sm:absolute sm:inset-0 sm:h-full sm:pt-20 lg:pt-28"
             initial={false}
           >
             <div
               ref={scrollContainerRef}
-              className="h-full w-full overflow-x-auto overflow-y-hidden relative z-20 custom-scrollbar snap-x snap-mandatory"
+              className="relative z-20 w-full overflow-x-auto overflow-y-visible custom-scrollbar snap-x snap-mandatory sm:h-full sm:overflow-y-hidden"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               <motion.div
                 style={{ x: cardsX, opacity: cardsOpacity }}
-                className="flex items-center h-full w-max min-w-full gap-8 sm:gap-16 lg:gap-24 px-[10vw] sm:px-[20vw] lg:px-[30vw]"
+                className="flex w-max min-w-full items-start gap-8 sm:h-full sm:items-center sm:gap-16 lg:gap-24 pl-[calc((100vw-92vw)/2)] pr-[calc((100vw-85vw)/2)] sm:pl-[calc((100vw-min(72vw,58rem))/2)] sm:pr-[calc((100vw-50vw)/2)] lg:pl-[calc((100vw-min(54vw,72rem))/2)] lg:pr-[calc((100vw-30vw)/2)]"
                 initial={false}
               >
                 {PROJECTS.map((project, index) => (
-                  <div key={project.id} data-scroll-card className="snap-center shrink-0 flex items-center h-full">
+                  <div key={project.id} data-scroll-card className="snap-center shrink-0 flex items-start sm:h-full sm:items-center">
                     <ProjectCard
                       project={project}
                       index={index}
@@ -197,7 +198,7 @@ const Projects = () => {
           {/* Manual Navigation Console (Animated Entry) */}
           <motion.div
             style={{ x: buttonsX, opacity: buttonsOpacity }}
-            className="absolute bottom-8 right-8 md:bottom-12 md:right-12 z-50 flex gap-4"
+            className="hidden sm:flex absolute bottom-8 right-8 md:bottom-12 md:right-12 z-50 gap-4"
           >
             <button
               onClick={scrollPrev}
@@ -280,11 +281,11 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
       title: 'What shipped',
       summary: '3 delivery highlights',
       content: (
-        <ul className="space-y-3">
+        <ul className="space-y-2.5">
           {project.delivery.map((item) => (
             <li key={item} className="flex gap-3">
               <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-gradient-to-br from-primary via-sky-300 to-secondary shadow-[0_0_12px_rgba(56,189,248,0.4)]" />
-              <span className="text-sm leading-relaxed text-slate-300">{item}</span>
+              <span className="text-[13px] leading-[1.65] text-slate-300">{item}</span>
             </li>
           ))}
         </ul>
@@ -295,13 +296,13 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
       title: 'Delivery signal',
       summary: deliverySummary,
       content: (
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2.5">
           {project.stats.map((stat) => (
-            <div key={stat.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-3 py-3 text-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
-              <p className="text-lg font-black leading-none text-white">
+            <div key={stat.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-2.5 py-3 text-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+              <p className="text-[1.05rem] font-black leading-none text-white">
                 {stat.value}
               </p>
-              <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+              <p className="mt-1 text-[8px] font-semibold uppercase tracking-[0.18em] text-slate-400">
                 {stat.label}
               </p>
             </div>
@@ -316,7 +317,7 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
       content: (
         <div className="flex flex-wrap gap-2">
           {project.techStack.map((tech) => (
-            <span key={tech} className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+            <span key={tech} className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
               {tech}
             </span>
           ))}
@@ -326,26 +327,27 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
   ]
 
   return (
-    <div className="w-[88vw] sm:w-[60vw] lg:w-[45vw] h-auto sm:h-[66vh] lg:h-[65vh] shrink-0 relative">
-      <div className="w-full h-full rounded-[2.5rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(2,8,23,0.97),rgba(2,6,23,0.95))] sm:bg-[linear-gradient(180deg,rgba(2,8,23,0.92),rgba(2,6,23,0.84))] p-5 sm:p-10 flex flex-col relative overflow-hidden group isolate transform-gpu transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_34px_70px_rgba(0,0,0,0.84),inset_0_1px_5px_rgba(255,255,255,0.18),0_0_24px_rgba(56,189,248,0.18)] shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.16),0_0_20px_rgba(56,189,248,0.08)]">
+    <div className="w-[92vw] sm:w-[min(72vw,58rem)] lg:w-[min(54vw,72rem)] h-auto sm:h-[clamp(40rem,79vh,52rem)] lg:h-[clamp(42rem,78vh,54rem)] shrink-0 relative">
+      <div className="pointer-events-none absolute inset-x-[8%] bottom-[-4%] h-[16%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(9,31,64,0.5)_0%,rgba(8,17,31,0.22)_55%,rgba(8,17,31,0)_100%)] blur-2xl opacity-85" />
+      <div className="w-full h-full rounded-[2.5rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(2,8,23,0.97),rgba(2,6,23,0.95))] sm:bg-[linear-gradient(180deg,rgba(2,8,23,0.92),rgba(2,6,23,0.84))] p-4 sm:p-[clamp(1.5rem,1rem+0.9vw,2rem)] lg:p-[clamp(1.75rem,1.05rem+0.9vw,2.35rem)] flex flex-col relative overflow-hidden group isolate transform-gpu transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_30px_58px_-18px_rgba(0,0,0,0.74),0_48px_120px_-28px_rgba(7,25,51,0.54),inset_0_1px_5px_rgba(255,255,255,0.18),0_0_24px_rgba(56,189,248,0.18)] shadow-[0_24px_48px_-20px_rgba(0,0,0,0.72),0_38px_90px_-34px_rgba(2,8,23,0.52),inset_0_1px_5px_rgba(255,255,255,0.16),0_0_20px_rgba(56,189,248,0.08)]">
         {/* Hover Gradient Overlay */}
         <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none mix-blend-overlay`} />
         <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
         <div className="pointer-events-none absolute -right-12 top-20 h-44 w-44 rounded-full bg-primary/10 blur-3xl opacity-60" />
 
         <div className="relative z-10 flex h-full flex-col">
-          <div className="flex items-start justify-between gap-4 border-b border-white/[0.08] pb-5 sm:pb-6">
-            <div className="max-w-[82%] sm:max-w-[80%]">
-              <div className="mb-3 sm:mb-4 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-400">
+          <div className="flex items-start justify-between gap-3 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)] border-b border-white/[0.08] pb-[clamp(1rem,0.8rem+0.25vw,1.25rem)]">
+            <div className="max-w-[84%] sm:max-w-[83%]">
+              <div className="mb-[clamp(0.75rem,0.65rem+0.15vw,1rem)] flex items-center gap-3 text-[clamp(0.55rem,0.48rem+0.08vw,0.68rem)] font-semibold uppercase tracking-[0.24em] sm:tracking-[0.26em] text-slate-400">
                 <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-slate-300">
                   Featured Build
                 </span>
                 <span className="text-primary/80">{projectNumber}</span>
               </div>
-              <h3 className="text-[2.45rem] leading-[0.95] sm:text-4xl font-bold text-white drop-shadow-md">
+              <h3 className="text-[clamp(2rem,1.3rem+1.45vw,3.4rem)] leading-[0.96] font-bold text-white drop-shadow-md">
                 {project.title}
               </h3>
-              <p className="mt-4 sm:mt-5 max-w-2xl text-sm sm:text-base leading-relaxed text-slate-300">
+              <p className="mt-[clamp(0.75rem,0.62rem+0.18vw,1rem)] max-w-2xl text-[clamp(0.9rem,0.78rem+0.26vw,1.1rem)] leading-[1.75] text-slate-300">
                 {project.description}
               </p>
             </div>
@@ -353,23 +355,23 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0"
+              className="h-11 w-11 sm:h-12 sm:w-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0"
               aria-label="View Source on GitHub"
             >
               <Github size={20} />
             </a>
           </div>
 
-          <div className="mt-4 sm:mt-5 flex items-start sm:items-center justify-between gap-4">
-            <p className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.24em] sm:tracking-[0.28em] text-primary leading-relaxed">
+          <div className="mt-[clamp(0.875rem,0.72rem+0.18vw,1.1rem)] flex items-start sm:items-center justify-between gap-3 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)]">
+            <p className="text-[clamp(0.66rem,0.58rem+0.16vw,0.86rem)] font-bold uppercase tracking-[0.22em] sm:tracking-[0.24em] lg:tracking-[0.26em] text-primary leading-relaxed">
               {project.impact}
             </p>
-            <span className="hidden lg:inline-flex rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+            <span className="hidden lg:inline-flex rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[clamp(0.55rem,0.5rem+0.08vw,0.68rem)] font-semibold uppercase tracking-[0.2em] text-slate-400">
               {project.images.length} Frames
             </span>
           </div>
 
-          <div className="mt-4 space-y-3 sm:hidden">
+          <div className="mt-3.5 space-y-2.5 sm:hidden">
             {mobilePanels.map((panel) => {
               const isOpen = activeMobilePanel === panel.id
 
@@ -379,13 +381,13 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
                     type="button"
                     onClick={() => setActiveMobilePanel(panel.id)}
                     aria-expanded={isOpen}
-                    className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left"
+                    className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left"
                   >
                     <div className="min-w-0">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-400">
+                      <p className="text-[9px] font-semibold uppercase tracking-[0.24em] text-slate-400">
                         {panel.title}
                       </p>
-                      <p className="mt-2 truncate text-[11px] font-medium uppercase tracking-[0.16em] text-primary/80">
+                      <p className="mt-1.5 truncate text-[10px] font-medium uppercase tracking-[0.14em] text-primary/80">
                         {panel.summary}
                       </p>
                     </div>
@@ -403,7 +405,7 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
                         transition={{ duration: 0.2, ease: 'easeOut' }}
                         className="overflow-hidden"
                       >
-                        <div className="border-t border-white/[0.08] px-4 py-4">
+                        <div className="border-t border-white/[0.08] px-4 py-3.5">
                           {panel.content}
                         </div>
                       </motion.div>
@@ -414,33 +416,33 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
             })}
           </div>
 
-          <div className="mt-5 hidden sm:grid flex-1 gap-4 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
-            <section className="rounded-[1.8rem] border border-white/[0.08] bg-white/[0.03] p-4 sm:p-5 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_18px_40px_rgba(0,0,0,0.2)]">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-400">
+          <div className="mt-[clamp(0.95rem,0.8rem+0.22vw,1.25rem)] hidden min-h-0 sm:grid flex-1 gap-[clamp(0.75rem,0.6rem+0.2vw,0.95rem)] lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
+            <section className="rounded-[1.8rem] border border-white/[0.08] bg-white/[0.03] p-[clamp(0.95rem,0.82rem+0.2vw,1.25rem)] backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_18px_40px_rgba(0,0,0,0.2)] flex flex-col">
+              <p className="text-[clamp(0.55rem,0.49rem+0.09vw,0.68rem)] font-semibold uppercase tracking-[0.24em] sm:tracking-[0.26em] text-slate-400">
                 What shipped
               </p>
-              <ul className="mt-4 space-y-4">
+              <ul className="mt-[clamp(0.8rem,0.68rem+0.18vw,1rem)] flex h-full flex-col justify-between gap-[clamp(0.75rem,0.62rem+0.18vw,0.95rem)]">
                 {project.delivery.map((item) => (
                   <li key={item} className="flex gap-3">
                     <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-gradient-to-br from-primary via-sky-300 to-secondary shadow-[0_0_12px_rgba(56,189,248,0.4)]" />
-                    <span className="text-sm leading-relaxed text-slate-300">{item}</span>
+                    <span className="text-[clamp(0.85rem,0.76rem+0.18vw,1rem)] leading-[1.7] text-slate-300">{item}</span>
                   </li>
                 ))}
               </ul>
             </section>
 
-            <div className="grid gap-4">
-              <section className="rounded-[1.8rem] border border-white/[0.08] bg-black/20 p-4 sm:p-5 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_16px_32px_rgba(0,0,0,0.18)]">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-400">
+            <div className="grid gap-[clamp(0.75rem,0.6rem+0.2vw,0.95rem)]">
+              <section className="rounded-[1.8rem] border border-white/[0.08] bg-black/20 p-[clamp(0.95rem,0.82rem+0.2vw,1.25rem)] backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_16px_32px_rgba(0,0,0,0.18)]">
+                <p className="text-[clamp(0.55rem,0.49rem+0.09vw,0.68rem)] font-semibold uppercase tracking-[0.24em] sm:tracking-[0.26em] text-slate-400">
                   Delivery signal
                 </p>
-                <div className="mt-4 grid grid-cols-3 gap-3">
+                <div className="mt-[clamp(0.8rem,0.68rem+0.18vw,1rem)] grid grid-cols-3 gap-[clamp(0.55rem,0.46rem+0.14vw,0.75rem)]">
                   {project.stats.map((stat) => (
-                    <div key={stat.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-3 py-3 text-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
-                      <p className="text-lg sm:text-xl font-black leading-none text-white">
+                    <div key={stat.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-[clamp(0.7rem,0.62rem+0.12vw,0.85rem)] py-[clamp(0.8rem,0.72rem+0.14vw,0.95rem)] text-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+                      <p className="text-[clamp(1.05rem,0.92rem+0.28vw,1.35rem)] font-black leading-none text-white">
                         {stat.value}
                       </p>
-                      <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+                      <p className="mt-1 text-[clamp(0.5rem,0.46rem+0.08vw,0.62rem)] font-semibold uppercase tracking-[0.18em] sm:tracking-[0.2em] text-slate-400">
                         {stat.label}
                       </p>
                     </div>
@@ -448,13 +450,13 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
                 </div>
               </section>
 
-              <section className="rounded-[1.8rem] border border-white/[0.08] bg-black/20 p-4 sm:p-5 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_16px_32px_rgba(0,0,0,0.18)]">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-400">
+              <section className="rounded-[1.8rem] border border-white/[0.08] bg-black/20 p-[clamp(0.95rem,0.82rem+0.2vw,1.25rem)] backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_16px_32px_rgba(0,0,0,0.18)]">
+                <p className="text-[clamp(0.55rem,0.49rem+0.09vw,0.68rem)] font-semibold uppercase tracking-[0.24em] sm:tracking-[0.26em] text-slate-400">
                   Stack focus
                 </p>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-[clamp(0.8rem,0.68rem+0.18vw,1rem)] flex flex-wrap gap-[clamp(0.45rem,0.38rem+0.1vw,0.6rem)]">
                   {project.techStack.map((tech) => (
-                    <span key={tech} className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+                    <span key={tech} className="rounded-full border border-white/[0.08] bg-white/[0.04] px-[clamp(0.65rem,0.58rem+0.1vw,0.85rem)] py-[clamp(0.35rem,0.3rem+0.08vw,0.5rem)] text-[clamp(0.55rem,0.5rem+0.08vw,0.72rem)] font-semibold uppercase tracking-[0.16em] sm:tracking-[0.18em] text-slate-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
                       {tech}
                     </span>
                   ))}
@@ -463,10 +465,10 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
             </div>
           </div>
 
-          <div className="mt-4 sm:mt-5 flex items-end justify-between gap-4 border-t border-white/[0.08] pt-4 sm:pt-5">
+          <div className="mt-[clamp(0.875rem,0.72rem+0.18vw,1.1rem)] flex items-end justify-between gap-3 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)] border-t border-white/[0.08] pt-[clamp(0.95rem,0.8rem+0.18vw,1.15rem)]">
             <button
               onClick={onOpenLightbox}
-              className="flex items-center gap-3 px-5 sm:px-6 py-3 rounded-full bg-white/10 hover:bg-primary text-white font-bold tracking-[0.18em] text-[11px] sm:text-xs uppercase transition-all shadow-[0_10px_20px_rgba(0,0,0,0.2)]"
+              className="flex items-center gap-2.5 px-[clamp(1rem,0.9rem+0.16vw,1.25rem)] sm:px-[clamp(1.1rem,0.95rem+0.18vw,1.35rem)] py-[clamp(0.6rem,0.52rem+0.08vw,0.78rem)] rounded-full bg-white/10 hover:bg-primary text-white font-bold tracking-[0.16em] text-[clamp(0.62rem,0.56rem+0.08vw,0.75rem)] uppercase transition-all shadow-[0_10px_20px_rgba(0,0,0,0.2)]"
             >
               <ImageIcon size={16} />
               <span>View Gallery</span>
@@ -474,15 +476,15 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
 
             <div className="flex items-end gap-4 sm:gap-6 text-right">
               <div className="hidden sm:block">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">Gallery</p>
-                <p className="mt-1 text-xs font-semibold text-slate-300">{project.images.length} screens</p>
+                <p className="text-[clamp(0.52rem,0.48rem+0.08vw,0.62rem)] font-semibold uppercase tracking-[0.2em] text-slate-500">Gallery</p>
+                <p className="mt-1 text-[clamp(0.72rem,0.66rem+0.1vw,0.8rem)] font-semibold text-slate-300">{project.images.length} screens</p>
               </div>
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">Status</p>
-                <p className="mt-1 text-xs font-semibold text-slate-300">{project.status}</p>
+                <p className="text-[clamp(0.52rem,0.48rem+0.08vw,0.62rem)] font-semibold uppercase tracking-[0.2em] text-slate-500">Status</p>
+                <p className="mt-1 text-[clamp(0.72rem,0.66rem+0.1vw,0.8rem)] font-semibold text-slate-300">{project.status}</p>
               </div>
               <div className="pb-0.5">
-                <p className="text-[2rem] sm:text-[2.5rem] font-black leading-none text-white/[0.08]">{projectNumber}</p>
+                <p className="text-[clamp(1.8rem,1.55rem+0.45vw,2.4rem)] font-black leading-none text-white/[0.08]">{projectNumber}</p>
               </div>
             </div>
           </div>
