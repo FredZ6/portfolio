@@ -92,6 +92,12 @@ const PROJECTS = [
   },
 ]
 
+const buildDeepWikiUrl = (githubUrl) => {
+  if (!githubUrl) return '#'
+
+  return githubUrl.replace('https://github.com/', 'https://deepwiki.com/')
+}
+
 const Projects = () => {
   const targetRef = useRef(null)
   const scrollContainerRef = useRef(null)
@@ -119,15 +125,16 @@ const Projects = () => {
     return Array.from(scrollContainerRef.current.querySelectorAll('[data-scroll-card]'))
   }
 
-  const scrollToCard = (direction) => {
+  const getCenteredCardIndex = () => {
     const container = scrollContainerRef.current
-    if (!container) return
+    if (!container) return -1
 
     const targets = getScrollTargets()
-    if (!targets.length) return
+    if (!targets.length) return -1
 
     const viewportCenter = container.scrollLeft + container.clientWidth / 2
-    const currentIndex = targets.reduce((closestIndex, target, index) => {
+
+    return targets.reduce((closestIndex, target, index) => {
       const targetCenter = target.offsetLeft + target.offsetWidth / 2
       const closestTarget = targets[closestIndex]
       const closestCenter = closestTarget.offsetLeft + closestTarget.offsetWidth / 2
@@ -136,15 +143,39 @@ const Projects = () => {
         ? index
         : closestIndex
     }, 0)
+  }
 
-    const nextIndex = Math.min(Math.max(currentIndex + direction, 0), targets.length - 1)
-    const nextTarget = targets[nextIndex]
+  const centerCardAtIndex = (targetIndex) => {
+    const container = scrollContainerRef.current
+    if (!container) return
+
+    const targets = getScrollTargets()
+    if (!targets.length) return
+
+    const safeIndex = Math.min(Math.max(targetIndex, 0), targets.length - 1)
+    const nextTarget = targets[safeIndex]
     const nextLeft = nextTarget.offsetLeft - (container.clientWidth - nextTarget.offsetWidth) / 2
 
     container.scrollTo({
       left: Math.max(0, nextLeft),
       behavior: 'smooth',
     })
+  }
+
+  const scrollToCard = (direction) => {
+    const currentIndex = getCenteredCardIndex()
+    if (currentIndex === -1) return
+
+    centerCardAtIndex(currentIndex + direction)
+  }
+
+  const handleDesktopCardClick = (event, targetIndex) => {
+    if (event.target instanceof Element && event.target.closest('a, button')) return
+
+    const currentIndex = getCenteredCardIndex()
+    if (currentIndex === targetIndex) return
+
+    centerCardAtIndex(targetIndex)
   }
 
   const scrollPrev = () => scrollToCard(-1)
@@ -186,7 +217,7 @@ const Projects = () => {
             </h2>
             <p className="mt-3 text-[11px] text-slate-300 font-medium tracking-wide border-l-2 border-primary pl-4 uppercase sm:mt-4 sm:text-sm shadow-[inset_1px_0_10px_rgba(56,189,248,0.12)] py-1">
               <span className="sm:hidden">Use buttons to explore<br /> architectural implementations.</span>
-              <span className="hidden sm:inline">Swipe or use buttons to explore<br /> architectural implementations.</span>
+              <span className="hidden sm:inline">Swipe, click cards, or use buttons to explore<br /> architectural implementations.</span>
             </p>
           </motion.div>
 
@@ -247,7 +278,12 @@ const Projects = () => {
                 initial={false}
               >
                 {PROJECTS.map((project, index) => (
-                  <div key={project.id} data-scroll-card className="snap-center shrink-0 flex items-start sm:h-full sm:items-center">
+                  <div
+                    key={project.id}
+                    data-scroll-card
+                    onClick={(event) => handleDesktopCardClick(event, index)}
+                    className="snap-center shrink-0 flex items-start sm:h-full sm:items-center sm:cursor-pointer"
+                  >
                     <ProjectCard
                       project={project}
                       index={index}
@@ -354,6 +390,7 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
   const [activeMobilePanel, setActiveMobilePanel] = useState('delivery')
   const deliverySummary = project.stats.map((stat) => `${stat.value} ${stat.label.toLowerCase()}`).join(' / ')
   const stackSummary = project.techStack.slice(0, 3).join(' / ')
+  const deepWikiUrl = buildDeepWikiUrl(project.githubUrl)
   const hasGallery = project.images.length > 0
   const galleryFrameLabel = project.images.length === 1 ? 'Frame' : 'Frames'
   const galleryScreenLabel = project.images.length === 1 ? 'screen' : 'screens'
@@ -419,7 +456,7 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
 
         <div className="relative z-10 flex h-full flex-col">
           <div className="flex items-start justify-between gap-3 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)] border-b border-white/[0.08] pb-[clamp(1rem,0.8rem+0.25vw,1.25rem)]">
-            <div className="max-w-[84%] sm:max-w-[83%]">
+            <div className="max-w-[78%] sm:max-w-[80%]">
               <div className="mb-[clamp(0.75rem,0.65rem+0.15vw,1rem)] flex items-center gap-3 text-[clamp(0.55rem,0.48rem+0.08vw,0.68rem)] font-semibold uppercase tracking-[0.24em] sm:tracking-[0.26em] text-slate-400">
                 <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-slate-300">
                   Featured Build
@@ -433,15 +470,31 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
                 {project.description}
               </p>
             </div>
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="h-11 w-11 sm:h-12 sm:w-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0"
-              aria-label="View Source on GitHub"
-            >
-              <Github size={20} />
-            </a>
+            <div className="flex shrink-0 items-center gap-2.5">
+              <a
+                href={deepWikiUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-11 w-11 sm:h-12 sm:w-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 overflow-hidden"
+                aria-label="Open repo on DeepWiki"
+              >
+                <img
+                  src="/portfolio/devin.avif"
+                  alt=""
+                  aria-hidden="true"
+                  className="h-5 w-5 rounded-[0.35rem] object-cover"
+                />
+              </a>
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-11 w-11 sm:h-12 sm:w-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0"
+                aria-label="View Source on GitHub"
+              >
+                <Github size={20} />
+              </a>
+            </div>
           </div>
 
           <div className="mt-[clamp(0.875rem,0.72rem+0.18vw,1.1rem)] flex items-start sm:items-center justify-between gap-3 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)]">
