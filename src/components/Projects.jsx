@@ -14,6 +14,11 @@ const PROJECTS = [
       'Observable automation with screenshots, logs, retries, and run history.',
       'Manual final submit by design.',
     ],
+    desktopDelivery: [
+      'End-to-end flow from profile setup and job import through analysis, resume review, and submission tracking.',
+      'Observable automation with field results, screenshots, worker logs, retries, cancellations, and run history.',
+      'Manual final submit by design, keeping review checkpoints visible instead of hiding risk behind one-click apply.',
+    ],
     stats: [
       { value: '2', label: 'Providers' },
       { value: '2', label: 'PDF Templates' },
@@ -42,6 +47,11 @@ const PROJECTS = [
       'Delivered auth, catalog, ordering, inventory, payment, and notification services.',
       'Implemented saga orchestration across order, payment, and inventory lifecycles.',
       'Locked releases behind mandatory CI checks and Terraform-driven infrastructure updates.',
+    ],
+    desktopDelivery: [
+      'Delivered auth, catalog, ordering, inventory, payment, and notification services across one event-driven platform.',
+      'Implemented saga orchestration across order, payment, and inventory lifecycles to coordinate cross-service state changes.',
+      'Locked releases behind required CI checks, Terraform updates, and safer deployment discipline.',
     ],
     stats: [
       { value: '6', label: 'Services' },
@@ -72,6 +82,11 @@ const PROJECTS = [
       'Shipped customer flows for auth, browsing, cart, checkout, and order management.',
       'Built admin tooling for product maintenance and operational order handling.',
       'Backed the demo with seeded catalog data, Docker orchestration, and CI/E2E automation.',
+    ],
+    desktopDelivery: [
+      'Shipped customer flows for auth, browsing, cart, checkout, and order management across the full storefront path.',
+      'Built admin tooling for product maintenance, inventory-facing updates, and operational order handling.',
+      'Backed the demo with seeded catalog data, Docker orchestration, and CI/E2E automation for repeatable setup.',
     ],
     stats: [
       { value: '39', label: 'Tests' },
@@ -557,10 +572,13 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
                 What shipped
               </p>
               <ul className="mt-[clamp(0.8rem,0.68rem+0.18vw,1rem)] flex h-full flex-col justify-between gap-[clamp(0.75rem,0.62rem+0.18vw,0.95rem)]">
-                {project.delivery.map((item) => (
+                {project.delivery.map((item, itemIndex) => (
                   <li key={item} className="flex gap-3">
                     <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-gradient-to-br from-primary via-sky-300 to-secondary shadow-[0_0_12px_rgba(56,189,248,0.4)]" />
-                    <span className="text-[clamp(0.85rem,0.76rem+0.18vw,1rem)] leading-[1.7] text-slate-300">{item}</span>
+                    <span className="text-[clamp(0.85rem,0.76rem+0.18vw,1rem)] leading-[1.7] text-slate-300">
+                      <span className="2xl:hidden">{item}</span>
+                      <span className="hidden 2xl:inline">{project.desktopDelivery?.[itemIndex] || item}</span>
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -651,6 +669,7 @@ ProjectCard.propTypes = {
     description: PropTypes.string.isRequired,
     impact: PropTypes.string.isRequired,
     delivery: PropTypes.arrayOf(PropTypes.string).isRequired,
+    desktopDelivery: PropTypes.arrayOf(PropTypes.string),
     stats: PropTypes.arrayOf(
       PropTypes.shape({
         value: PropTypes.string.isRequired,
