@@ -5,6 +5,35 @@ import PropTypes from 'prop-types'
 
 const PROJECTS = [
   {
+    id: 3,
+    title: 'Local-First AI Job Copilot',
+    description: 'Imports roles, scores fit, generates tailored resumes, and runs reviewable browser prefills before a human decides the final submit.',
+    impact: 'URL IMPORT | FIT ANALYSIS | PDF RESUMES | REVIEWABLE PREFILL',
+    delivery: [
+      'End-to-end flow from job import to submission tracking.',
+      'Observable automation with screenshots, logs, retries, and run history.',
+      'Manual final submit by design.',
+    ],
+    stats: [
+      { value: '2', label: 'Providers' },
+      { value: '2', label: 'PDF Templates' },
+      { value: '1', label: 'Approval Gate' },
+    ],
+    status: 'Completed',
+    techStack: ['Next.js', 'NestJS', 'PostgreSQL', 'Prisma', 'Playwright', 'Docker', 'Redis', 'Temporal'],
+    githubUrl: 'https://github.com/FredZ6/JobAgent',
+    ctaLabel: 'View Case Study',
+    ctaUrl: 'https://github.com/FredZ6/JobAgent',
+    images: [
+      {
+        src: 'https://opengraph.githubassets.com/1/FredZ6/JobAgent',
+        fullSrc: 'https://opengraph.githubassets.com/1/FredZ6/JobAgent',
+        caption: 'JobAgent Repository Preview',
+      },
+    ],
+    accent: 'from-emerald-300 to-cyan-500',
+  },
+  {
     id: 1,
     title: 'Event-Driven Order & Inventory Microservices',
     description: 'Cloud-native order platform built on AWS with microservices, Terraform IaC, and CI/CD quality gates. Delivered 6 services across auth, catalog, ordering, inventory, payment, and notifications.',
@@ -22,6 +51,7 @@ const PROJECTS = [
     status: 'Completed',
     techStack: ['Java 17', 'Spring Boot', 'Microservices', 'AWS', 'Terraform'],
     githubUrl: 'https://github.com/FredZ6/cloud-project',
+    ctaLabel: 'View Gallery',
     images: [
       { src: '/portfolio/projects/cloud-order/dashboard_16x10.png', fullSrc: '/portfolio/projects/cloud-order/dashboard_full.png', caption: 'Dashboard' },
       { src: '/portfolio/projects/cloud-order/cloud_01_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_01_full.png', caption: 'System Screen 1' },
@@ -51,6 +81,7 @@ const PROJECTS = [
     status: 'Completed',
     techStack: ['React', 'Vite', 'Spring Security', 'JWT', 'PostgreSQL', 'Docker'],
     githubUrl: 'https://github.com/FredZ6/e-commerce',
+    ctaLabel: 'View Gallery',
     images: [
       { src: '/portfolio/projects/ecommerce/home_16x10.png', fullSrc: '/portfolio/projects/ecommerce/home.png', caption: 'Home Page' },
       { src: '/portfolio/projects/ecommerce/product_16x10.png', fullSrc: '/portfolio/projects/ecommerce/product.png', caption: 'Products Page' },
@@ -126,6 +157,8 @@ const Projects = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
 
   const openLightbox = (projectImages) => {
+    if (!projectImages?.length) return
+
     setLightboxData(projectImages)
     setActiveImageIndex(0)
     document.body.style.overflow = 'hidden'
@@ -321,6 +354,9 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
   const [activeMobilePanel, setActiveMobilePanel] = useState('delivery')
   const deliverySummary = project.stats.map((stat) => `${stat.value} ${stat.label.toLowerCase()}`).join(' / ')
   const stackSummary = project.techStack.slice(0, 3).join(' / ')
+  const hasGallery = project.images.length > 0
+  const galleryFrameLabel = project.images.length === 1 ? 'Frame' : 'Frames'
+  const galleryScreenLabel = project.images.length === 1 ? 'screen' : 'screens'
   const mobilePanels = [
     {
       id: 'delivery',
@@ -413,7 +449,7 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
               {project.impact}
             </p>
             <span className="hidden lg:inline-flex rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[clamp(0.55rem,0.5rem+0.08vw,0.68rem)] font-semibold uppercase tracking-[0.2em] text-slate-400">
-              {project.images.length} Frames
+              {project.images.length} {galleryFrameLabel}
             </span>
           </div>
 
@@ -512,19 +548,34 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
           </div>
 
           <div className="mt-[clamp(0.875rem,0.72rem+0.18vw,1.1rem)] flex items-end justify-between gap-3 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)] border-t border-white/[0.08] pt-[clamp(0.95rem,0.8rem+0.18vw,1.15rem)]">
-            <button
-              onClick={onOpenLightbox}
-              className="flex items-center gap-2.5 px-[clamp(1rem,0.9rem+0.16vw,1.25rem)] sm:px-[clamp(1.1rem,0.95rem+0.18vw,1.35rem)] py-[clamp(0.6rem,0.52rem+0.08vw,0.78rem)] rounded-full bg-white/10 hover:bg-primary text-white font-bold tracking-[0.16em] text-[clamp(0.62rem,0.56rem+0.08vw,0.75rem)] uppercase transition-all shadow-[0_10px_20px_rgba(0,0,0,0.2)]"
-            >
-              <ImageIcon size={16} />
-              <span>View Gallery</span>
-            </button>
+            {project.ctaUrl ? (
+              <a
+                href={project.ctaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2.5 px-[clamp(1rem,0.9rem+0.16vw,1.25rem)] sm:px-[clamp(1.1rem,0.95rem+0.18vw,1.35rem)] py-[clamp(0.6rem,0.52rem+0.08vw,0.78rem)] rounded-full bg-white/10 hover:bg-primary text-white font-bold tracking-[0.16em] text-[clamp(0.62rem,0.56rem+0.08vw,0.75rem)] uppercase transition-all shadow-[0_10px_20px_rgba(0,0,0,0.2)]"
+              >
+                <ExternalLink size={16} />
+                <span>{project.ctaLabel}</span>
+              </a>
+            ) : (
+              <button
+                onClick={onOpenLightbox}
+                disabled={!hasGallery}
+                className="flex items-center gap-2.5 px-[clamp(1rem,0.9rem+0.16vw,1.25rem)] sm:px-[clamp(1.1rem,0.95rem+0.18vw,1.35rem)] py-[clamp(0.6rem,0.52rem+0.08vw,0.78rem)] rounded-full bg-white/10 hover:bg-primary text-white font-bold tracking-[0.16em] text-[clamp(0.62rem,0.56rem+0.08vw,0.75rem)] uppercase transition-all shadow-[0_10px_20px_rgba(0,0,0,0.2)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white/10"
+              >
+                <ImageIcon size={16} />
+                <span>{project.ctaLabel}</span>
+              </button>
+            )}
 
             <div className="flex items-end gap-4 sm:gap-6 text-right">
-              <div className="hidden sm:block">
-                <p className="text-[clamp(0.52rem,0.48rem+0.08vw,0.62rem)] font-semibold uppercase tracking-[0.2em] text-slate-500">Gallery</p>
-                <p className="mt-1 text-[clamp(0.72rem,0.66rem+0.1vw,0.8rem)] font-semibold text-slate-300">{project.images.length} screens</p>
-              </div>
+              {hasGallery && (
+                <div className="hidden sm:block">
+                  <p className="text-[clamp(0.52rem,0.48rem+0.08vw,0.62rem)] font-semibold uppercase tracking-[0.2em] text-slate-500">Gallery</p>
+                  <p className="mt-1 text-[clamp(0.72rem,0.66rem+0.1vw,0.8rem)] font-semibold text-slate-300">{project.images.length} {galleryScreenLabel}</p>
+                </div>
+              )}
               <div>
                 <p className="text-[clamp(0.52rem,0.48rem+0.08vw,0.62rem)] font-semibold uppercase tracking-[0.2em] text-slate-500">Status</p>
                 <p className="mt-1 text-[clamp(0.72rem,0.66rem+0.1vw,0.8rem)] font-semibold text-slate-300">{project.status}</p>
@@ -556,6 +607,8 @@ ProjectCard.propTypes = {
     status: PropTypes.string.isRequired,
     techStack: PropTypes.arrayOf(PropTypes.string).isRequired,
     githubUrl: PropTypes.string.isRequired,
+    ctaLabel: PropTypes.string.isRequired,
+    ctaUrl: PropTypes.string,
     images: PropTypes.arrayOf(
       PropTypes.shape({
         src: PropTypes.string.isRequired,
