@@ -8,7 +8,7 @@ const PROJECTS = [
     id: 3,
     title: 'Local-First AI Job Copilot',
     description: 'Imports roles, scores fit, generates tailored resumes, and runs reviewable browser prefills before a human decides the final submit.',
-    impact: 'URL IMPORT | FIT ANALYSIS | PDF RESUMES | REVIEWABLE PREFILL',
+    impact: 'URL IMPORT | LLM-POWERED ANALYSIS | PDF RESUMES | REVIEWABLE PREFILL',
     delivery: [
       'End-to-end flow from job import to submission tracking.',
       'Observable automation with screenshots, logs, retries, and run history.',
