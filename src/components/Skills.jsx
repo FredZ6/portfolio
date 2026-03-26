@@ -157,7 +157,7 @@ OrbitRing.propTypes = {
 
 const Skills = () => {
   return (
-    <section className="relative -mt-14 sm:-mt-20 lg:-mt-24 min-h-screen w-full overflow-hidden bg-transparent flex flex-col items-center justify-center pt-2 sm:pt-0" id="skills">
+    <section className="relative -mt-14 sm:-mt-[16vh] lg:-mt-[20vh] min-h-screen w-full overflow-hidden bg-transparent flex flex-col items-center justify-center pt-2 sm:pt-0" id="skills">
 
       {/* Absolute headers so they don't break the orbital centering */}
       <div className="absolute top-1 sm:top-3 left-1/2 -translate-x-1/2 text-center z-10 w-full px-4">
