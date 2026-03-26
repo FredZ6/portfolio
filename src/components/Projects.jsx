@@ -27,13 +27,27 @@ const PROJECTS = [
     status: 'Completed',
     techStack: ['Next.js', 'NestJS', 'PostgreSQL', 'Prisma', 'Playwright', 'Docker', 'Redis', 'Temporal'],
     githubUrl: 'https://github.com/FredZ6/JobAgent',
-    ctaLabel: 'View Case Study',
-    ctaUrl: 'https://github.com/FredZ6/JobAgent',
+    ctaLabel: 'View Gallery',
     images: [
       {
-        src: 'https://opengraph.githubassets.com/1/FredZ6/JobAgent',
-        fullSrc: 'https://opengraph.githubassets.com/1/FredZ6/JobAgent',
-        caption: 'JobAgent Repository Preview',
+        src: '/portfolio/projects/job-agent/application-review-automation-sessions-16x9.png',
+        fullSrc: '/portfolio/projects/job-agent/application-review-automation-sessions-16x9.png',
+        caption: 'Application review automation sessions',
+      },
+      {
+        src: '/portfolio/projects/job-agent/job-detail-workflow-runs-16x9.png',
+        fullSrc: '/portfolio/projects/job-agent/job-detail-workflow-runs-16x9.png',
+        caption: 'Job detail workflow runs',
+      },
+      {
+        src: '/portfolio/projects/job-agent/dashboard-overview-16x9.png',
+        fullSrc: '/portfolio/projects/job-agent/dashboard-overview-16x9.png',
+        caption: 'Dashboard overview',
+      },
+      {
+        src: '/portfolio/projects/job-agent/resume-review-pdf-preview-16x9.png',
+        fullSrc: '/portfolio/projects/job-agent/resume-review-pdf-preview-16x9.png',
+        caption: 'Resume review PDF preview',
       },
     ],
     accent: 'from-emerald-300 to-cyan-500',
