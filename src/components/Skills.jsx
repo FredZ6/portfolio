@@ -1,94 +1,33 @@
-import { useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import {
-  FaReact,
   FaAws,
-  FaGitAlt,
   FaDocker,
-  FaNodeJs,
   FaLinux,
+  FaNodeJs,
   FaJava,
-  FaHtml5,
-  FaCss3Alt
+  FaReact,
 } from 'react-icons/fa'
 import {
-  SiTypescript,
-  SiTailwindcss,
-  SiNextdotjs,
-  SiSpring,
-  SiRedis,
-  SiMongodb,
-  SiPostgresql,
-  SiGithubactions,
-  SiKubernetes,
   SiApachekafka,
-  SiRabbitmq,
-  SiVuedotjs,
-  SiRedux,
-  SiTerraform,
+  SiGithubactions,
   SiGraphql,
+  SiKubernetes,
+  SiMongodb,
+  SiNextdotjs,
   SiNginx,
-  SiJenkins
+  SiPostgresql,
+  SiRabbitmq,
+  SiRedis,
+  SiRedux,
+  SiSpring,
+  SiTailwindcss,
+  SiTerraform,
+  SiTypescript,
+  SiVuedotjs,
 } from 'react-icons/si'
 import { RiClaudeLine, RiGeminiLine, RiOpenaiLine } from 'react-icons/ri'
 import { TbPencilCode } from 'react-icons/tb'
-// Add PropTypes import
 import PropTypes from 'prop-types'
-
-const skillsData = [
-  {
-    title: 'Frontend',
-    radius: 160,
-    duration: 35,
-    reverse: false,
-    color: 'rgba(97, 218, 251, 0.4)',
-    skills: [
-      { name: 'React', icon: <FaReact />, color: '#61DAFB' },
-      { name: 'TypeScript', icon: <SiTypescript />, color: '#3178C6' },
-      { name: 'Next.js', icon: <SiNextdotjs />, color: '#ffffff' },
-      { name: 'Tailwind', icon: <SiTailwindcss />, color: '#06B6D4' },
-      { name: 'Vue', icon: <SiVuedotjs />, color: '#42B883' },
-      { name: 'Redux', icon: <SiRedux />, color: '#3B82F6' },
-      { name: 'HTML5', icon: <FaHtml5 />, color: '#E34F26' },
-      { name: 'CSS3', icon: <FaCss3Alt />, color: '#1572B6' },
-    ],
-  },
-  {
-    title: 'Backend',
-    radius: 280,
-    duration: 45,
-    reverse: true,
-    color: 'rgba(109, 179, 63, 0.4)',
-    skills: [
-      { name: 'Spring Boot', icon: <SiSpring />, color: '#6DB33F' },
-      { name: 'Node.js', icon: <FaNodeJs />, color: '#339933' },
-      { name: 'PostgreSQL', icon: <SiPostgresql />, color: '#4169E1' },
-      { name: 'MongoDB', icon: <SiMongodb />, color: '#47A248' },
-      { name: 'Redis', icon: <SiRedis />, color: '#DC382D' },
-      { name: 'Kafka', icon: <SiApachekafka />, color: '#aaaaaa' },
-      { name: 'RabbitMQ', icon: <SiRabbitmq />, color: '#FF6600' },
-      { name: 'Java', icon: <FaJava />, color: '#F89820' },
-      { name: 'GraphQL', icon: <SiGraphql />, color: '#E10098' },
-    ],
-  },
-  {
-    title: 'DevOps',
-    radius: 420,
-    duration: 55,
-    reverse: false,
-    color: 'rgba(255, 153, 0, 0.4)',
-    skills: [
-      { name: 'AWS', icon: <FaAws />, color: '#FF9900' },
-      { name: 'Docker', icon: <FaDocker />, color: '#2496ED' },
-      { name: 'Kubernetes', icon: <SiKubernetes />, color: '#326CE5' },
-      { name: 'Git Actions', icon: <SiGithubactions />, color: '#2088FF' },
-      { name: 'Terraform', icon: <SiTerraform />, color: '#38BDF8' },
-      { name: 'Linux', icon: <FaLinux />, color: '#aaaaaa' },
-      { name: 'Nginx', icon: <SiNginx />, color: '#009639' },
-      { name: 'Jenkins', icon: <SiJenkins />, color: '#D24939' },
-      { name: 'Git', icon: <FaGitAlt />, color: '#F05032' },
-    ],
-  },
-]
 
 const AntigravityIcon = ({ className = '' }) => (
   <svg
@@ -110,6 +49,67 @@ const AntigravityIcon = ({ className = '' }) => (
 AntigravityIcon.propTypes = {
   className: PropTypes.string,
 }
+
+const capabilityClusters = [
+  {
+    id: 'frontend',
+    eyebrow: 'Experience Layer',
+    title: 'Frontend Systems',
+    summary: 'Interfaces with motion discipline, typed state, and a visual layer that still feels intentional under pressure.',
+    accent: '#69D6FF',
+    skills: [
+      { name: 'React', icon: FaReact, color: '#61DAFB' },
+      { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+      { name: 'Next.js', icon: SiNextdotjs, color: '#FFFFFF' },
+      { name: 'Tailwind', icon: SiTailwindcss, color: '#06B6D4' },
+      { name: 'Vue', icon: SiVuedotjs, color: '#42B883' },
+      { name: 'Redux', icon: SiRedux, color: '#7C3AED' },
+    ],
+  },
+  {
+    id: 'services',
+    eyebrow: 'Application Layer',
+    title: 'Platform Services',
+    summary: 'Backend flows shaped around clean boundaries, reliable APIs, and systems that stay legible as scope grows.',
+    accent: '#8CF2A5',
+    skills: [
+      { name: 'Java', icon: FaJava, color: '#F89820' },
+      { name: 'Spring', icon: SiSpring, color: '#6DB33F' },
+      { name: 'Node.js', icon: FaNodeJs, color: '#5FA04E' },
+      { name: 'GraphQL', icon: SiGraphql, color: '#E10098' },
+      { name: 'Nginx', icon: SiNginx, color: '#009639' },
+    ],
+  },
+  {
+    id: 'data',
+    eyebrow: 'State Layer',
+    title: 'Data + Messaging',
+    summary: 'Storage, cache, and event pipelines tuned for observability, async coordination, and safer retry paths.',
+    accent: '#F4B462',
+    skills: [
+      { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
+      { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
+      { name: 'Redis', icon: SiRedis, color: '#DC382D' },
+      { name: 'Kafka', icon: SiApachekafka, color: '#C9D1D9' },
+      { name: 'RabbitMQ', icon: SiRabbitmq, color: '#FF6600' },
+    ],
+  },
+  {
+    id: 'delivery',
+    eyebrow: 'Delivery Layer',
+    title: 'Cloud Delivery',
+    summary: 'Containers, infrastructure as code, CI, and runtime discipline wired together for repeatable releases.',
+    accent: '#9AA7FF',
+    skills: [
+      { name: 'AWS', icon: FaAws, color: '#FF9900' },
+      { name: 'Docker', icon: FaDocker, color: '#2496ED' },
+      { name: 'Kubernetes', icon: SiKubernetes, color: '#326CE5' },
+      { name: 'Terraform', icon: SiTerraform, color: '#7B42F6' },
+      { name: 'Git Actions', icon: SiGithubactions, color: '#2088FF' },
+      { name: 'Linux', icon: FaLinux, color: '#D4D4D8' },
+    ],
+  },
+]
 
 const aiWorkflowTools = [
   {
@@ -146,156 +146,269 @@ const aiWorkflowTools = [
 
 const workflowStages = ['Spec', 'Build', 'Review', 'Verify']
 
-const OrbitRing = ({ radius, duration, reverse, skills, color }) => {
-  const shouldReduceMotion = useReducedMotion()
-  const orbitRotationStyle = shouldReduceMotion
-    ? { animation: 'none' }
-    : {
-        '--orbit-duration': `${duration}s`,
-        '--orbit-direction': reverse ? 'reverse' : 'normal'
-      }
-  const iconRotationStyle = shouldReduceMotion
-    ? { animation: 'none' }
-    : {
-        '--orbit-duration': `${duration}s`,
-        '--orbit-direction': reverse ? 'normal' : 'reverse'
-      }
+const signalPillars = [
+  { label: 'Operating Mode', value: 'Spec-Driven' },
+  { label: 'Delivery Surface', value: 'Full-Stack' },
+  { label: 'Execution Loop', value: 'AI-Assisted' },
+  { label: 'Risk Control', value: 'Human Review' },
+]
+
+const certifications = [
+  {
+    name: 'DVA-C02',
+    label: 'AWS Developer',
+    image: '/portfolio/dvac02.png',
+    href: 'https://www.credly.com/badges/f68690b3-1e68-46d8-ae56-366bd880c0e5/linked_in_profile',
+  },
+  {
+    name: 'CLF-C02',
+    label: 'Cloud Practitioner',
+    image: '/portfolio/clf-c02.png',
+    href: 'https://www.credly.com/badges/ff21fdcd-97e7-42a1-9e15-ddf052af8c57/linked_in_profile',
+  },
+]
+
+const SkillChip = ({ skill }) => {
+  const Icon = skill.icon
 
   return (
-    <div
-      className="skill-orbit-ring absolute top-1/2 left-1/2 rounded-full border border-dashed border-white/10 pointer-events-none"
-      style={{
-        width: radius * 2,
-        height: radius * 2,
-        boxShadow: `0 0 40px ${color} inset`,
-        ...orbitRotationStyle
-      }}
-    >
-      {skills.map((skill, index) => {
-        const angle = (index / skills.length) * 360
-        return (
-          <div
-            key={skill.name}
-            className="absolute top-1/2 left-1/2 pointer-events-auto"
-            style={{
-              transform: `rotate(${angle}deg) translateX(${radius}px) rotate(-${angle}deg)`
-            }}
-          >
-            <div className="relative h-12 w-12 -translate-x-1/2 -translate-y-1/2 md:h-16 md:w-16">
-              <div className="skill-orbit-counter flex h-full w-full items-center justify-center" style={iconRotationStyle}>
-                <div className="group relative flex h-full w-full items-center justify-center rounded-full glass-panel-strong shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(56,189,248,0.58)] hover:scale-125 transition-all cursor-pointer z-20">
-                  <div
-                    className="text-xl md:text-2xl drop-shadow-md"
-                    style={{ color: skill.color }}
-                  >
-                    {skill.icon}
-                  </div>
-
-                  {/* Tooltip */}
-                  <div className="absolute -bottom-8 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/80 backdrop-blur border border-white/20 text-white text-[10px] sm:text-xs px-2 py-1 rounded whitespace-nowrap z-50 shadow-xl font-bold tracking-widest">
-                    {skill.name}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )
-      })}
-    </div>
+    <span className="signal-node-chip">
+      <span
+        className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-slate-950/80 text-[1rem]"
+        style={{ color: skill.color, boxShadow: `0 0 22px ${skill.color}22` }}
+      >
+        <Icon className="h-[1em] w-[1em]" />
+      </span>
+      <span className="text-[11px] font-semibold tracking-[0.12em] text-slate-50 sm:text-xs">
+        {skill.name}
+      </span>
+    </span>
   )
 }
 
-OrbitRing.propTypes = {
-  radius: PropTypes.number.isRequired,
-  duration: PropTypes.number.isRequired,
-  reverse: PropTypes.bool.isRequired,
-  skills: PropTypes.array.isRequired,
-  color: PropTypes.string.isRequired,
+SkillChip.propTypes = {
+  skill: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    icon: PropTypes.elementType.isRequired,
+    color: PropTypes.string.isRequired,
+  }).isRequired,
+}
+
+const ClusterCard = ({ cluster, index, shouldReduceMotion }) => (
+  <motion.article
+    className="signal-cluster-card relative overflow-hidden rounded-[1.65rem] p-5 sm:p-6"
+    style={{ '--cluster-accent': cluster.accent, borderColor: `${cluster.accent}33` }}
+    initial={shouldReduceMotion ? false : { opacity: 0, y: 26 }}
+    whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.35 }}
+    transition={{ duration: 0.65, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+    whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.01 }}
+  >
+    <div
+      className="absolute inset-x-5 top-0 h-px opacity-90"
+      style={{ background: `linear-gradient(90deg, transparent, ${cluster.accent}, transparent)` }}
+    />
+    <div className="relative z-10">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-200/90">
+        {cluster.eyebrow}
+      </p>
+      <h3 className="mt-3 text-xl font-black tracking-[0.02em] text-white sm:text-[1.35rem]">
+        {cluster.title}
+      </h3>
+      <p className="mt-3 max-w-[28rem] text-sm leading-6 text-[#E8F1FF]">
+        {cluster.summary}
+      </p>
+      <div className="mt-5 flex flex-wrap gap-2.5">
+        {cluster.skills.map((skill) => (
+          <SkillChip key={skill.name} skill={skill} />
+        ))}
+      </div>
+    </div>
+  </motion.article>
+)
+
+ClusterCard.propTypes = {
+  cluster: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    eyebrow: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    summary: PropTypes.string.isRequired,
+    accent: PropTypes.string.isRequired,
+    skills: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      icon: PropTypes.elementType.isRequired,
+      color: PropTypes.string.isRequired,
+    })).isRequired,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+  shouldReduceMotion: PropTypes.bool.isRequired,
 }
 
 const Skills = () => {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
-    <section className="relative -mt-14 sm:-mt-[16vh] lg:-mt-[20vh] min-h-screen w-full overflow-hidden bg-transparent flex flex-col items-center justify-center pt-2 sm:pt-0" id="skills">
+    <section className="relative -mt-14 sm:-mt-[16vh] lg:-mt-[20vh] min-h-screen w-full overflow-hidden bg-transparent" id="skills">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-[-8rem] top-[18%] h-56 w-56 rounded-full bg-sky-400/12 blur-3xl sm:h-72 sm:w-72" />
+        <div className="absolute right-[-6rem] top-[10%] h-64 w-64 rounded-full bg-cyan-300/10 blur-3xl sm:h-80 sm:w-80" />
+        <div className="absolute bottom-[12%] left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-indigo-400/8 blur-[140px]" />
+      </div>
 
-      {/* Absolute headers so they don't break the orbital centering */}
-      <div className="absolute top-1 sm:top-3 left-1/2 -translate-x-1/2 text-center z-10 w-full px-4">
-        <h2 className="text-4xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_15px_rgba(56,189,248,0.42)] mix-blend-plus-lighter mb-4">
-          TECHNICAL CORE
-        </h2>
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-2 text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.45em] text-secondary/90 sm:text-xl">
-            AI-NATIVE DEV WORKFLOW
+      <div className="container-width relative z-10 flex min-h-screen flex-col items-center justify-center px-4 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-16 lg:px-8 lg:pt-20">
+        <div className="w-full max-w-4xl text-center">
+          <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_18px_rgba(56,189,248,0.34)] sm:text-6xl">
+            TECHNICAL CORE
+          </h2>
+          <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.42em] text-secondary sm:text-sm">
+            SIGNAL MAP
           </p>
-          <p className="text-sm font-medium tracking-[0.02em] text-slate-300/90 sm:text-lg">
-            Any stack, lower learning cost, faster delivery.
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#E8F1FF] sm:text-base">
+            A cleaner view of how I ship: product-facing frontend, reliable backend services, observable data flows, and cloud delivery linked by an AI-native workflow.
           </p>
         </div>
 
-        <div className="mx-auto mt-5 flex max-w-5xl flex-wrap items-center justify-center gap-2.5 sm:mt-6 sm:gap-3">
-          {aiWorkflowTools.map((tool) => {
-            const Icon = tool.icon
+        <div className="mt-10 w-full max-w-6xl">
+          <div className="signal-map-shell relative overflow-hidden rounded-[2.2rem] px-4 py-5 sm:px-7 sm:py-7 lg:px-10 lg:py-10">
+            <div className="pointer-events-none absolute inset-0 hidden lg:block">
+              <div className="absolute left-1/2 top-1/2 h-px w-[32%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(115,212,255,0.22),rgba(255,255,255,0.1),rgba(140,242,165,0.22),transparent)]" />
+              <div className="absolute left-1/2 top-1/2 h-[46%] w-px -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(154,167,255,0.24),rgba(255,255,255,0.08),rgba(244,180,98,0.26),transparent)]" />
+            </div>
 
-            return (
-              <div
-                key={tool.name}
-                className="group flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/25 px-3 py-2 backdrop-blur-xl shadow-[0_14px_30px_rgba(0,0,0,0.28),inset_0_1px_1px_rgba(255,255,255,0.08)] transition-transform duration-300 hover:-translate-y-0.5"
-              >
-                <span
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-slate-950/80 text-base shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] sm:h-9 sm:w-9 sm:text-lg"
-                  style={{ color: tool.color, boxShadow: `0 0 18px ${tool.glow}` }}
-                >
-                  <Icon className="h-[1em] w-[1em]" />
-                </span>
-                <span className="text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-100/90 sm:text-[10px]">
-                  {tool.name}
-                </span>
+            <div className="relative z-10 flex flex-col gap-3 border-b border-white/[0.08] pb-4 sm:gap-4 sm:pb-5 xl:grid xl:grid-cols-[minmax(0,1fr)_1px_auto] xl:items-center xl:gap-4">
+              <div className="flex flex-wrap gap-2.5 sm:gap-3 xl:min-w-0 xl:flex-nowrap xl:gap-2">
+                {aiWorkflowTools.map((tool) => {
+                  const Icon = tool.icon
+
+                  return (
+                    <div
+                      key={tool.name}
+                      className="flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/25 px-3 py-2 backdrop-blur-xl shadow-[0_14px_30px_rgba(0,0,0,0.24),inset_0_1px_1px_rgba(255,255,255,0.06)] xl:gap-1.5 xl:px-2.5 xl:py-1.5"
+                    >
+                      <span
+                        className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-slate-950/80 text-base xl:h-7 xl:w-7 xl:text-[0.92rem]"
+                        style={{ color: tool.color, boxShadow: `0 0 18px ${tool.glow}` }}
+                      >
+                        <Icon className="h-[1em] w-[1em]" />
+                      </span>
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-50 xl:text-[9px] xl:tracking-[0.14em]">
+                        {tool.name}
+                      </span>
+                    </div>
+                  )
+                })}
               </div>
-            )
-          })}
-        </div>
 
-        <div className="mx-auto mt-3 flex max-w-3xl flex-wrap items-center justify-center gap-2 sm:mt-4 sm:gap-2.5">
-          {workflowStages.map((stage) => (
-            <span
-              key={stage}
-              className="rounded-full border border-primary/20 bg-primary/[0.08] px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-slate-200/90 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_8px_18px_rgba(0,0,0,0.18)] sm:px-3.5 sm:text-[10px]"
+              <div className="hidden h-9 w-px shrink-0 bg-[linear-gradient(180deg,transparent,rgba(147,197,253,0.72),transparent)] xl:block" />
+
+              <div className="flex flex-wrap gap-2.5 sm:gap-3 xl:flex-nowrap xl:justify-end xl:gap-2">
+                {certifications.map((certification) => (
+                  <a
+                    key={certification.name}
+                    href={certification.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-2 rounded-full border border-white/[0.08] bg-slate-950/70 px-3 py-2 backdrop-blur-xl shadow-[0_14px_28px_rgba(0,0,0,0.28),inset_0_1px_1px_rgba(255,255,255,0.05)] transition-transform duration-300 hover:-translate-y-0.5 xl:gap-1.5 xl:px-2.5 xl:py-1.5"
+                  >
+                    <img
+                      src={certification.image}
+                      alt={certification.name}
+                      className="h-8 w-8 rounded-full object-cover shadow-[0_0_16px_rgba(96,165,250,0.2)]"
+                    />
+                    <span className="pr-1">
+                      <span className="block text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-300/80 xl:text-[8px] xl:tracking-[0.14em]">
+                        {certification.label}
+                      </span>
+                      <span className="mt-0.5 block text-[11px] font-black uppercase tracking-[0.22em] text-[#BFDBFE] xl:text-[10px] xl:tracking-[0.18em]">
+                        {certification.name}
+                      </span>
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative z-10 mt-6 grid gap-4 lg:grid-cols-[1fr_minmax(260px,0.88fr)_1fr] lg:grid-rows-[1fr_1fr]">
+              <ClusterCard cluster={capabilityClusters[0]} index={0} shouldReduceMotion={shouldReduceMotion} />
+
+              <motion.div
+                className="signal-core-panel relative overflow-hidden rounded-[1.9rem] p-6 sm:p-7 lg:row-span-2 lg:px-8 lg:py-8"
+                initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96 }}
+                whileInView={shouldReduceMotion ? undefined : { opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div className="signal-core-pulse absolute inset-[18%] rounded-full bg-cyan-300/8 blur-[70px]" />
+                <div className="relative z-10 flex h-full flex-col justify-between gap-8">
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-cyan-50">
+                      Signal Core
+                    </p>
+                    <h3 className="mt-4 text-3xl font-black leading-[1.02] tracking-tight text-white sm:text-[2.6rem]">
+                      Systems that stay elegant all the way to delivery.
+                    </h3>
+                    <p className="mt-4 text-sm leading-7 text-[#E8F1FF]">
+                      I connect design-minded frontend work with backend architecture, delivery guardrails, and AI-assisted execution so the whole build pipeline feels coherent instead of patched together.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    {signalPillars.map((pillar) => (
+                      <div
+                        key={pillar.label}
+                        className="rounded-[1.15rem] border border-white/[0.08] bg-white/[0.04] px-4 py-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]"
+                      >
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-200/90">
+                          {pillar.label}
+                        </p>
+                        <p className="mt-2 text-sm font-bold uppercase tracking-[0.16em] text-white">
+                          {pillar.value}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+
+              <ClusterCard cluster={capabilityClusters[1]} index={1} shouldReduceMotion={shouldReduceMotion} />
+              <ClusterCard cluster={capabilityClusters[2]} index={2} shouldReduceMotion={shouldReduceMotion} />
+              <ClusterCard cluster={capabilityClusters[3]} index={3} shouldReduceMotion={shouldReduceMotion} />
+            </div>
+
+            <motion.div
+              className="relative z-10 mt-6 rounded-[1.6rem] border border-white/[0.08] bg-black/20 p-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.04)] sm:p-5"
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 0.6, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
             >
-              {stage}
-            </span>
-          ))}
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#93C5FD]">
+                  Workflow Route
+                </p>
+                <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#93C5FD]">
+                  AI-assisted, human-reviewed
+                </p>
+              </div>
+
+              <div className="mt-4 grid gap-3 sm:grid-cols-4">
+                {workflowStages.map((stage, index) => (
+                  <div key={stage} className="relative">
+                    <div className="rounded-[1.1rem] border border-white/[0.08] bg-white/[0.04] px-4 py-4 text-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#93C5FD]">
+                        0{index + 1}
+                      </p>
+                      <p className="mt-2 text-sm font-bold uppercase tracking-[0.2em] text-[#BFDBFE]">
+                        {stage}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
-
-      {/* Orbital Star System */}
-      <div className="relative w-full max-w-[1000px] aspect-square flex items-center justify-center mt-36 sm:mt-40 md:mt-44 scale-[0.46] sm:scale-75 md:scale-90 lg:scale-100">
-
-        {/* Core AI/Me Node */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-24 h-24 sm:w-32 sm:h-32 glass-panel-strong rounded-full flex flex-col items-center justify-center shadow-[0_0_50px_rgba(13,244,230,0.5),inset_0_0_20px_rgba(255,255,255,0.5)]">
-          <div className="absolute inset-2 border-2 border-primary/50 border-dashed rounded-full animate-[spin_10s_linear_infinite]" />
-          <p className="text-white font-black text-sm sm:text-lg tracking-widest relative z-10 text-center uppercase">Dev<br />Core</p>
-        </div>
-
-        {/* Orbit Rings */}
-        {skillsData.map((orbit) => (
-          <OrbitRing key={orbit.title} {...orbit} />
-        ))}
-      </div>
-
-      {/* Certs Section at the bottom */}
-      <div className="absolute bottom-6 sm:bottom-8 w-full z-10 flex flex-col items-center justify-center px-4">
-        <div className="flex gap-4 glass-panel-strong rounded-full px-7 py-4 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
-          <a href="https://www.credly.com/badges/f68690b3-1e68-46d8-ae56-366bd880c0e5/linked_in_profile" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition-opacity flex items-center gap-3">
-            <img src="/portfolio/dvac02.png" alt="AWS DVA" className="w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-lg" />
-            <span className="text-xs sm:text-sm text-white font-bold tracking-widest hidden sm:inline">DVA-C02</span>
-          </a>
-          <div className="w-px bg-white/20 mx-2"></div>
-          <a href="https://www.credly.com/badges/ff21fdcd-97e7-42a1-9e15-ddf052af8c57/linked_in_profile" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition-opacity flex items-center gap-3">
-            <img src="/portfolio/clf-c02.png" alt="AWS CLF" className="w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-lg" />
-            <span className="text-xs sm:text-sm text-white font-bold tracking-widest hidden sm:inline">CLF-C02</span>
-          </a>
-        </div>
-      </div>
-
     </section>
   )
 }
