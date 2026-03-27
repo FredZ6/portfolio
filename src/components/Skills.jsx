@@ -29,6 +29,8 @@ import {
   SiNginx,
   SiJenkins
 } from 'react-icons/si'
+import { RiClaudeLine, RiGeminiLine, RiOpenaiLine } from 'react-icons/ri'
+import { TbPencilCode } from 'react-icons/tb'
 // Add PropTypes import
 import PropTypes from 'prop-types'
 
@@ -87,6 +89,62 @@ const skillsData = [
     ],
   },
 ]
+
+const AntigravityIcon = ({ className = '' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    className={className}
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.75"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M12 4.5 18 19.5h-2.7l-1.2-3.2h-4.2l-1.2 3.2H6z" />
+    <path d="m10.8 13.4 1.2-3.4 1.2 3.4" />
+    <path d="M7.7 8.2h8.6" opacity="0.5" />
+  </svg>
+)
+
+AntigravityIcon.propTypes = {
+  className: PropTypes.string,
+}
+
+const aiWorkflowTools = [
+  {
+    name: 'Claude Code',
+    icon: RiClaudeLine,
+    color: '#D97757',
+    glow: 'rgba(217, 119, 87, 0.34)',
+  },
+  {
+    name: 'Codex',
+    icon: RiOpenaiLine,
+    color: '#7ADAA5',
+    glow: 'rgba(122, 218, 165, 0.34)',
+  },
+  {
+    name: 'Gemini',
+    icon: RiGeminiLine,
+    color: '#8BA8FF',
+    glow: 'rgba(139, 168, 255, 0.34)',
+  },
+  {
+    name: 'Pencil',
+    icon: TbPencilCode,
+    color: '#F4C06A',
+    glow: 'rgba(244, 192, 106, 0.32)',
+  },
+  {
+    name: 'Antigravity',
+    icon: AntigravityIcon,
+    color: '#F472B6',
+    glow: 'rgba(244, 114, 182, 0.34)',
+  },
+]
+
+const workflowStages = ['Spec', 'Build', 'Review', 'Verify']
 
 const OrbitRing = ({ radius, duration, reverse, skills, color }) => {
   const shouldReduceMotion = useReducedMotion()
@@ -172,10 +230,44 @@ const Skills = () => {
             Any stack, lower learning cost, faster delivery.
           </p>
         </div>
+
+        <div className="mx-auto mt-5 flex max-w-5xl flex-wrap items-center justify-center gap-2.5 sm:mt-6 sm:gap-3">
+          {aiWorkflowTools.map((tool) => {
+            const Icon = tool.icon
+
+            return (
+              <div
+                key={tool.name}
+                className="group flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/25 px-3 py-2 backdrop-blur-xl shadow-[0_14px_30px_rgba(0,0,0,0.28),inset_0_1px_1px_rgba(255,255,255,0.08)] transition-transform duration-300 hover:-translate-y-0.5"
+              >
+                <span
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-slate-950/80 text-base shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] sm:h-9 sm:w-9 sm:text-lg"
+                  style={{ color: tool.color, boxShadow: `0 0 18px ${tool.glow}` }}
+                >
+                  <Icon className="h-[1em] w-[1em]" />
+                </span>
+                <span className="text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-100/90 sm:text-[10px]">
+                  {tool.name}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+
+        <div className="mx-auto mt-3 flex max-w-3xl flex-wrap items-center justify-center gap-2 sm:mt-4 sm:gap-2.5">
+          {workflowStages.map((stage) => (
+            <span
+              key={stage}
+              className="rounded-full border border-primary/20 bg-primary/[0.08] px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-slate-200/90 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_8px_18px_rgba(0,0,0,0.18)] sm:px-3.5 sm:text-[10px]"
+            >
+              {stage}
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* Orbital Star System */}
-      <div className="relative w-full max-w-[1000px] aspect-square flex items-center justify-center mt-20 sm:mt-24 scale-[0.46] sm:scale-75 md:scale-90 lg:scale-100">
+      <div className="relative w-full max-w-[1000px] aspect-square flex items-center justify-center mt-36 sm:mt-40 md:mt-44 scale-[0.46] sm:scale-75 md:scale-90 lg:scale-100">
 
         {/* Core AI/Me Node */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-24 h-24 sm:w-32 sm:h-32 glass-panel-strong rounded-full flex flex-col items-center justify-center shadow-[0_0_50px_rgba(13,244,230,0.5),inset_0_0_20px_rgba(255,255,255,0.5)]">
