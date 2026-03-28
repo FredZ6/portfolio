@@ -29,33 +29,12 @@ import { RiClaudeLine, RiGeminiLine, RiOpenaiLine } from 'react-icons/ri'
 import { TbPencilCode } from 'react-icons/tb'
 import PropTypes from 'prop-types'
 
-const AntigravityIcon = ({ className = '' }) => (
-  <svg
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.75"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M12 4.5 18 19.5h-2.7l-1.2-3.2h-4.2l-1.2 3.2H6z" />
-    <path d="m10.8 13.4 1.2-3.4 1.2 3.4" />
-    <path d="M7.7 8.2h8.6" opacity="0.5" />
-  </svg>
-)
-
-AntigravityIcon.propTypes = {
-  className: PropTypes.string,
-}
-
 const capabilityClusters = [
   {
     id: 'frontend',
     eyebrow: 'Experience Layer',
     title: 'Frontend Systems',
-    summary: 'Interfaces with motion discipline, typed state, and a visual layer that still feels intentional under pressure.',
+    summary: 'Interfaces with motion discipline, typed state, and a visual layer that stays intentional under pressure.',
     accent: '#69D6FF',
     skills: [
       { name: 'React', icon: FaReact, color: '#61DAFB' },
@@ -70,7 +49,7 @@ const capabilityClusters = [
     id: 'services',
     eyebrow: 'Application Layer',
     title: 'Platform Services',
-    summary: 'Backend flows shaped around clean boundaries, reliable APIs, and systems that stay legible as scope grows.',
+    summary: 'Backend flows shaped around clean boundaries, reliable APIs, and systems that stay legible as they scale.',
     accent: '#8CF2A5',
     skills: [
       { name: 'Java', icon: FaJava, color: '#F89820' },
@@ -84,7 +63,7 @@ const capabilityClusters = [
     id: 'data',
     eyebrow: 'State Layer',
     title: 'Data + Messaging',
-    summary: 'Storage, cache, and event pipelines tuned for observability, async coordination, and safer retry paths.',
+    summary: 'Storage, cache, and event pipelines tuned for observability, async coordination, and safer retries.',
     accent: '#F4B462',
     skills: [
       { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
@@ -98,7 +77,7 @@ const capabilityClusters = [
     id: 'delivery',
     eyebrow: 'Delivery Layer',
     title: 'Cloud Delivery',
-    summary: 'Containers, infrastructure as code, CI, and runtime discipline wired together for repeatable releases.',
+    summary: 'Containers, infrastructure as code, CI, and runtime discipline wired for repeatable releases.',
     accent: '#9AA7FF',
     skills: [
       { name: 'AWS', icon: FaAws, color: '#FF9900' },
@@ -138,9 +117,15 @@ const aiWorkflowTools = [
   },
   {
     name: 'Antigravity',
-    icon: AntigravityIcon,
-    color: '#F472B6',
-    glow: 'rgba(244, 114, 182, 0.34)',
+    image: '/portfolio/antigravity-logo.png',
+    color: '#F7A24C',
+    glow: 'rgba(105, 168, 255, 0.34)',
+  },
+  {
+    name: 'Openclaw',
+    image: '/portfolio/openclaw-logo.png',
+    color: '#FF6A4A',
+    glow: 'rgba(255, 106, 74, 0.32)',
   },
 ]
 
@@ -189,7 +174,8 @@ const SkillChip = ({ skill }) => {
 SkillChip.propTypes = {
   skill: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    icon: PropTypes.elementType.isRequired,
+    icon: PropTypes.elementType,
+    image: PropTypes.string,
     color: PropTypes.string.isRequired,
   }).isRequired,
 }
@@ -289,7 +275,15 @@ const Skills = () => {
                         className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-slate-950/80 text-base xl:h-7 xl:w-7 xl:text-[0.92rem]"
                         style={{ color: tool.color, boxShadow: `0 0 18px ${tool.glow}` }}
                       >
-                        <Icon className="h-[1em] w-[1em]" />
+                        {tool.image ? (
+                          <img
+                            src={tool.image}
+                            alt=""
+                            className="h-[1.12em] w-[1.12em] object-contain"
+                          />
+                        ) : (
+                          <Icon className="h-[1em] w-[1em]" />
+                        )}
                       </span>
                       <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-50 xl:text-[9px] xl:tracking-[0.14em]">
                         {tool.name}
@@ -345,10 +339,10 @@ const Skills = () => {
                       Signal Core
                     </p>
                     <h3 className="mt-4 text-3xl font-black leading-[1.02] tracking-tight text-white sm:text-[2.6rem]">
-                      Systems that stay elegant all the way to delivery.
+                      Systems that stay elegant through delivery.
                     </h3>
                     <p className="mt-4 text-sm leading-7 text-[#E8F1FF]">
-                      I connect design-minded frontend work with backend architecture, delivery guardrails, and AI-assisted execution so the whole build pipeline feels coherent instead of patched together.
+                      I connect design-minded frontend with backend architecture, delivery guardrails, and AI-assisted execution so the build pipeline feels coherent end to end.
                     </p>
                   </div>
 
