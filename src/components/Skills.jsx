@@ -186,9 +186,9 @@ SkillChip.propTypes = {
   }).isRequired,
 }
 
-const ClusterCard = ({ cluster, index, shouldReduceMotion }) => (
+const ClusterCard = ({ cluster, index, shouldReduceMotion, className = '' }) => (
   <motion.article
-    className="signal-cluster-card relative overflow-hidden rounded-[1.65rem] p-5 sm:p-6"
+    className={`signal-cluster-card relative overflow-hidden rounded-[1.65rem] p-5 sm:p-6 ${className}`}
     style={{ '--cluster-accent': cluster.accent, borderColor: `${cluster.accent}33` }}
     initial={shouldReduceMotion ? false : { opacity: 0, y: 26 }}
     whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -234,6 +234,7 @@ ClusterCard.propTypes = {
   }).isRequired,
   index: PropTypes.number.isRequired,
   shouldReduceMotion: PropTypes.bool.isRequired,
+  className: PropTypes.string,
 }
 
 const Skills = () => {
@@ -333,10 +334,15 @@ const Skills = () => {
             </div>
 
             <div className="relative z-10 mt-6 grid gap-4 lg:grid-cols-[1fr_minmax(260px,0.88fr)_1fr] lg:grid-rows-[1fr_1fr]">
-              <ClusterCard cluster={capabilityClusters[0]} index={0} shouldReduceMotion={shouldReduceMotion} />
+              <ClusterCard
+                cluster={capabilityClusters[0]}
+                index={0}
+                shouldReduceMotion={shouldReduceMotion}
+                className="order-2 lg:order-none"
+              />
 
               <motion.div
-                className="signal-core-panel relative overflow-hidden rounded-[1.9rem] p-6 sm:p-7 lg:row-span-2 lg:px-8 lg:py-8"
+                className="signal-core-panel relative order-1 overflow-hidden rounded-[1.9rem] p-6 sm:p-7 lg:order-none lg:row-span-2 lg:px-8 lg:py-8"
                 initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96 }}
                 whileInView={shouldReduceMotion ? undefined : { opacity: 1, scale: 1 }}
                 viewport={{ once: true, amount: 0.35 }}
@@ -374,9 +380,24 @@ const Skills = () => {
                 </div>
               </motion.div>
 
-              <ClusterCard cluster={capabilityClusters[1]} index={1} shouldReduceMotion={shouldReduceMotion} />
-              <ClusterCard cluster={capabilityClusters[2]} index={2} shouldReduceMotion={shouldReduceMotion} />
-              <ClusterCard cluster={capabilityClusters[3]} index={3} shouldReduceMotion={shouldReduceMotion} />
+              <ClusterCard
+                cluster={capabilityClusters[1]}
+                index={1}
+                shouldReduceMotion={shouldReduceMotion}
+                className="order-3 lg:order-none"
+              />
+              <ClusterCard
+                cluster={capabilityClusters[2]}
+                index={2}
+                shouldReduceMotion={shouldReduceMotion}
+                className="order-4 lg:order-none"
+              />
+              <ClusterCard
+                cluster={capabilityClusters[3]}
+                index={3}
+                shouldReduceMotion={shouldReduceMotion}
+                className="order-5 lg:order-none"
+              />
             </div>
 
             <motion.div
