@@ -96,36 +96,42 @@ const aiWorkflowTools = [
     icon: RiClaudeLine,
     color: '#D97757',
     glow: 'rgba(217, 119, 87, 0.34)',
+    href: 'https://claude.com/product/claude-code',
   },
   {
     name: 'Codex',
     icon: RiOpenaiLine,
     color: '#7ADAA5',
     glow: 'rgba(122, 218, 165, 0.34)',
+    href: 'https://openai.com/codex/',
   },
   {
     name: 'Gemini',
     icon: RiGeminiLine,
     color: '#8BA8FF',
     glow: 'rgba(139, 168, 255, 0.34)',
+    href: 'https://gemini.google.com/',
   },
   {
     name: 'Pencil',
     icon: TbPencilCode,
     color: '#F4C06A',
     glow: 'rgba(244, 192, 106, 0.32)',
+    href: 'https://pencil.dev/',
   },
   {
     name: 'Antigravity',
     image: '/portfolio/antigravity-logo.png',
     color: '#F7A24C',
     glow: 'rgba(105, 168, 255, 0.34)',
+    href: 'https://antigravity.google/',
   },
   {
     name: 'Openclaw',
     image: '/portfolio/openclaw-logo.png',
     color: '#FF6A4A',
     glow: 'rgba(255, 106, 74, 0.32)',
+    href: 'https://openclaw.ai/',
   },
 ]
 
@@ -267,9 +273,13 @@ const Skills = () => {
                   const Icon = tool.icon
 
                   return (
-                    <div
+                    <a
                       key={tool.name}
-                      className="flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/25 px-3 py-2 backdrop-blur-xl shadow-[0_14px_30px_rgba(0,0,0,0.24),inset_0_1px_1px_rgba(255,255,255,0.06)] xl:gap-1.5 xl:px-2.5 xl:py-1.5"
+                      href={tool.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Open ${tool.name} website`}
+                      className="flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/25 px-3 py-2 backdrop-blur-xl shadow-[0_14px_30px_rgba(0,0,0,0.24),inset_0_1px_1px_rgba(255,255,255,0.06)] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:shadow-[0_18px_34px_rgba(0,0,0,0.28),inset_0_1px_1px_rgba(255,255,255,0.08),0_0_18px_rgba(125,211,252,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 xl:gap-1.5 xl:px-2.5 xl:py-1.5"
                     >
                       <span
                         className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-slate-950/80 text-base xl:h-7 xl:w-7 xl:text-[0.92rem]"
@@ -288,7 +298,7 @@ const Skills = () => {
                       <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-50 xl:text-[9px] xl:tracking-[0.14em]">
                         {tool.name}
                       </span>
-                    </div>
+                    </a>
                   )
                 })}
               </div>
