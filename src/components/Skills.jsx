@@ -241,7 +241,7 @@ const Skills = () => {
   const shouldReduceMotion = useReducedMotion()
 
   return (
-    <section className="relative -mt-14 sm:-mt-[16vh] lg:-mt-[20vh] min-h-screen w-full overflow-hidden bg-transparent" id="skills">
+    <section className="relative mt-8 sm:mt-[8vh] lg:mt-[10vh] min-h-screen w-full overflow-hidden bg-transparent" id="skills">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[-8rem] top-[18%] h-56 w-56 rounded-full bg-sky-400/12 blur-3xl sm:h-72 sm:w-72" />
         <div className="absolute right-[-6rem] top-[10%] h-64 w-64 rounded-full bg-cyan-300/10 blur-3xl sm:h-80 sm:w-80" />

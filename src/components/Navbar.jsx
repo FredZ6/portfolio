@@ -4,8 +4,8 @@ import { Home, Briefcase, Code2, User, Mail } from 'lucide-react'
 const Navbar = () => {
   const navItems = [
     { name: 'Home', icon: Home, href: '#home' },
-    { name: 'Projects', icon: Briefcase, href: '#projects' },
     { name: 'Skills', icon: Code2, href: '#skills' },
+    { name: 'Projects', icon: Briefcase, href: '#projects' },
     { name: 'About', icon: User, href: '#about' },
     { name: 'Contact', icon: Mail, href: '#contact' },
   ]
