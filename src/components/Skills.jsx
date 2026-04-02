@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+import { ArrowUpRight, Award, ChevronDown, ChevronUp } from 'lucide-react'
 import {
   FaAws,
   FaDocker,
@@ -144,18 +146,59 @@ const signalPillars = [
   { label: 'Risk Control', value: 'Human Review' },
 ]
 
+const MAX_VISIBLE_CERTIFICATIONS = 6
+
 const certifications = [
   {
+    issuer: 'AWS',
+    title: 'Developer Associate',
     name: 'DVA-C02',
-    label: 'AWS Developer',
+    summary: 'Associate badge validating application delivery across core AWS services.',
+    accent: '#FF9F43',
     image: '/portfolio/dvac02.png',
     href: 'https://www.credly.com/badges/f68690b3-1e68-46d8-ae56-366bd880c0e5/linked_in_profile',
   },
   {
+    issuer: 'AWS',
+    title: 'Cloud Practitioner',
     name: 'CLF-C02',
-    label: 'Cloud Practitioner',
+    summary: 'Foundational certification covering cloud concepts, billing, security, and operations.',
+    accent: '#69D6FF',
     image: '/portfolio/clf-c02.png',
     href: 'https://www.credly.com/badges/ff21fdcd-97e7-42a1-9e15-ddf052af8c57/linked_in_profile',
+  },
+  {
+    issuer: 'Skilljar',
+    title: 'Introduction to agent skills',
+    name: 'Verified Certificate',
+    summary: 'Course completion credential focused on agent skills fundamentals and workflow literacy.',
+    accent: '#7DB8FF',
+    image: '/portfolio/anthropic-icon.svg',
+    imageFit: 'contain',
+    imageFrameClassName: 'bg-[#F4F7FB] p-3',
+    href: 'http://verify.skilljar.com/c/7owbue56fohe',
+  },
+  {
+    issuer: 'Skilljar',
+    title: 'Introduction to subagents',
+    name: 'Verified Certificate',
+    summary: 'Credential covering the structure, delegation model, and practical use of subagents.',
+    accent: '#9AE6D1',
+    image: '/portfolio/anthropic-icon.svg',
+    imageFit: 'contain',
+    imageFrameClassName: 'bg-[#F4F7FB] p-3',
+    href: 'http://verify.skilljar.com/c/muit9mnrkf6k',
+  },
+  {
+    issuer: 'Skilljar',
+    title: 'AI Fluency for students',
+    name: 'Verified Certificate',
+    summary: 'Course credential highlighting prompt fluency, AI literacy, and student-facing workflows.',
+    accent: '#C6C0F4',
+    image: '/portfolio/anthropic-icon.svg',
+    imageFit: 'contain',
+    imageFrameClassName: 'bg-[#F4F7FB] p-3',
+    href: 'http://verify.skilljar.com/c/uincy7b9xx7n',
   },
 ]
 
@@ -237,8 +280,81 @@ ClusterCard.propTypes = {
   className: PropTypes.string,
 }
 
+const CertificationCard = ({ certification }) => {
+  return (
+    <a
+      href={certification.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative overflow-hidden rounded-[1.5rem] border border-white/[0.08] bg-black/20 p-4 shadow-[0_18px_36px_rgba(0,0,0,0.22),inset_0_1px_1px_rgba(255,255,255,0.04)] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_24px_44px_rgba(0,0,0,0.28),inset_0_1px_1px_rgba(255,255,255,0.07),0_0_22px_rgba(125,211,252,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 opacity-80"
+        style={{ background: `radial-gradient(circle at top right, ${certification.accent}20 0%, transparent 48%)` }}
+      />
+      <div className="relative z-10 flex items-start gap-4">
+      <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-[1.15rem] border border-white/10 bg-slate-950/70 shadow-[0_0_18px_rgba(15,23,42,0.35)]">
+        {certification.image ? (
+          <img
+            src={certification.image}
+            alt={certification.title}
+            className={`h-full w-full ${certification.imageFit === 'contain' ? 'object-contain' : 'object-cover'} ${certification.imageFrameClassName || ''}`}
+          />
+        ) : (
+            <div
+              className="flex h-full w-full items-center justify-center bg-slate-900 text-sm font-black uppercase tracking-[0.22em] text-white"
+              style={{ background: `linear-gradient(145deg, ${certification.accent}66 0%, rgba(15,23,42,0.94) 100%)` }}
+            >
+              {certification.monogram || <Award className="h-5 w-5" />}
+            </div>
+          )}
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-300/80">
+                {certification.issuer}
+              </p>
+              <h3 className="mt-2 text-base font-black leading-tight text-white">
+                {certification.title}
+              </h3>
+            </div>
+            <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
+          </div>
+
+          <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#BFDBFE]">
+            {certification.name}
+          </p>
+        </div>
+      </div>
+
+      <p className="relative z-10 mt-4 text-sm leading-6 text-[#E8F1FF]">
+        {certification.summary}
+      </p>
+    </a>
+  )
+}
+
+CertificationCard.propTypes = {
+  certification: PropTypes.shape({
+    issuer: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    summary: PropTypes.string.isRequired,
+    accent: PropTypes.string.isRequired,
+    image: PropTypes.string,
+    imageFit: PropTypes.oneOf(['cover', 'contain']),
+    imageFrameClassName: PropTypes.string,
+    monogram: PropTypes.string,
+    href: PropTypes.string.isRequired,
+  }).isRequired,
+}
+
 const Skills = () => {
   const shouldReduceMotion = useReducedMotion()
+  const [showAllCertifications, setShowAllCertifications] = useState(false)
+  const visibleCertifications = showAllCertifications ? certifications : certifications.slice(0, MAX_VISIBLE_CERTIFICATIONS)
 
   return (
     <section className="relative mt-8 sm:mt-[8vh] lg:mt-[10vh] min-h-screen w-full overflow-hidden bg-transparent" id="skills">
@@ -265,11 +381,24 @@ const Skills = () => {
           <div className="signal-map-shell relative overflow-hidden rounded-[2.2rem] px-4 py-5 sm:px-7 sm:py-7 lg:px-10 lg:py-10">
             <div className="pointer-events-none absolute inset-0 hidden lg:block">
               <div className="absolute left-1/2 top-1/2 h-px w-[32%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(115,212,255,0.22),rgba(255,255,255,0.1),rgba(140,242,165,0.22),transparent)]" />
-              <div className="absolute left-1/2 top-1/2 h-[46%] w-px -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(154,167,255,0.24),rgba(255,255,255,0.08),rgba(244,180,98,0.26),transparent)]" />
             </div>
 
-            <div className="relative z-10 flex flex-col gap-3 border-b border-white/[0.08] pb-4 sm:gap-4 sm:pb-5 xl:grid xl:grid-cols-[minmax(0,1fr)_1px_auto] xl:items-center xl:gap-4">
-              <div className="flex flex-wrap gap-2.5 sm:gap-3 xl:min-w-0 xl:flex-nowrap xl:gap-2">
+            <div className="relative z-10 border-b border-white/[0.08] pb-4 sm:pb-5">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#93C5FD]">
+                    Workflow Toolchain
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-[#E8F1FF]">
+                    AI-native tools that support spec writing, implementation, review, and verification.
+                  </p>
+                </div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-300/80">
+                  {aiWorkflowTools.length} linked tools
+                </p>
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-2.5 sm:gap-3">
                 {aiWorkflowTools.map((tool) => {
                   const Icon = tool.icon
 
@@ -302,34 +431,6 @@ const Skills = () => {
                     </a>
                   )
                 })}
-              </div>
-
-              <div className="hidden h-9 w-px shrink-0 bg-[linear-gradient(180deg,transparent,rgba(147,197,253,0.72),transparent)] xl:block" />
-
-              <div className="flex flex-wrap gap-2.5 sm:gap-3 xl:flex-nowrap xl:justify-end xl:gap-2">
-                {certifications.map((certification) => (
-                  <a
-                    key={certification.name}
-                    href={certification.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-2 rounded-full border border-white/[0.08] bg-slate-950/70 px-3 py-2 backdrop-blur-xl shadow-[0_14px_28px_rgba(0,0,0,0.28),inset_0_1px_1px_rgba(255,255,255,0.05)] transition-transform duration-300 hover:-translate-y-0.5 xl:gap-1.5 xl:px-2.5 xl:py-1.5"
-                  >
-                    <img
-                      src={certification.image}
-                      alt={certification.name}
-                      className="h-8 w-8 rounded-full object-cover shadow-[0_0_16px_rgba(96,165,250,0.2)]"
-                    />
-                    <span className="pr-1">
-                      <span className="block text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-300/80 xl:text-[8px] xl:tracking-[0.14em]">
-                        {certification.label}
-                      </span>
-                      <span className="mt-0.5 block text-[11px] font-black uppercase tracking-[0.22em] text-[#BFDBFE] xl:text-[10px] xl:tracking-[0.18em]">
-                        {certification.name}
-                      </span>
-                    </span>
-                  </a>
-                ))}
               </div>
             </div>
 
@@ -430,6 +531,57 @@ const Skills = () => {
                   </div>
                 ))}
               </div>
+            </motion.div>
+
+            <motion.div
+              className="relative z-10 mt-6 border-t border-white/[0.08] pt-6"
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.62, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#93C5FD]">
+                    Verified Credentials
+                  </p>
+                  <h3 className="mt-2 text-2xl font-black tracking-tight text-white sm:text-[2rem]">
+                    Verified Certifications
+                  </h3>
+                  <p className="mt-3 max-w-2xl text-sm leading-6 text-[#E8F1FF]">
+                    A growing credential layer covering cloud delivery and AI workflow training, structured so new badges can be added without crowding the section.
+                  </p>
+                </div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-300/80">
+                  {certifications.length} tracked credentials
+                </p>
+              </div>
+
+              <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {visibleCertifications.map((certification) => (
+                  <CertificationCard
+                    key={`${certification.issuer}-${certification.title}`}
+                    certification={certification}
+                  />
+                ))}
+              </div>
+
+              {certifications.length > MAX_VISIBLE_CERTIFICATIONS && (
+                <div className="mt-5 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => setShowAllCertifications((currentValue) => !currentValue)}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-slate-950/70 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#BFDBFE] transition-colors duration-300 hover:border-white/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                  >
+                    <span>{showAllCertifications ? 'Show fewer' : `Show all ${certifications.length}`}</span>
+                    {showAllCertifications ? (
+                      <ChevronUp className="h-4 w-4" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
+              )}
             </motion.div>
           </div>
         </div>
