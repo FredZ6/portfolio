@@ -55,17 +55,17 @@ const PROJECTS = [
   {
     id: 1,
     title: 'Event-Driven Order & Inventory Microservices',
-    description: 'Cloud-native order platform built on AWS with microservices, Terraform IaC, and CI/CD quality gates. Delivered 6 services across auth, catalog, ordering, inventory, payment, and notifications.',
+    description: 'AWS order platform with 6 event-driven services, Terraform IaC, and CI/CD release gates.',
     impact: '6 microservices | 3 saga workflows | 6 required CI checks',
     delivery: [
-      'Delivered auth, catalog, ordering, inventory, payment, and notification services.',
-      'Implemented saga orchestration across order, payment, and inventory lifecycles.',
-      'Locked releases behind mandatory CI checks and Terraform-driven infrastructure updates.',
+      'Delivered auth, catalog, orders, inventory, payment, and notifications.',
+      'Coordinated order, payment, and inventory flows with saga orchestration.',
+      'Protected releases with required CI checks and Terraform updates.',
     ],
     desktopDelivery: [
-      'Delivered auth, catalog, ordering, inventory, payment, and notification services across one event-driven platform.',
-      'Implemented saga orchestration across order, payment, and inventory lifecycles to coordinate cross-service state changes.',
-      'Locked releases behind required CI checks, Terraform updates, and safer deployment discipline.',
+      'Delivered auth, catalog, orders, inventory, payment, and notification services in one event-driven platform.',
+      'Used saga orchestration to coordinate order, payment, and inventory state changes.',
+      'Protected releases with required CI checks, Terraform updates, and safer deployment discipline.',
     ],
     stats: [
       { value: '6', label: 'Services' },
@@ -632,7 +632,7 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
             </div>
           </div>
 
-          <div className="mt-[clamp(0.875rem,0.72rem+0.18vw,1.1rem)] flex items-end justify-between gap-3 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)] border-t border-white/[0.08] pt-[clamp(0.95rem,0.8rem+0.18vw,1.15rem)]">
+          <div className="mt-[clamp(0.95rem,0.78rem+0.22vw,1.25rem)] flex min-h-[clamp(6rem,5.4rem+1.2vw,7rem)] items-end justify-between gap-3 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)] pt-[clamp(1.1rem,0.95rem+0.2vw,1.35rem)]">
             {project.ctaUrl ? (
               <a
                 href={project.ctaUrl}
@@ -647,20 +647,28 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
               <button
                 onClick={onOpenLightbox}
                 disabled={!hasGallery}
-                className="flex items-center gap-2.5 px-[clamp(1rem,0.9rem+0.16vw,1.25rem)] sm:px-[clamp(1.1rem,0.95rem+0.18vw,1.35rem)] py-[clamp(0.6rem,0.52rem+0.08vw,0.78rem)] rounded-full bg-white/10 hover:bg-primary text-white font-bold tracking-[0.16em] text-[clamp(0.62rem,0.56rem+0.08vw,0.75rem)] uppercase transition-all shadow-[0_10px_20px_rgba(0,0,0,0.2)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white/10"
+                className="group flex min-w-[min(78vw,19rem)] items-center justify-between gap-4 rounded-[1.45rem] border border-primary/20 bg-[linear-gradient(135deg,rgba(56,189,248,0.18),rgba(15,23,42,0.82))] px-[clamp(1rem,0.9rem+0.16vw,1.25rem)] sm:min-w-[clamp(15rem,14rem+3vw,18rem)] sm:px-[clamp(1.1rem,0.95rem+0.18vw,1.35rem)] py-[clamp(0.75rem,0.64rem+0.12vw,0.95rem)] text-white transition-all shadow-[0_14px_28px_rgba(0,0,0,0.28),inset_0_1px_1px_rgba(255,255,255,0.08),0_0_18px_rgba(56,189,248,0.12)] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_18px_36px_rgba(0,0,0,0.34),inset_0_1px_1px_rgba(255,255,255,0.1),0_0_26px_rgba(56,189,248,0.2)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:border-primary/20"
               >
-                <ImageIcon size={16} />
-                <span>{project.ctaLabel}</span>
+                <div className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.07)]">
+                    <ImageIcon size={17} className="text-primary" />
+                  </span>
+                  <span className="text-left">
+                    <span className="block text-[clamp(0.68rem,0.6rem+0.08vw,0.8rem)] font-black uppercase tracking-[0.18em] text-white">
+                      {project.ctaLabel}
+                    </span>
+                    <span className="mt-1 block text-[clamp(0.62rem,0.56rem+0.08vw,0.72rem)] font-semibold uppercase tracking-[0.14em] text-sky-100/85">
+                      {project.images.length} {galleryScreenLabel} · Tap to open
+                    </span>
+                  </span>
+                </div>
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-black/20 text-slate-100 transition-transform duration-300 group-hover:translate-x-0.5">
+                  <ChevronRight size={18} />
+                </span>
               </button>
             )}
 
-            <div className="flex items-end gap-4 sm:gap-6 text-right">
-              {hasGallery && (
-                <div className="hidden sm:block">
-                  <p className="text-[clamp(0.52rem,0.48rem+0.08vw,0.62rem)] font-semibold uppercase tracking-[0.2em] text-slate-500">Gallery</p>
-                  <p className="mt-1 text-[clamp(0.72rem,0.66rem+0.1vw,0.8rem)] font-semibold text-slate-300">{project.images.length} {galleryScreenLabel}</p>
-                </div>
-              )}
+            <div className="flex h-full items-end gap-4 sm:gap-6 text-right">
               <div>
                 <p className="text-[clamp(0.52rem,0.48rem+0.08vw,0.62rem)] font-semibold uppercase tracking-[0.2em] text-slate-500">Status</p>
                 <p className="mt-1 text-[clamp(0.72rem,0.66rem+0.1vw,0.8rem)] font-semibold text-slate-300">{project.status}</p>

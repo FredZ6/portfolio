@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  --desktop-ui-scale: 1;
   --scrollbar-size: 11px;
   --page-scrollbar-track: transparent;
   --page-scrollbar-thumb-start: rgba(191, 219, 254, 0.94);
@@ -20,6 +21,13 @@
   --custom-scrollbar-thumb-end: rgba(99, 102, 241, 0.84);
   --custom-scrollbar-thumb-border: rgba(2, 6, 23, 0.82);
   --custom-scrollbar-thumb-glow: rgba(45, 212, 191, 0.22);
+}
+
+@media (min-width: 1024px) and (max-width: 1535px) {
+  :root {
+    --desktop-ui-scale: 0.9;
+    font-size: calc(16px * var(--desktop-ui-scale));
+  }
 }
 
 /* 自定义滚动条样式 */
