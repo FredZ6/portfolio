@@ -504,24 +504,24 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
                 href={deepWikiUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="h-11 w-11 sm:h-12 sm:w-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 overflow-hidden"
+                className="project-card-action-orb h-11 w-11 sm:h-12 sm:w-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 overflow-hidden"
                 aria-label="Open repo on DeepWiki"
               >
                 <img
                   src="/portfolio/devin.avif"
                   alt=""
                   aria-hidden="true"
-                  className="h-5 w-5 rounded-[0.35rem] object-cover"
+                  className="relative z-10 h-5 w-5 rounded-[0.35rem] object-cover"
                 />
               </a>
               <a
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="h-11 w-11 sm:h-12 sm:w-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0"
+                className="project-card-action-orb h-11 w-11 sm:h-12 sm:w-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 overflow-hidden"
                 aria-label="View Source on GitHub"
               >
-                <Github size={20} />
+                <Github size={20} className="relative z-10" />
               </a>
             </div>
           </div>
@@ -647,10 +647,10 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
               <button
                 onClick={onOpenLightbox}
                 disabled={!hasGallery}
-                className="group flex min-w-[min(78vw,19rem)] items-center justify-between gap-4 rounded-[1.45rem] border border-primary/20 bg-[linear-gradient(135deg,rgba(56,189,248,0.18),rgba(15,23,42,0.82))] px-[clamp(1rem,0.9rem+0.16vw,1.25rem)] sm:min-w-[clamp(15rem,14rem+3vw,18rem)] sm:px-[clamp(1.1rem,0.95rem+0.18vw,1.35rem)] py-[clamp(0.75rem,0.64rem+0.12vw,0.95rem)] text-white transition-all shadow-[0_14px_28px_rgba(0,0,0,0.28),inset_0_1px_1px_rgba(255,255,255,0.08),0_0_18px_rgba(56,189,248,0.12)] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_18px_36px_rgba(0,0,0,0.34),inset_0_1px_1px_rgba(255,255,255,0.1),0_0_26px_rgba(56,189,248,0.2)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:border-primary/20"
+                className="project-gallery-cta group flex min-w-[min(78vw,19rem)] items-center justify-between gap-4 rounded-[1.45rem] border border-primary/20 px-[clamp(1rem,0.9rem+0.16vw,1.25rem)] sm:min-w-[clamp(15rem,14rem+3vw,18rem)] sm:px-[clamp(1.1rem,0.95rem+0.18vw,1.35rem)] py-[clamp(0.75rem,0.64rem+0.12vw,0.95rem)] text-white transition-all shadow-[0_14px_28px_rgba(0,0,0,0.28),inset_0_1px_1px_rgba(255,255,255,0.08),0_0_18px_rgba(56,189,248,0.12)] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_18px_36px_rgba(0,0,0,0.34),inset_0_1px_1px_rgba(255,255,255,0.1),0_0_26px_rgba(56,189,248,0.2)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:border-primary/20"
               >
-                <div className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.07)]">
+                <div className="relative z-10 flex items-center gap-3">
+                  <span className="project-gallery-cta__icon-shell flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.07)]">
                     <ImageIcon size={17} className="text-primary" />
                   </span>
                   <span className="text-left">
@@ -662,7 +662,7 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
                     </span>
                   </span>
                 </div>
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-black/20 text-slate-100 transition-transform duration-300 group-hover:translate-x-0.5">
+                <span className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-black/20 text-slate-100 transition-transform duration-300 group-hover:translate-x-0.5">
                   <ChevronRight size={18} />
                 </span>
               </button>
