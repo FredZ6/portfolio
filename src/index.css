@@ -420,6 +420,60 @@ html {
   pointer-events: none;
 }
 
+.project-shell-card {
+  border: 1px solid rgba(144, 205, 255, 0.14);
+  background:
+    radial-gradient(circle at 10% 12%, rgba(103, 232, 249, 0.12) 0%, rgba(103, 232, 249, 0) 18%),
+    radial-gradient(circle at 86% 18%, rgba(56, 189, 248, 0.12) 0%, rgba(56, 189, 248, 0) 22%),
+    radial-gradient(circle at 72% 86%, rgba(34, 211, 238, 0.09) 0%, rgba(34, 211, 238, 0) 26%),
+    linear-gradient(180deg, rgba(7, 17, 32, 0.82) 0%, rgba(3, 9, 20, 0.88) 100%);
+  backdrop-filter: blur(26px) saturate(135%);
+  box-shadow:
+    0 24px 48px -20px rgba(0, 0, 0, 0.72),
+    0 38px 90px -34px rgba(2, 8, 23, 0.52),
+    inset 0 1px 4px rgba(255, 255, 255, 0.14),
+    0 0 24px rgba(56, 189, 248, 0.12);
+}
+
+.project-shell-card::before {
+  content: '';
+  position: absolute;
+  inset: -20% -8%;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 12% 16%, rgba(125, 211, 252, 0.16) 0%, rgba(125, 211, 252, 0) 18%),
+    radial-gradient(circle at 78% 20%, rgba(34, 211, 238, 0.16) 0%, rgba(34, 211, 238, 0) 22%),
+    radial-gradient(circle at 52% 78%, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 26%);
+  opacity: 0.88;
+  pointer-events: none;
+}
+
+.project-shell-card::after {
+  content: '';
+  position: absolute;
+  inset: 0.9rem;
+  border-radius: calc(2.5rem - 0.9rem);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, rgba(255, 255, 255, 0) 22%),
+    radial-gradient(circle at 50% 0%, rgba(125, 211, 252, 0.08) 0%, rgba(125, 211, 252, 0) 54%);
+  pointer-events: none;
+}
+
+.project-shell-card:hover {
+  border-color: rgba(103, 232, 249, 0.28);
+  box-shadow:
+    0 30px 58px -18px rgba(0, 0, 0, 0.74),
+    0 48px 120px -28px rgba(7, 25, 51, 0.54),
+    inset 0 1px 5px rgba(255, 255, 255, 0.18),
+    0 0 34px rgba(56, 189, 248, 0.2);
+}
+
+.project-shell-card > * {
+  position: relative;
+  z-index: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .signal-map-shell::before,
   .signal-core-pulse,
