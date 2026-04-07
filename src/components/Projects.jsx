@@ -231,7 +231,7 @@ const Projects = () => {
 
   return (
     <>
-      <section ref={targetRef} className="relative mt-0 bg-transparent pt-[calc(env(safe-area-inset-top)+2rem)] pb-[calc(env(safe-area-inset-bottom)+10rem)] sm:-mt-[8vh] sm:h-[138vh] sm:pt-0 sm:pb-0 lg:-mt-[10vh] lg:h-[134vh]" id="projects">
+      <section ref={targetRef} className="relative mt-0 bg-transparent pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-[calc(env(safe-area-inset-bottom)+10rem)] sm:-mt-[8vh] sm:h-[138vh] sm:pt-0 sm:pb-0 lg:-mt-[10vh] lg:h-[134vh]" id="projects">
         {/* Sticky wrapper */}
         <div className="relative w-full overflow-visible sm:sticky sm:top-0 sm:flex sm:h-screen sm:items-center sm:overflow-hidden">
           <div className="pointer-events-none absolute inset-x-0 bottom-[6vh] h-[18vh] bg-[radial-gradient(ellipse_at_center,rgba(12,40,78,0.2)_0%,rgba(8,17,31,0.14)_42%,rgba(8,17,31,0)_78%)] blur-3xl" />
@@ -239,7 +239,7 @@ const Projects = () => {
           {/* Background Title (Animated) */}
           <motion.div
             style={{ x: titleX, opacity: titleOpacity }}
-            className="relative z-10 mx-auto mb-5 w-[92vw] max-w-sm px-1 pointer-events-none sm:absolute sm:top-[29%] sm:left-16 sm:mb-0 sm:w-full sm:max-w-sm sm:px-0 md:top-[29%] md:left-16 lg:top-[30%] lg:left-24"
+            className="relative z-10 mx-auto mb-4 w-[92vw] max-w-sm px-1 pointer-events-none sm:absolute sm:top-[29%] sm:left-16 sm:mb-0 sm:w-full sm:max-w-sm sm:px-0 md:top-[29%] md:left-16 lg:top-[30%] lg:left-24"
           >
             <h2 className="text-4xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] mix-blend-plus-lighter">
               FEATURED<br />SYSTEMS
@@ -252,7 +252,7 @@ const Projects = () => {
 
           <div className="w-full sm:hidden">
             <div className="mx-auto w-[92vw]">
-              <div className="mb-4 flex items-center justify-between gap-3 rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-3 shadow-[0_14px_30px_rgba(0,0,0,0.18)]">
+              <div className="mb-3 flex items-center justify-between gap-3 rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-3 shadow-[0_14px_30px_rgba(0,0,0,0.18)]">
                 <button
                   type="button"
                   onClick={showPreviousMobileProject}
@@ -477,14 +477,14 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
   return (
     <div className="w-[92vw] sm:w-[min(72vw,58rem)] lg:w-[min(54vw,72rem)] h-auto sm:h-[clamp(40rem,79vh,52rem)] lg:h-[clamp(42rem,78vh,54rem)] shrink-0 relative">
       <div className="pointer-events-none absolute inset-x-[8%] bottom-[-4%] h-[16%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(9,31,64,0.5)_0%,rgba(8,17,31,0.22)_55%,rgba(8,17,31,0)_100%)] blur-2xl opacity-85" />
-      <div className="project-shell-card w-full h-full rounded-[2.5rem] p-4 sm:p-[clamp(1.5rem,1rem+0.9vw,2rem)] lg:p-[clamp(1.75rem,1.05rem+0.9vw,2.35rem)] flex flex-col relative overflow-hidden group isolate transform-gpu transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1">
+      <div className="project-shell-card w-full h-full rounded-[2.5rem] px-4 pb-4 pt-2 sm:p-[clamp(1.5rem,1rem+0.9vw,2rem)] lg:p-[clamp(1.75rem,1.05rem+0.9vw,2.35rem)] flex flex-col relative overflow-hidden group isolate transform-gpu transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1">
         {/* Hover Gradient Overlay */}
         <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none mix-blend-overlay`} />
         <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
         <div className="pointer-events-none absolute -right-12 top-20 h-44 w-44 rounded-full bg-primary/10 blur-3xl opacity-60" />
 
-        <div className="relative z-10 flex h-full flex-col">
-          <div className="flex items-start justify-between gap-3 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)] border-b border-white/[0.08] pb-[clamp(1rem,0.8rem+0.25vw,1.25rem)]">
+        <div className="relative z-10 -mt-[clamp(8rem,24vw,10rem)] flex h-full flex-col sm:mt-0">
+          <div className="flex items-start justify-between gap-3 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)] border-b border-white/[0.08] pb-[clamp(0.9rem,0.76rem+0.2vw,1.25rem)]">
             <div className="max-w-[78%] sm:max-w-[80%]">
               <div className="mb-[clamp(0.75rem,0.65rem+0.15vw,1rem)] flex items-center gap-3 text-[clamp(0.55rem,0.48rem+0.08vw,0.68rem)] font-semibold uppercase tracking-[0.24em] sm:tracking-[0.26em] text-slate-400">
                 <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-slate-300">
