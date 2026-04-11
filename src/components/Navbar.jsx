@@ -50,7 +50,7 @@ const Navbar = ({ theme, onToggleTheme }) => {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', damping: 20, stiffness: 100, delay: 0.5 }}
-        className="glass-panel-strong pointer-events-auto flex items-center gap-3 sm:gap-5 rounded-full px-5 py-4 border-t border-primary/30 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.1),0_0_20px_rgba(56,189,248,0.24)]"
+        className="glass-panel-strong theme-nav-shell pointer-events-auto flex items-center gap-3 sm:gap-5 rounded-full px-5 py-4 border-t border-primary/30"
       >
         {navItems.map((item) => (
           <motion.a

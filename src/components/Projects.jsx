@@ -473,60 +473,63 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
   ]
 
   return (
-    <div className="w-[92vw] sm:w-[min(72vw,58rem)] lg:w-[min(54vw,72rem)] h-auto sm:h-[clamp(40rem,79vh,52rem)] lg:h-[clamp(42rem,78vh,54rem)] shrink-0 relative">
-      <div className="project-shell-card w-full h-full rounded-[2.5rem] p-4 sm:p-[clamp(1.5rem,1rem+0.9vw,2rem)] lg:p-[clamp(1.75rem,1.05rem+0.9vw,2.35rem)] flex flex-col relative overflow-hidden group isolate transform-gpu transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1">
+    <div className="relative h-auto w-[92vw] shrink-0 sm:h-[clamp(40rem,79vh,52rem)] sm:w-[min(72vw,58rem)] lg:h-[clamp(42rem,78vh,54rem)] lg:w-[min(54vw,72rem)]">
+      <div className="project-shell-card relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem] px-4 pb-4 pt-0 sm:p-[clamp(1.5rem,1rem+0.9vw,2rem)] lg:p-[clamp(1.75rem,1.05rem+0.9vw,2.35rem)] group isolate transform-gpu transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1">
         {/* Hover Gradient Overlay */}
         <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none mix-blend-overlay`} />
         <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
         <div className="pointer-events-none absolute -right-12 top-20 h-44 w-44 rounded-full bg-primary/10 blur-3xl opacity-60" />
 
         <div className="relative z-10 flex h-full flex-col">
-          <div className="flex items-start justify-between gap-3 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)] border-b border-white/[0.08] pb-[clamp(1rem,0.8rem+0.25vw,1.25rem)]">
-            <div className="max-w-[78%] sm:max-w-[80%]">
-              <div className="mb-[clamp(0.75rem,0.65rem+0.15vw,1rem)] flex items-center gap-3 text-[clamp(0.55rem,0.48rem+0.08vw,0.68rem)] font-semibold uppercase tracking-[0.24em] sm:tracking-[0.26em] text-slate-400">
+          <div className="-mt-36 flex items-start justify-between gap-2.5 border-b border-white/[0.08] pb-3 sm:mt-0 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)] sm:pb-[clamp(1rem,0.8rem+0.25vw,1.25rem)]">
+            <div className="max-w-[74%] sm:max-w-[80%]">
+              <div className="mb-3 flex items-center gap-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.23em] text-slate-400 sm:mb-[clamp(0.75rem,0.65rem+0.15vw,1rem)] sm:gap-3 sm:text-[clamp(0.55rem,0.48rem+0.08vw,0.68rem)] sm:tracking-[0.26em]">
                 <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-slate-300">
                   Featured Build
                 </span>
                 <span className="text-primary/80">{projectNumber}</span>
               </div>
-              <h3 className="text-[clamp(2rem,1.3rem+1.45vw,3.4rem)] leading-[0.96] font-bold text-white drop-shadow-md">
+              <h3 className="text-[2.75rem] font-bold leading-[0.92] text-white drop-shadow-md sm:text-[clamp(2rem,1.3rem+1.45vw,3.4rem)] sm:leading-[0.96]">
                 {project.title}
               </h3>
-              <p className="mt-[clamp(0.75rem,0.62rem+0.18vw,1rem)] max-w-2xl text-[clamp(0.9rem,0.78rem+0.26vw,1.1rem)] leading-[1.75] text-slate-300">
+              <p className="mt-2.5 max-w-2xl text-[1rem] leading-[1.58] text-slate-300 sm:mt-[clamp(0.75rem,0.62rem+0.18vw,1rem)] sm:text-[clamp(0.9rem,0.78rem+0.26vw,1.1rem)] sm:leading-[1.75]">
                 {project.description}
               </p>
             </div>
-            <div className="flex shrink-0 items-center gap-2.5">
+            <div className="flex shrink-0 items-center gap-2">
               <a
                 href={deepWikiUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="project-card-action-orb h-11 w-11 sm:h-12 sm:w-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 overflow-hidden"
+                className="project-card-action-orb glass-panel flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full text-white transition-colors hover:bg-white hover:text-black sm:h-12 sm:w-12"
                 aria-label="Open repo on DeepWiki"
               >
                 <img
                   src="/portfolio/devin.avif"
                   alt=""
                   aria-hidden="true"
-                  className="relative z-10 h-5 w-5 rounded-[0.35rem] object-cover"
+                  className="relative z-10 h-4.5 w-4.5 rounded-[0.35rem] object-cover sm:h-5 sm:w-5"
                 />
               </a>
               <a
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="project-card-action-orb h-11 w-11 sm:h-12 sm:w-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors shrink-0 overflow-hidden"
+                className="project-card-action-orb glass-panel flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full text-white transition-colors hover:bg-white hover:text-black sm:h-12 sm:w-12"
                 aria-label="View Source on GitHub"
               >
-                <Github size={20} className="relative z-10" />
+                <Github size={18} className="relative z-10 sm:h-5 sm:w-5" />
               </a>
             </div>
           </div>
 
-          <div className="mt-[clamp(0.875rem,0.72rem+0.18vw,1.1rem)] flex items-start sm:items-center justify-between gap-3 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)]">
+          <div className="mt-[clamp(0.875rem,0.72rem+0.18vw,1.1rem)] flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)]">
             <p className="text-[clamp(0.66rem,0.58rem+0.16vw,0.86rem)] font-bold uppercase tracking-[0.22em] sm:tracking-[0.24em] lg:tracking-[0.26em] text-primary leading-relaxed">
               {project.impact}
             </p>
+            <span className="theme-surface-card inline-flex self-start rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] theme-surface-meta sm:hidden">
+              {project.images.length} {galleryFrameLabel}
+            </span>
             <span className="hidden lg:inline-flex rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[clamp(0.55rem,0.5rem+0.08vw,0.68rem)] font-semibold uppercase tracking-[0.2em] text-slate-400">
               {project.images.length} {galleryFrameLabel}
             </span>
@@ -537,7 +540,7 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
               const isOpen = activeMobilePanel === panel.id
 
               return (
-                <section key={panel.id} className="rounded-[1.55rem] border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_14px_30px_rgba(0,0,0,0.16)]">
+                <section key={panel.id} className="theme-surface-card overflow-hidden rounded-[1.45rem]">
                   <button
                     type="button"
                     onClick={() => setActiveMobilePanel(panel.id)}
@@ -545,17 +548,19 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
                     className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left"
                   >
                     <div className="min-w-0">
-                      <p className="text-[9px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+                      <p className="theme-surface-meta text-[9px] font-semibold uppercase tracking-[0.24em]">
                         {panel.title}
                       </p>
-                      <p className="mt-1.5 truncate text-[10px] font-medium uppercase tracking-[0.14em] text-primary/80">
+                      <p className="theme-surface-accent mt-1.5 truncate text-[10px] font-medium uppercase tracking-[0.14em]">
                         {panel.summary}
                       </p>
                     </div>
-                    <ChevronRight
-                      size={18}
-                      className={`shrink-0 text-slate-300 transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`}
-                    />
+                    <span className="theme-surface-card flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
+                      <ChevronRight
+                        size={18}
+                        className={`theme-card-arrow shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`}
+                      />
+                    </span>
                   </button>
                   <AnimatePresence initial={false}>
                     {isOpen && (
@@ -566,7 +571,7 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
                         transition={{ duration: 0.2, ease: 'easeOut' }}
                         className="overflow-hidden"
                       >
-                        <div className="border-t border-white/[0.08] px-4 py-3.5">
+                        <div className="border-t border-white/[0.08] px-4 pb-4 pt-3">
                           {panel.content}
                         </div>
                       </motion.div>
@@ -629,13 +634,13 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
             </div>
           </div>
 
-          <div className="mt-[clamp(0.95rem,0.78rem+0.22vw,1.25rem)] flex min-h-[clamp(6rem,5.4rem+1.2vw,7rem)] items-end justify-between gap-3 sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)] pt-[clamp(1.1rem,0.95rem+0.2vw,1.35rem)]">
+          <div className="mt-[clamp(0.95rem,0.78rem+0.22vw,1.25rem)] flex min-h-[clamp(6rem,5.4rem+1.2vw,7rem)] flex-col gap-3 pt-[clamp(1.1rem,0.95rem+0.2vw,1.35rem)] sm:flex-row sm:items-end sm:justify-between sm:gap-[clamp(0.875rem,0.7rem+0.15vw,1rem)]">
             {project.ctaUrl ? (
               <a
                 href={project.ctaUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 px-[clamp(1rem,0.9rem+0.16vw,1.25rem)] sm:px-[clamp(1.1rem,0.95rem+0.18vw,1.35rem)] py-[clamp(0.6rem,0.52rem+0.08vw,0.78rem)] rounded-full bg-white/10 hover:bg-primary text-white font-bold tracking-[0.16em] text-[clamp(0.62rem,0.56rem+0.08vw,0.75rem)] uppercase transition-all shadow-[0_10px_20px_rgba(0,0,0,0.2)]"
+                className="flex w-full items-center gap-2.5 rounded-full bg-white/10 px-[clamp(1rem,0.9rem+0.16vw,1.25rem)] py-[clamp(0.6rem,0.52rem+0.08vw,0.78rem)] text-[clamp(0.62rem,0.56rem+0.08vw,0.75rem)] font-bold uppercase tracking-[0.16em] text-white transition-all shadow-[0_10px_20px_rgba(0,0,0,0.2)] hover:bg-primary sm:w-auto sm:px-[clamp(1.1rem,0.95rem+0.18vw,1.35rem)]"
               >
                 <ExternalLink size={16} />
                 <span>{project.ctaLabel}</span>
@@ -644,7 +649,7 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
               <button
                 onClick={onOpenLightbox}
                 disabled={!hasGallery}
-                className="project-gallery-cta group flex min-w-[min(78vw,19rem)] items-center justify-between gap-4 rounded-[1.45rem] border border-primary/20 px-[clamp(1rem,0.9rem+0.16vw,1.25rem)] sm:min-w-[clamp(15rem,14rem+3vw,18rem)] sm:px-[clamp(1.1rem,0.95rem+0.18vw,1.35rem)] py-[clamp(0.75rem,0.64rem+0.12vw,0.95rem)] text-white transition-all shadow-[0_14px_28px_rgba(0,0,0,0.28),inset_0_1px_1px_rgba(255,255,255,0.08),0_0_18px_rgba(56,189,248,0.12)] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_18px_36px_rgba(0,0,0,0.34),inset_0_1px_1px_rgba(255,255,255,0.1),0_0_26px_rgba(56,189,248,0.2)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:border-primary/20"
+                className="project-gallery-cta group flex w-full items-center justify-between gap-4 rounded-[1.45rem] border border-primary/20 px-[clamp(1rem,0.9rem+0.16vw,1.25rem)] py-[clamp(0.75rem,0.64rem+0.12vw,0.95rem)] text-white transition-all shadow-[0_14px_28px_rgba(0,0,0,0.28),inset_0_1px_1px_rgba(255,255,255,0.08),0_0_18px_rgba(56,189,248,0.12)] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_18px_36px_rgba(0,0,0,0.34),inset_0_1px_1px_rgba(255,255,255,0.1),0_0_26px_rgba(56,189,248,0.2)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:border-primary/20 sm:min-w-[clamp(15rem,14rem+3vw,18rem)] sm:w-auto sm:px-[clamp(1.1rem,0.95rem+0.18vw,1.35rem)]"
               >
                 <div className="relative z-10 flex items-center gap-3">
                   <span className="project-gallery-cta__icon-shell flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.07)]">
@@ -665,7 +670,15 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
               </button>
             )}
 
-            <div className="flex h-full items-end gap-4 sm:gap-6 text-right">
+            <div className="theme-surface-card flex items-center justify-between rounded-[1.35rem] px-4 py-3 sm:hidden">
+              <div>
+                <p className="theme-surface-meta text-[10px] font-semibold uppercase tracking-[0.22em]">Status</p>
+                <p className="theme-surface-title mt-1 text-sm font-semibold">{project.status}</p>
+              </div>
+              <p className="theme-surface-meta text-[2rem] font-black leading-none opacity-45">{projectNumber}</p>
+            </div>
+
+            <div className="hidden h-full items-end gap-4 text-right sm:flex sm:gap-6">
               <div>
                 <p className="text-[clamp(0.52rem,0.48rem+0.08vw,0.62rem)] font-semibold uppercase tracking-[0.2em] text-slate-500">Status</p>
                 <p className="mt-1 text-[clamp(0.72rem,0.66rem+0.1vw,0.8rem)] font-semibold text-slate-300">{project.status}</p>

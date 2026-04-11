@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Award, ChevronDown, ChevronUp } from 'lucide-react'
 import {
@@ -147,6 +147,7 @@ const signalPillars = [
 ]
 
 const MAX_VISIBLE_CERTIFICATIONS = 6
+const MOBILE_VISIBLE_CERTIFICATIONS = 3
 
 const certifications = [
   {
@@ -387,7 +388,33 @@ CertificationCard.propTypes = {
 const Skills = () => {
   const shouldReduceMotion = useReducedMotion()
   const [showAllCertifications, setShowAllCertifications] = useState(false)
-  const visibleCertifications = showAllCertifications ? certifications : certifications.slice(0, MAX_VISIBLE_CERTIFICATIONS)
+  const [isMobileViewport, setIsMobileViewport] = useState(() => {
+    if (typeof window === 'undefined') return false
+
+    return window.matchMedia('(max-width: 639px)').matches
+  })
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined
+
+    const mediaQuery = window.matchMedia('(max-width: 639px)')
+    const handleChange = (event) => {
+      setIsMobileViewport(event.matches)
+    }
+
+    setIsMobileViewport(mediaQuery.matches)
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', handleChange)
+      return () => mediaQuery.removeEventListener('change', handleChange)
+    }
+
+    mediaQuery.addListener(handleChange)
+    return () => mediaQuery.removeListener(handleChange)
+  }, [])
+
+  const visibleCertificationLimit = isMobileViewport ? MOBILE_VISIBLE_CERTIFICATIONS : MAX_VISIBLE_CERTIFICATIONS
+  const visibleCertifications = showAllCertifications ? certifications : certifications.slice(0, visibleCertificationLimit)
 
   return (
     <section className="relative mt-8 sm:mt-[8vh] lg:mt-[10vh] min-h-screen w-full overflow-hidden bg-transparent" id="skills">
@@ -599,7 +626,7 @@ const Skills = () => {
                 ))}
               </div>
 
-              {certifications.length > MAX_VISIBLE_CERTIFICATIONS && (
+              {certifications.length > visibleCertificationLimit && (
                 <div className="mt-5 flex justify-center">
                   <button
                     type="button"
