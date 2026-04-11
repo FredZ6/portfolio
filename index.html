@@ -7,8 +7,8 @@
     <link rel="icon" type="image/svg+xml" href="/portfolio/portfolio.svg" sizes="32x32" />
     <link rel="apple-touch-icon" href="/portfolio/portfolio.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#08111f" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#f7f6f3" />
+    <meta name="color-scheme" content="light" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="description" content="Fred Zhang - Full Stack Developer Portfolio" />
@@ -17,8 +17,26 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/portfolio/assets/index-DadSE5xA.js"></script>
-    <link rel="stylesheet" crossorigin href="/portfolio/assets/index-DbfMgyrQ.css">
+    <script>
+      (() => {
+        const storageKey = 'portfolio-theme'
+        const fallbackTheme = 'light'
+
+        try {
+          const theme = localStorage.getItem(storageKey) === 'dark' ? 'dark' : fallbackTheme
+          const root = document.documentElement
+          root.dataset.theme = theme
+
+          const themeColor = theme === 'light' ? '#f7f6f3' : '#08111f'
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColor)
+          document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', theme)
+        } catch {
+          document.documentElement.dataset.theme = fallbackTheme
+        }
+      })()
+    </script>
+    <script type="module" crossorigin src="/portfolio/assets/index-cxluoifD.js"></script>
+    <link rel="stylesheet" crossorigin href="/portfolio/assets/index-IAFHLGvs.css">
   </head>
   <body>
     <div id="root"></div>
