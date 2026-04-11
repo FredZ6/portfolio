@@ -241,12 +241,12 @@ const SkillChip = ({ skill }) => {
   return (
     <span className="signal-node-chip">
       <span
-        className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-slate-950/80 text-[1rem]"
+        className="theme-chip-icon flex h-8 w-8 items-center justify-center rounded-full text-[1rem]"
         style={{ color: skill.color, boxShadow: `0 0 22px ${skill.color}22` }}
       >
         <Icon className="h-[1em] w-[1em]" />
       </span>
-      <span className="text-[11px] font-semibold tracking-[0.12em] text-slate-50 sm:text-xs">
+      <span className="theme-chip-label text-[11px] font-semibold tracking-[0.12em] sm:text-xs">
         {skill.name}
       </span>
     </span>
@@ -277,13 +277,13 @@ const ClusterCard = ({ cluster, index, shouldReduceMotion, className = '' }) => 
       style={{ background: `linear-gradient(90deg, transparent, ${cluster.accent}, transparent)` }}
     />
     <div className="relative z-10">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-200/90">
+      <p className="theme-surface-meta text-[10px] font-semibold uppercase tracking-[0.28em]">
         {cluster.eyebrow}
       </p>
-      <h3 className="mt-3 text-xl font-black tracking-[0.02em] text-white sm:text-[1.35rem]">
+      <h3 className="theme-surface-title mt-3 text-xl font-black tracking-[0.02em] sm:text-[1.35rem]">
         {cluster.title}
       </h3>
-      <p className="mt-3 max-w-[28rem] text-sm leading-6 text-[#E8F1FF]">
+      <p className="theme-surface-copy mt-3 max-w-[28rem] text-sm leading-6">
         {cluster.summary}
       </p>
       <div className="mt-5 flex flex-wrap gap-2.5">
@@ -319,14 +319,14 @@ const CertificationCard = ({ certification }) => {
       href={certification.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative overflow-hidden rounded-[1.5rem] border border-white/[0.08] bg-black/20 p-4 shadow-[0_18px_36px_rgba(0,0,0,0.22),inset_0_1px_1px_rgba(255,255,255,0.04)] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_24px_44px_rgba(0,0,0,0.28),inset_0_1px_1px_rgba(255,255,255,0.07),0_0_22px_rgba(125,211,252,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+      className="theme-certification-card group relative overflow-hidden rounded-[1.5rem] p-4 transition-[transform,border-color,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 hover:-translate-y-1"
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-80"
         style={{ background: `radial-gradient(circle at top right, ${certification.accent}20 0%, transparent 48%)` }}
       />
       <div className="relative z-10 flex items-start gap-4">
-      <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-[1.15rem] border border-white/10 bg-slate-950/70 shadow-[0_0_18px_rgba(15,23,42,0.35)]">
+      <div className="theme-certification-media flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-[1.15rem]">
         {certification.image ? (
           <img
             src={certification.image}
@@ -335,7 +335,7 @@ const CertificationCard = ({ certification }) => {
           />
         ) : (
             <div
-              className="flex h-full w-full items-center justify-center bg-slate-900 text-sm font-black uppercase tracking-[0.22em] text-white"
+              className="theme-certification-fallback flex h-full w-full items-center justify-center text-sm font-black uppercase tracking-[0.22em]"
               style={{ background: `linear-gradient(145deg, ${certification.accent}66 0%, rgba(15,23,42,0.94) 100%)` }}
             >
               {certification.monogram || <Award className="h-5 w-5" />}
@@ -346,23 +346,23 @@ const CertificationCard = ({ certification }) => {
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-300/80">
+              <p className="theme-surface-meta text-[10px] font-semibold uppercase tracking-[0.28em]">
                 {certification.issuer}
               </p>
-              <h3 className="mt-2 text-base font-black leading-tight text-white">
+              <h3 className="theme-surface-title mt-2 text-base font-black leading-tight">
                 {certification.title}
               </h3>
             </div>
-            <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
+            <ArrowUpRight className="theme-card-arrow mt-1 h-4 w-4 shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </div>
 
-          <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#BFDBFE]">
+          <p className="theme-surface-accent mt-2 text-[11px] font-bold uppercase tracking-[0.2em]">
             {certification.name}
           </p>
         </div>
       </div>
 
-      <p className="relative z-10 mt-4 text-sm leading-6 text-[#E8F1FF]">
+      <p className="theme-surface-copy relative z-10 mt-4 text-sm leading-6">
         {certification.summary}
       </p>
     </a>
@@ -399,13 +399,13 @@ const Skills = () => {
 
       <div className="container-width relative z-10 flex min-h-screen flex-col items-center justify-center px-4 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-16 lg:px-8 lg:pt-20">
         <div className="w-full max-w-4xl text-center">
-          <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_18px_rgba(56,189,248,0.34)] sm:text-6xl">
+          <h2 className="theme-section-title text-4xl font-black text-transparent bg-clip-text sm:text-6xl">
             TECHNICAL CORE
           </h2>
           <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.42em] text-secondary sm:text-sm">
             SIGNAL MAP
           </p>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#E8F1FF] sm:text-base">
+          <p className="theme-copy-primary mx-auto mt-4 max-w-2xl text-sm leading-7 sm:text-base">
             A cleaner view of how I ship: product-facing frontend, reliable backend services, observable data flows, and cloud delivery linked by an AI-native workflow.
           </p>
         </div>
@@ -419,14 +419,14 @@ const Skills = () => {
             <div className="relative z-10 border-b border-white/[0.08] pb-4 sm:pb-5">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#93C5FD]">
+                  <p className="theme-surface-accent text-[10px] font-semibold uppercase tracking-[0.28em]">
                     Workflow Toolchain
                   </p>
-                  <p className="mt-2 text-sm leading-6 text-[#E8F1FF]">
+                  <p className="theme-surface-copy mt-2 text-sm leading-6">
                     AI-native tools that support spec writing, implementation, review, and verification.
                   </p>
                 </div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-300/80">
+                <p className="theme-surface-meta text-[10px] font-semibold uppercase tracking-[0.24em]">
                   {aiWorkflowTools.length} linked tools
                 </p>
               </div>
@@ -442,10 +442,10 @@ const Skills = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Open ${tool.name} website`}
-                      className="flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/25 px-3 py-2 backdrop-blur-xl shadow-[0_14px_30px_rgba(0,0,0,0.24),inset_0_1px_1px_rgba(255,255,255,0.06)] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:shadow-[0_18px_34px_rgba(0,0,0,0.28),inset_0_1px_1px_rgba(255,255,255,0.08),0_0_18px_rgba(125,211,252,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 xl:gap-1.5 xl:px-2.5 xl:py-1.5"
+                      className="theme-tool-chip flex items-center gap-2 rounded-full px-3 py-2 transition-[transform,border-color,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 hover:-translate-y-0.5 xl:gap-1.5 xl:px-2.5 xl:py-1.5"
                     >
                       <span
-                        className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-slate-950/80 text-base xl:h-7 xl:w-7 xl:text-[0.92rem]"
+                        className="theme-tool-icon flex h-8 w-8 items-center justify-center rounded-full text-base xl:h-7 xl:w-7 xl:text-[0.92rem]"
                         style={{ color: tool.color, boxShadow: `0 0 18px ${tool.glow}` }}
                       >
                         {tool.image ? (
@@ -458,7 +458,7 @@ const Skills = () => {
                           <Icon className="h-[1em] w-[1em]" />
                         )}
                       </span>
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-50 xl:text-[9px] xl:tracking-[0.14em]">
+                      <span className="theme-tool-label text-[10px] font-semibold uppercase tracking-[0.18em] xl:text-[9px] xl:tracking-[0.14em]">
                         {tool.name}
                       </span>
                     </a>
@@ -488,10 +488,10 @@ const Skills = () => {
                     <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-cyan-50">
                       Signal Core
                     </p>
-                    <h3 className="mt-4 text-3xl font-black leading-[1.02] tracking-tight text-white sm:text-[2.6rem]">
+                    <h3 className="theme-surface-title mt-4 text-3xl font-black leading-[1.02] tracking-tight sm:text-[2.6rem]">
                       Systems that stay elegant through delivery.
                     </h3>
-                    <p className="mt-4 text-sm leading-7 text-[#E8F1FF]">
+                    <p className="theme-surface-copy mt-4 text-sm leading-7">
                       I connect design-minded frontend with backend architecture, delivery guardrails, and AI-assisted execution so the build pipeline feels coherent end to end.
                     </p>
                   </div>
@@ -500,12 +500,12 @@ const Skills = () => {
                     {signalPillars.map((pillar) => (
                       <div
                         key={pillar.label}
-                        className="rounded-[1.15rem] border border-white/[0.08] bg-white/[0.04] px-4 py-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]"
+                        className="theme-surface-card rounded-[1.15rem] px-4 py-3"
                       >
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-200/90">
+                        <p className="theme-surface-meta text-[10px] font-semibold uppercase tracking-[0.24em]">
                           {pillar.label}
                         </p>
-                        <p className="mt-2 text-sm font-bold uppercase tracking-[0.16em] text-white">
+                        <p className="theme-surface-title mt-2 text-sm font-bold uppercase tracking-[0.16em]">
                           {pillar.value}
                         </p>
                       </div>
@@ -535,17 +535,17 @@ const Skills = () => {
             </div>
 
             <motion.div
-              className="relative z-10 mt-6 rounded-[1.6rem] border border-white/[0.08] bg-black/20 p-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.04)] sm:p-5"
+              className="theme-surface-card relative z-10 mt-6 rounded-[1.6rem] p-4 sm:p-5"
               initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
               whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.35 }}
               transition={{ duration: 0.6, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#93C5FD]">
+                <p className="theme-surface-accent text-[10px] font-semibold uppercase tracking-[0.28em]">
                   Workflow Route
                 </p>
-                <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#93C5FD]">
+                <p className="theme-surface-accent text-xs font-medium uppercase tracking-[0.18em]">
                   AI-assisted, human-reviewed
                 </p>
               </div>
@@ -553,11 +553,11 @@ const Skills = () => {
               <div className="mt-4 grid gap-3 sm:grid-cols-4">
                 {workflowStages.map((stage, index) => (
                   <div key={stage} className="relative">
-                    <div className="rounded-[1.1rem] border border-white/[0.08] bg-white/[0.04] px-4 py-4 text-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#93C5FD]">
+                    <div className="theme-surface-card rounded-[1.1rem] px-4 py-4 text-center">
+                      <p className="theme-surface-accent text-[10px] font-semibold uppercase tracking-[0.22em]">
                         0{index + 1}
                       </p>
-                      <p className="mt-2 text-sm font-bold uppercase tracking-[0.2em] text-[#BFDBFE]">
+                      <p className="theme-surface-title mt-2 text-sm font-bold uppercase tracking-[0.2em]">
                         {stage}
                       </p>
                     </div>
@@ -575,17 +575,17 @@ const Skills = () => {
             >
               <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#93C5FD]">
+                  <p className="theme-surface-accent text-[10px] font-semibold uppercase tracking-[0.28em]">
                     Verified Credentials
                   </p>
-                  <h3 className="mt-2 text-2xl font-black tracking-tight text-white sm:text-[2rem]">
+                  <h3 className="theme-surface-title mt-2 text-2xl font-black tracking-tight sm:text-[2rem]">
                     Verified Certifications
                   </h3>
-                  <p className="mt-3 max-w-2xl text-sm leading-6 text-[#E8F1FF]">
+                  <p className="theme-surface-copy mt-3 max-w-2xl text-sm leading-6">
                     A growing credential layer covering cloud delivery and AI workflow training, structured so new badges can be added without crowding the section.
                   </p>
                 </div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-300/80">
+                <p className="theme-surface-meta text-[10px] font-semibold uppercase tracking-[0.24em]">
                   {certifications.length} tracked credentials
                 </p>
               </div>
@@ -604,7 +604,7 @@ const Skills = () => {
                   <button
                     type="button"
                     onClick={() => setShowAllCertifications((currentValue) => !currentValue)}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-slate-950/70 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#BFDBFE] transition-colors duration-300 hover:border-white/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                    className="theme-credentials-button inline-flex items-center gap-2 rounded-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.24em] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                   >
                     <span>{showAllCertifications ? 'Show fewer' : `Show all ${certifications.length}`}</span>
                     {showAllCertifications ? (

@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
-import { Home, Briefcase, Code2, User, Mail } from 'lucide-react'
+import PropTypes from 'prop-types'
+import { Home, Briefcase, Code2, User, Mail, MoonStar, SunMedium } from 'lucide-react'
 
-const Navbar = () => {
+const Navbar = ({ theme, onToggleTheme }) => {
   const navItems = [
     { name: 'Home', icon: Home, href: '#home' },
     { name: 'Skills', icon: Code2, href: '#skills' },
@@ -38,6 +39,11 @@ const Navbar = () => {
     window.scrollTo({ top: nextScrollTop, behavior: 'smooth' })
   }
 
+  const isDarkTheme = theme === 'dark'
+  const ThemeIcon = isDarkTheme ? SunMedium : MoonStar
+  const themeTooltip = isDarkTheme ? 'Light Mode' : 'Night Mode'
+  const themeAriaLabel = isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'
+
   return (
     <div className="fixed bottom-6 sm:bottom-10 left-1/2 z-[100] -translate-x-1/2 pointer-events-none">
       <motion.nav
@@ -54,19 +60,39 @@ const Navbar = () => {
             aria-label={item.name}
             whileHover={{ scale: 1.4, y: -12 }}
             whileTap={{ scale: 0.9 }}
-            className="group relative flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-300 transition-colors hover:bg-primary/20 hover:border-primary/50 hover:text-primary hover:shadow-[0_0_15px_rgba(56,189,248,0.52)]"
+            className="theme-nav-button group relative flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14"
           >
             <item.icon size={22} className="sm:w-6 sm:h-6 drop-shadow-md" />
 
-            {/* Tooltip */}
-            <span className="absolute -top-12 left-1/2 -translate-x-1/2 origin-bottom scale-50 rounded-lg bg-black/80 border border-primary/30 px-3 py-1.5 text-xs font-semibold text-white tracking-widest opacity-0 transition-all duration-200 group-hover:scale-100 group-hover:opacity-100 pointer-events-none shadow-[0_5px_15px_rgba(0,0,0,0.5)]">
+            <span className="theme-tooltip absolute -top-12 left-1/2 -translate-x-1/2 origin-bottom scale-50 rounded-lg px-3 py-1.5 text-xs font-semibold tracking-widest opacity-0 transition-all duration-200 group-hover:scale-100 group-hover:opacity-100 pointer-events-none">
               {item.name}
             </span>
           </motion.a>
         ))}
+
+        <motion.button
+          type="button"
+          onClick={onToggleTheme}
+          aria-label={themeAriaLabel}
+          data-theme-toggle="true"
+          whileHover={{ scale: 1.4, y: -12 }}
+          whileTap={{ scale: 0.9 }}
+          className="theme-nav-button group relative flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14"
+        >
+          <ThemeIcon size={22} className="sm:h-6 sm:w-6 drop-shadow-md" />
+
+          <span className="theme-tooltip absolute -top-12 left-1/2 -translate-x-1/2 origin-bottom scale-50 rounded-lg px-3 py-1.5 text-xs font-semibold tracking-widest opacity-0 transition-all duration-200 group-hover:scale-100 group-hover:opacity-100 pointer-events-none">
+            {themeTooltip}
+          </span>
+        </motion.button>
       </motion.nav>
     </div>
   )
+}
+
+Navbar.propTypes = {
+  theme: PropTypes.oneOf(['dark', 'light']).isRequired,
+  onToggleTheme: PropTypes.func.isRequired,
 }
 
 export default Navbar

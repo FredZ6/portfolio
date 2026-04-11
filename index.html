@@ -17,6 +17,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      (() => {
+        const storageKey = 'portfolio-theme'
+        const fallbackTheme = 'dark'
+
+        try {
+          const theme = localStorage.getItem(storageKey) === 'light' ? 'light' : fallbackTheme
+          const root = document.documentElement
+          root.dataset.theme = theme
+
+          const themeColor = theme === 'light' ? '#f6f8fc' : '#08111f'
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColor)
+          document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', theme)
+        } catch {
+          document.documentElement.dataset.theme = fallbackTheme
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

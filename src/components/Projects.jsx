@@ -241,7 +241,7 @@ const Projects = () => {
             style={{ x: titleX, opacity: titleOpacity }}
             className="relative z-10 mx-auto mb-5 w-[92vw] max-w-sm px-1 pointer-events-none sm:absolute sm:top-[29%] sm:left-16 sm:mb-0 sm:w-full sm:max-w-sm sm:px-0 md:top-[29%] md:left-16 lg:top-[30%] lg:left-24"
           >
-            <h2 className="text-4xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] mix-blend-plus-lighter">
+            <h2 className="theme-section-title text-4xl sm:text-7xl font-black text-transparent bg-clip-text">
               FEATURED<br />SYSTEMS
             </h2>
             <p className="mt-3 text-[11px] text-slate-300 font-medium tracking-wide border-l-2 border-primary pl-4 uppercase sm:mt-4 sm:text-sm shadow-[inset_1px_0_10px_rgba(56,189,248,0.12)] py-1">
@@ -252,13 +252,13 @@ const Projects = () => {
 
           <div className="w-full sm:hidden">
             <div className="mx-auto w-[92vw]">
-              <div className="mb-4 flex items-center justify-between gap-3 rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-3 shadow-[0_14px_30px_rgba(0,0,0,0.18)]">
+              <div className="project-mobile-console mb-4 flex items-center justify-between gap-3 rounded-full px-4 py-3">
                 <button
                   type="button"
                   onClick={showPreviousMobileProject}
                   aria-label="Show previous project"
                   disabled={activeMobileProjectIndex === 0}
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full glass-panel text-white transition-colors disabled:cursor-not-allowed disabled:opacity-35"
+                  className="theme-utility-orb flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-35"
                 >
                   <ChevronLeft size={20} />
                 </button>
@@ -277,7 +277,7 @@ const Projects = () => {
                   onClick={showNextMobileProject}
                   aria-label="Show next project"
                   disabled={activeMobileProjectIndex === PROJECTS.length - 1}
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full glass-panel text-white transition-colors disabled:cursor-not-allowed disabled:opacity-35"
+                  className="theme-utility-orb flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-35"
                 >
                   <ChevronRight size={20} />
                 </button>
@@ -346,14 +346,14 @@ const Projects = () => {
           >
             <button
               onClick={scrollPrev}
-              className="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-white hover:bg-primary transition-all shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(56,189,248,0.58)]"
+              className="theme-utility-orb flex h-14 w-14 items-center justify-center rounded-full transition-all"
               aria-label="Scroll Previous"
             >
               <ChevronLeft size={28} />
             </button>
             <button
               onClick={scrollNext}
-              className="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-white hover:bg-primary transition-all shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_1px_5px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(56,189,248,0.58)]"
+              className="theme-utility-orb flex h-14 w-14 items-center justify-center rounded-full transition-all"
               aria-label="Scroll Next"
             >
               <ChevronRight size={28} />
@@ -369,13 +369,13 @@ const Projects = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 sm:p-8"
+            className="theme-modal-overlay fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-8"
             onClick={closeLightbox}
           >
             <div className="flex w-full max-w-6xl flex-col items-center gap-6" onClick={(e) => e.stopPropagation()}>
               <div className="relative w-full aspect-[16/10] sm:aspect-video rounded-3xl overflow-hidden glass-panel-strong">
                 <div className="absolute top-4 right-4 z-50 flex gap-2">
-                  <button onClick={closeLightbox} className="w-12 h-12 rounded-full glass-panel flex items-center justify-center text-white hover:bg-rose-500 transition-colors">
+                  <button onClick={closeLightbox} className="theme-icon-button theme-danger-hover flex h-12 w-12 items-center justify-center rounded-full">
                     <X size={24} />
                   </button>
                 </div>
@@ -383,25 +383,25 @@ const Projects = () => {
                 <img
                   src={lightboxData[activeImageIndex].fullSrc || lightboxData[activeImageIndex].src}
                   alt={lightboxData[activeImageIndex].caption}
-                  className="w-full h-full object-contain bg-black/50"
+                  className="theme-modal-image h-full w-full object-contain"
                 />
               </div>
 
-              <div className="glass-panel rounded-full px-6 py-3 flex items-center gap-6 z-10 shadow-[0_16px_40px_rgba(0,0,0,0.45)]">
+              <div className="theme-lightbox-controls glass-panel z-10 flex items-center gap-6 rounded-full px-6 py-3">
                 <button
                   disabled={activeImageIndex === 0}
                   onClick={() => setActiveImageIndex(prev => prev - 1)}
-                  className="text-white hover:text-primary disabled:opacity-30 disabled:hover:text-white"
+                  className="theme-lightbox-nav disabled:opacity-30"
                 >
                   <ChevronLeft size={24} />
                 </button>
-                <span className="text-white font-bold text-sm tracking-widest">
+                <span className="theme-emphasis text-sm font-bold tracking-widest">
                   {activeImageIndex + 1} / {lightboxData.length}
                 </span>
                 <button
                   disabled={activeImageIndex === lightboxData.length - 1}
                   onClick={() => setActiveImageIndex(prev => prev + 1)}
-                  className="text-white hover:text-primary disabled:opacity-30 disabled:hover:text-white"
+                  className="theme-lightbox-nav disabled:opacity-30"
                 >
                   <ChevronRight size={24} />
                 </button>

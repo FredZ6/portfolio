@@ -50,7 +50,7 @@ const Hero = () => {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 0.35, scale: 1 }}
           transition={{ duration: 1.5, ease: 'easeOut' }}
-          className="relative perspective-1000 mix-blend-screen"
+          className="hero-avatar-orbit relative perspective-1000"
         >
           <Tilt
             tiltMaxAngleX={20}
@@ -81,7 +81,7 @@ const Hero = () => {
               <img
                 src="/portfolio/avatar.png"
                 alt="Profile Avatar Hologram"
-                className="w-full h-full object-cover rounded-full mix-blend-lighten scale-[1.7] sm:scale-[1.44] blur-[1px] sm:blur-[2px] opacity-90 sm:opacity-80"
+                className="theme-hero-avatar w-full h-full object-cover rounded-full scale-[1.7] sm:scale-[1.44] blur-[1px] sm:blur-[2px] opacity-90 sm:opacity-80"
                 style={{ filter: 'drop-shadow(0 0 40px rgba(56,189,248,0.82))' }}
               />
             </motion.div>
@@ -105,7 +105,7 @@ const Hero = () => {
 
           <motion.h1
             variants={heroItemVariants}
-            className="text-[14vw] sm:text-[11vw] md:text-[9vw] font-black leading-[0.85] tracking-tighter mb-3 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-transparent drop-shadow-[0_0_40px_rgba(255,255,255,0.2)] mix-blend-plus-lighter"
+            className="hero-title-gradient theme-hero-display mb-3 bg-clip-text text-[14vw] font-black leading-[0.85] tracking-tighter text-transparent sm:mb-6 sm:text-[11vw] md:text-[9vw]"
           >
             FRED Z
           </motion.h1>
@@ -124,9 +124,9 @@ const Hero = () => {
 
           <motion.p
             variants={heroItemVariants}
-            className="w-full max-w-xl text-sm sm:text-base md:text-lg text-slate-300 font-medium leading-relaxed tracking-wide mb-10 sm:mb-12 glass-panel p-4 sm:p-5 rounded-2xl"
+            className="theme-copy-primary theme-hero-copy mb-10 w-full max-w-xl rounded-2xl p-4 text-sm font-medium leading-relaxed tracking-wide glass-panel sm:mb-12 sm:p-5 sm:text-base md:text-lg"
           >
-            I build <span className="text-white font-bold">reliable backend systems</span> with Java, Spring Boot, and AWS infrastructure. I use <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-bold">AI-assisted, spec-driven</span> workflows to ship faster while keeping quality gates strict.
+            I build <span className="theme-emphasis font-bold">reliable backend systems</span> with Java, Spring Boot, and AWS infrastructure. I use <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-bold">AI-assisted, spec-driven</span> workflows to ship faster while keeping quality gates strict.
           </motion.p>
 
           {/* Social Links & Action Buttons - Floating Pill */}
@@ -139,7 +139,7 @@ const Hero = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub Profile"
-              className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+              className="theme-icon-button flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14"
               whileHover={{ scale: 1.1, y: -4 }}
             >
               <Github size={22} className="sm:w-6 sm:h-6" />
@@ -149,7 +149,7 @@ const Hero = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn Profile"
-              className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-white/5 text-slate-300 hover:text-secondary hover:bg-secondary/20 transition-colors"
+              className="theme-icon-button flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14"
               whileHover={{ scale: 1.1, y: -4 }}
             >
               <Linkedin size={22} className="sm:w-6 sm:h-6" />
@@ -157,18 +157,18 @@ const Hero = () => {
             <motion.a
               href="mailto:fredzhang026@gmail.com"
               aria-label="Send Email"
-              className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-white/5 text-slate-300 hover:text-accent hover:bg-accent/20 transition-colors"
+              className="theme-icon-button flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14"
               whileHover={{ scale: 1.1, y: -4 }}
             >
               <Mail size={22} className="sm:w-6 sm:h-6" />
             </motion.a>
 
-            <div className="w-px h-8 bg-white/20 mx-2 hidden sm:block"></div>
+            <div className="theme-pill-divider mx-2 hidden h-8 w-px sm:block"></div>
 
             <motion.button
               type="button"
               onClick={() => setIsResumeOpen(true)}
-              className="flex items-center gap-2 px-6 h-12 sm:h-14 rounded-full bg-primary/20 text-primary font-bold tracking-widest uppercase text-xs sm:text-sm hover:bg-primary hover:text-white transition-colors"
+              className="theme-primary-action flex h-12 items-center gap-2 rounded-full px-6 text-xs font-bold uppercase tracking-widest sm:h-14 sm:text-sm"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -183,7 +183,7 @@ const Hero = () => {
       <AnimatePresence>
         {isResumeOpen && (
           <motion.div
-            className="fixed inset-0 z-[120] bg-black/90 backdrop-blur-md p-4 sm:p-8 flex items-center justify-center"
+            className="theme-modal-overlay fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -199,21 +199,21 @@ const Hero = () => {
               onClick={(event) => event.stopPropagation()}
             >
               {/* Modal Header */}
-              <div className="flex-none flex items-center justify-between border-b border-white/10 bg-white/5 px-4 lg:px-6 py-3">
+              <div className="theme-modal-header flex-none flex items-center justify-between px-4 py-3 lg:px-6">
                 <p className="text-sm font-bold text-primary tracking-widest uppercase">Fred Zhang Resume</p>
                 <div className="flex items-center gap-3">
                   <a
                     href={resumePdfUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 hover:bg-primary hover:text-white transition-colors"
+                    className="theme-icon-button flex h-10 w-10 items-center justify-center rounded-full"
                   >
                     <ExternalLink size={16} />
                   </a>
                   <button
                     type="button"
                     onClick={() => setIsResumeOpen(false)}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 hover:bg-rose-500 hover:text-white transition-colors"
+                    className="theme-icon-button theme-danger-hover flex h-10 w-10 items-center justify-center rounded-full"
                   >
                     <X size={18} />
                   </button>
@@ -222,7 +222,7 @@ const Hero = () => {
               {/* Modal Body */}
               <div className="flex-grow w-full relative">
                 <object data={resumePdfUrl} type="application/pdf" className="absolute inset-0 w-full h-full">
-                  <div className="flex h-full items-center justify-center px-6 text-center text-white/90">
+                  <div className="theme-modal-fallback flex h-full items-center justify-center px-6 text-center">
                     <p>PDF preview is not supported on this device. <a href={resumePdfUrl} target="_blank" rel="noopener noreferrer" className="text-primary underline">Open in new tab</a>.</p>
                   </div>
                 </object>

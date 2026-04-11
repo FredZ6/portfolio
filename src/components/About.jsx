@@ -88,16 +88,16 @@ const About = () => {
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true, margin: "-100px" }}
-        className="relative z-10 w-full max-w-6xl rounded-[2rem] overflow-hidden flex flex-col border border-white/[0.06] bg-black/6 backdrop-blur-[10px] shadow-[0_18px_40px_rgba(0,0,0,0.45),inset_0_1px_3px_rgba(255,255,255,0.08)]"
+        className="about-terminal-shell relative z-10 flex w-full max-w-6xl flex-col overflow-hidden rounded-[2rem]"
       >
         {/* Terminal Header */}
-        <div className="h-12 bg-white/5 border-b border-white/10 flex items-center px-6 relative">
+        <div className="about-terminal-header relative flex h-12 items-center px-6">
           <div className="flex gap-2">
             <div className="w-3 h-3 rounded-full bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.6)]" />
             <div className="w-3 h-3 rounded-full bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.6)]" />
             <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.6)]" />
           </div>
-          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 text-slate-400 font-mono text-xs tracking-widest uppercase">
+          <div className="about-window-title absolute left-1/2 -translate-x-1/2 flex items-center gap-2 font-mono text-xs tracking-widest uppercase">
             <TerminalIcon size={14} />
             <span>sys.admin@fredz-core:~</span>
           </div>
@@ -107,53 +107,53 @@ const About = () => {
         <div className="flex flex-col lg:flex-row h-full lg:h-[700px]">
 
           {/* Left Panel: Profile & Timeline */}
-          <div className="w-full lg:w-5/12 p-8 sm:p-10 border-b lg:border-b-0 lg:border-r border-white/10 bg-black/10 overflow-y-auto scrollbar-none relative">
+          <div className="about-terminal-sidebar relative w-full overflow-y-auto border-b p-8 scrollbar-none sm:p-10 lg:w-5/12 lg:border-b-0 lg:border-r">
 
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 rounded-full glass-panel flex items-center justify-center border border-primary/50 overflow-hidden shadow-[0_0_20px_rgba(56,189,248,0.32)] shrink-0">
+              <div className="about-avatar-shell glass-panel flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-primary/50">
                 <img src="/portfolio/avatar.png" alt="Avatar" className="w-full h-full object-cover scale-150 mix-blend-screen" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white tracking-widest">USER_ID: FRED_ZHANG</h3>
+                <h3 className="about-identity-title text-xl font-bold tracking-widest">USER_ID: FRED_ZHANG</h3>
                 <p className="text-xs font-mono uppercase tracking-[0.2em] flex items-center gap-1">
                   <ShieldCheck size={12} className="text-emerald-400" />
-                  <span className="text-emerald-400">Status: Online</span>
+                  <span className="about-status-online">Status: Online</span>
                 </p>
               </div>
             </div>
 
-            <p className="text-slate-300 text-sm leading-relaxed mb-10 font-mono">
-              <span className="text-secondary opacity-70">&gt; EXECUTE profile_summary.sh</span><br /><br />
-              A <span className="text-white font-bold">Computer Science</span> graduate (minor in Mathematics) from the University of Manitoba.<br /><br />
+            <p className="about-body-copy mb-10 text-sm leading-relaxed font-mono">
+              <span className="about-command">&gt; EXECUTE profile_summary.sh</span><br /><br />
+              A <span className="theme-emphasis font-bold">Computer Science</span> graduate (minor in Mathematics) from the University of Manitoba.<br /><br />
               Focus: Building maintainable backend systems, clear API contracts, and deployable cloud infrastructure.<br />
               Workflow: <span className="text-primary">AI-assisted, spec-driven</span> engineering for faster, more predictable delivery.
             </p>
 
             <div className="space-y-6">
-              <span className="text-secondary font-mono text-sm opacity-70">&gt; CAT /var/log/experience_timeline</span>
+              <span className="about-command font-mono text-sm">&gt; CAT /var/log/experience_timeline</span>
               {experiences.map((exp, idx) => (
                 <div key={idx} className="relative pl-6 border-l border-primary/30 group">
-                  <div className="absolute w-3 h-3 rounded-full bg-black border-2 border-primary -left-[6.5px] top-1 group-hover:bg-primary group-hover:shadow-[0_0_10px_rgba(56,189,248,0.82)] transition-all" />
-                  <p className="text-xs font-bold tracking-widest uppercase text-slate-500 mb-1">{exp.period}</p>
-                  <h4 className="font-bold text-white text-base tracking-wide flex items-center gap-2">
+                  <div className="about-timeline-node absolute -left-[6.5px] top-1 h-3 w-3 rounded-full border-2 border-primary transition-all group-hover:bg-primary group-hover:shadow-[0_0_10px_rgba(56,189,248,0.82)]" />
+                  <p className="about-timeline-period mb-1 text-xs font-bold tracking-widest uppercase">{exp.period}</p>
+                  <h4 className="about-heading-emphasis flex items-center gap-2 text-base font-bold tracking-wide">
                     {exp.icon} {exp.title}
                   </h4>
                   <p className="text-primary text-xs font-mono mb-2">{exp.org}</p>
-                  <p className="text-slate-400 text-xs leading-relaxed">{exp.desc}</p>
+                  <p className="about-body-muted text-xs leading-relaxed">{exp.desc}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Right Panel: Contact Interface */}
-          <div id="contact" className="w-full lg:w-7/12 p-8 sm:p-10 bg-gradient-to-br from-white/[0.015] via-black/[0.03] to-transparent relative flex flex-col justify-center">
+          <div id="contact" className="about-terminal-main relative flex w-full flex-col justify-center p-8 sm:p-10 lg:w-7/12">
 
             <div className="mb-10">
-              <span className="text-secondary font-mono text-sm opacity-70">&gt; INIT direct_transmission_protocol</span>
-              <h2 className="text-3xl sm:text-5xl font-black text-white mt-4 tracking-tighter mix-blend-plus-lighter drop-shadow-[0_0_15px_rgba(255,255,255,0.2)] mb-2">
+              <span className="about-command font-mono text-sm">&gt; INIT direct_transmission_protocol</span>
+              <h2 className="about-uplink-title mt-4 mb-2 text-3xl font-black tracking-tighter sm:text-5xl">
                 ESTABLISH UPLINK
               </h2>
-              <p className="text-slate-400 text-xs sm:text-sm max-w-md">Open to Software Engineer roles in backend, platform, and full-stack teams. Transmit your message below.</p>
+              <p className="about-body-muted max-w-md text-xs sm:text-sm">Open to Software Engineer roles in backend, platform, and full-stack teams. Transmit your message below.</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -161,22 +161,22 @@ const About = () => {
                 <div className="relative group">
                   <div className="absolute inset-x-0 bottom-0 h-0.5 bg-primary scale-x-0 group-focus-within:scale-x-100 transition-transform origin-left" />
                   <label className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary/70 mb-1 block">Alias / Name</label>
-                  <div className="flex items-center gap-3 bg-black/40 border border-white/10 rounded-xl px-4 py-3">
-                    <User size={16} className="text-slate-500" />
+                  <div className="about-input-shell flex items-center gap-3 rounded-xl px-4 py-3">
+                    <User size={16} className="about-input-icon" />
                     <input
                       type="text" name="name" required value={formData.name} onChange={handleChange}
-                      className="w-full bg-transparent outline-none text-white text-sm placeholder:text-slate-600 font-mono" placeholder="GUEST_USER"
+                      className="about-input-control w-full bg-transparent text-sm font-mono outline-none" placeholder="GUEST_USER"
                     />
                   </div>
                 </div>
                 <div className="relative group">
                   <div className="absolute inset-x-0 bottom-0 h-0.5 bg-primary scale-x-0 group-focus-within:scale-x-100 transition-transform origin-left" />
                   <label className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary/70 mb-1 block">Network / Email</label>
-                  <div className="flex items-center gap-3 bg-black/40 border border-white/10 rounded-xl px-4 py-3">
-                    <Mail size={16} className="text-slate-500" />
+                  <div className="about-input-shell flex items-center gap-3 rounded-xl px-4 py-3">
+                    <Mail size={16} className="about-input-icon" />
                     <input
                       type="email" name="email" required value={formData.email} onChange={handleChange}
-                      className="w-full bg-transparent outline-none text-white text-sm placeholder:text-slate-600 font-mono" placeholder="address@node.net"
+                      className="about-input-control w-full bg-transparent text-sm font-mono outline-none" placeholder="address@node.net"
                     />
                   </div>
                 </div>
@@ -185,10 +185,10 @@ const About = () => {
               <div className="relative group">
                 <div className="absolute inset-x-0 bottom-0 h-0.5 bg-secondary scale-x-0 group-focus-within:scale-x-100 transition-transform origin-left" />
                 <label className="text-[10px] font-bold tracking-[0.2em] uppercase text-secondary/70 mb-1 block">Header / Subject</label>
-                <div className="bg-black/40 border border-white/10 rounded-xl px-4 py-3">
+                <div className="about-input-shell rounded-xl px-4 py-3">
                   <input
                     type="text" name="subject" required value={formData.subject} onChange={handleChange}
-                    className="w-full bg-transparent outline-none text-white text-sm placeholder:text-slate-600 font-mono" placeholder="Transmission subject..."
+                    className="about-input-control w-full bg-transparent text-sm font-mono outline-none" placeholder="Transmission subject..."
                   />
                 </div>
               </div>
@@ -196,10 +196,10 @@ const About = () => {
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 w-0.5 bg-accent scale-y-0 group-focus-within:scale-y-100 transition-transform origin-bottom" />
                 <label className="text-[10px] font-bold tracking-[0.2em] uppercase text-accent/70 mb-1 block">Payload / Message</label>
-                <div className="bg-black/40 border border-white/10 rounded-xl px-4 py-3">
+                <div className="about-input-shell rounded-xl px-4 py-3">
                   <textarea
                     name="message" required rows={5} value={formData.message} onChange={handleChange}
-                    className="w-full bg-transparent outline-none text-white text-sm placeholder:text-slate-600 font-mono resize-none" placeholder="Enter transmission payload here..."
+                    className="about-input-control w-full resize-none bg-transparent text-sm font-mono outline-none" placeholder="Enter transmission payload here..."
                   />
                 </div>
               </div>
