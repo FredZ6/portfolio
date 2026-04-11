@@ -62,13 +62,13 @@ const Hero = () => {
           >
             {/* Outer Orbit */}
             <motion.div
-              className="absolute inset-0 rounded-full border border-primary/20 shadow-[0_0_80px_rgba(56,189,248,0.24)]"
+              className="theme-orbit-outer absolute inset-0 rounded-full border"
               animate={shouldReduceMotion ? undefined : { rotateZ: 360 }}
               transition={shouldReduceMotion ? undefined : { duration: 20, repeat: Infinity, ease: 'linear' }}
             />
             {/* Inner Orbit */}
             <motion.div
-              className="absolute inset-5 sm:inset-10 rounded-full border border-secondary/30 shadow-[0_0_60px_rgba(13,244,230,0.3)]"
+              className="theme-orbit-inner absolute inset-5 sm:inset-10 rounded-full border"
               animate={shouldReduceMotion ? undefined : { rotateZ: -360 }}
               transition={shouldReduceMotion ? undefined : { duration: 25, repeat: Infinity, ease: 'linear' }}
             />
@@ -78,11 +78,9 @@ const Hero = () => {
               animate={shouldReduceMotion ? undefined : { y: [0, -30, 0] }}
               transition={shouldReduceMotion ? undefined : { duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             >
-              <img
-                src="/portfolio/avatar.png"
-                alt="Profile Avatar Hologram"
-                className="theme-hero-avatar w-full h-full object-cover rounded-full scale-[1.7] sm:scale-[1.44] blur-[1px] sm:blur-[2px] opacity-90 sm:opacity-80"
-                style={{ filter: 'drop-shadow(0 0 40px rgba(56,189,248,0.82))' }}
+              <div
+                aria-hidden="true"
+                className="theme-hero-avatar h-full w-full scale-[1.87] rounded-full sm:scale-[1.58]"
               />
             </motion.div>
           </Tilt>

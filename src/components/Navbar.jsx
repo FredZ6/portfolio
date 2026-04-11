@@ -70,6 +70,8 @@ const Navbar = ({ theme, onToggleTheme }) => {
           </motion.a>
         ))}
 
+        <div className="theme-nav-divider h-7 w-px shrink-0 sm:h-8" aria-hidden="true" />
+
         <motion.button
           type="button"
           onClick={onToggleTheme}

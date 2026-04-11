@@ -111,7 +111,7 @@ const About = () => {
 
             <div className="flex items-center gap-4 mb-10">
               <div className="about-avatar-shell glass-panel flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-primary/50">
-                <img src="/portfolio/avatar.png" alt="Avatar" className="w-full h-full object-cover scale-150 mix-blend-screen" />
+                <div aria-hidden="true" className="about-avatar-mark h-full w-full scale-150" />
               </div>
               <div>
                 <h3 className="about-identity-title text-xl font-bold tracking-widest">USER_ID: FRED_ZHANG</h3>

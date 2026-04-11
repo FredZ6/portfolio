@@ -234,8 +234,6 @@ const Projects = () => {
       <section ref={targetRef} className="relative mt-0 bg-transparent pt-[calc(env(safe-area-inset-top)+2rem)] pb-[calc(env(safe-area-inset-bottom)+10rem)] sm:-mt-[8vh] sm:h-[138vh] sm:pt-0 sm:pb-0 lg:-mt-[10vh] lg:h-[134vh]" id="projects">
         {/* Sticky wrapper */}
         <div className="relative w-full overflow-visible sm:sticky sm:top-0 sm:flex sm:h-screen sm:items-center sm:overflow-hidden">
-          <div className="pointer-events-none absolute inset-x-0 bottom-[6vh] h-[18vh] bg-[radial-gradient(ellipse_at_center,rgba(12,40,78,0.2)_0%,rgba(8,17,31,0.14)_42%,rgba(8,17,31,0)_78%)] blur-3xl" />
-
           {/* Background Title (Animated) */}
           <motion.div
             style={{ x: titleX, opacity: titleOpacity }}
@@ -244,7 +242,7 @@ const Projects = () => {
             <h2 className="theme-section-title text-4xl sm:text-7xl font-black text-transparent bg-clip-text">
               FEATURED<br />SYSTEMS
             </h2>
-            <p className="mt-3 text-[11px] text-slate-300 font-medium tracking-wide border-l-2 border-primary pl-4 uppercase sm:mt-4 sm:text-sm shadow-[inset_1px_0_10px_rgba(56,189,248,0.12)] py-1">
+            <p className="project-section-guidance mt-3 text-[11px] font-medium tracking-wide border-l-2 border-primary pl-4 uppercase sm:mt-4 sm:text-sm shadow-[inset_1px_0_10px_rgba(56,189,248,0.12)] py-1">
               <span className="sm:hidden">Use buttons to explore<br /> architectural implementations.</span>
               <span className="hidden sm:inline">Swipe, click cards, or use buttons to explore<br /> architectural implementations.</span>
             </p>
@@ -329,10 +327,10 @@ const Projects = () => {
                     rel="noopener noreferrer"
                     className="flex flex-col items-center gap-4 group cursor-pointer"
                   >
-                    <div className="w-24 h-24 rounded-full glass-panel-strong flex items-center justify-center text-white transition-all group-hover:bg-primary group-hover:scale-110 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_40px_rgba(56,189,248,0.6)]">
+                    <div className="project-endcap-orb w-24 h-24 rounded-full glass-panel-strong flex items-center justify-center transition-all group-hover:bg-primary group-hover:scale-110 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_40px_rgba(56,189,248,0.6)]">
                       <ExternalLink size={32} />
                     </div>
-                    <span className="text-white font-bold tracking-widest uppercase text-sm opacity-50 group-hover:opacity-100 transition-opacity">View All Repos</span>
+                    <span className="project-endcap-label font-bold tracking-widest uppercase text-sm opacity-50 group-hover:opacity-100 transition-opacity">View All Repos</span>
                   </a>
                 </div>
               </motion.div>
@@ -476,7 +474,6 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
 
   return (
     <div className="w-[92vw] sm:w-[min(72vw,58rem)] lg:w-[min(54vw,72rem)] h-auto sm:h-[clamp(40rem,79vh,52rem)] lg:h-[clamp(42rem,78vh,54rem)] shrink-0 relative">
-      <div className="pointer-events-none absolute inset-x-[8%] bottom-[-4%] h-[16%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(9,31,64,0.5)_0%,rgba(8,17,31,0.22)_55%,rgba(8,17,31,0)_100%)] blur-2xl opacity-85" />
       <div className="project-shell-card w-full h-full rounded-[2.5rem] p-4 sm:p-[clamp(1.5rem,1rem+0.9vw,2rem)] lg:p-[clamp(1.75rem,1.05rem+0.9vw,2.35rem)] flex flex-col relative overflow-hidden group isolate transform-gpu transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1">
         {/* Hover Gradient Overlay */}
         <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none mix-blend-overlay`} />

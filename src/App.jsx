@@ -14,18 +14,18 @@ const THEME_META = {
     colorScheme: 'dark',
   },
   light: {
-    themeColor: '#f6f8fc',
+    themeColor: '#f7f6f3',
     colorScheme: 'light',
   },
 }
 
 const getInitialTheme = () => {
-  if (typeof window === 'undefined') return 'dark'
+  if (typeof window === 'undefined') return 'light'
 
   try {
-    return localStorage.getItem(THEME_STORAGE_KEY) === 'light' ? 'light' : 'dark'
+    return localStorage.getItem(THEME_STORAGE_KEY) === 'dark' ? 'dark' : 'light'
   } catch {
-    return 'dark'
+    return 'light'
   }
 }
 
