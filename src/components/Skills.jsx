@@ -108,6 +108,14 @@ const aiWorkflowTools = [
     href: 'https://openai.com/codex/',
   },
   {
+    name: 'Cursor',
+    lightImage: '/portfolio/cursor-avatar-circle-light.png',
+    darkImage: '/portfolio/cursor-avatar-circle-dark.png',
+    color: '#8FB4FF',
+    glow: 'rgba(143, 180, 255, 0.34)',
+    href: 'https://www.cursor.com/',
+  },
+  {
     name: 'Gemini',
     icon: RiGeminiLine,
     color: '#8BA8FF',
@@ -259,6 +267,8 @@ SkillChip.propTypes = {
     name: PropTypes.string.isRequired,
     icon: PropTypes.elementType,
     image: PropTypes.string,
+    lightImage: PropTypes.string,
+    darkImage: PropTypes.string,
     color: PropTypes.string.isRequired,
   }).isRequired,
 }
@@ -475,11 +485,24 @@ const Skills = () => {
                         className="theme-tool-icon flex h-8 w-8 items-center justify-center rounded-full text-base xl:h-7 xl:w-7 xl:text-[0.92rem]"
                         style={{ color: tool.color, boxShadow: `0 0 18px ${tool.glow}` }}
                       >
-                        {tool.image ? (
+                        {tool.lightImage && tool.darkImage ? (
+                          <>
+                            <img
+                              src={tool.lightImage}
+                              alt=""
+                              className="theme-tool-icon-image theme-tool-icon-image--light"
+                            />
+                            <img
+                              src={tool.darkImage}
+                              alt=""
+                              className="theme-tool-icon-image theme-tool-icon-image--dark"
+                            />
+                          </>
+                        ) : tool.image ? (
                           <img
                             src={tool.image}
                             alt=""
-                            className="h-[1.12em] w-[1.12em] object-contain"
+                            className="theme-tool-icon-image"
                           />
                         ) : (
                           <Icon className="h-[1em] w-[1em]" />

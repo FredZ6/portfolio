@@ -818,6 +818,20 @@ html::-webkit-scrollbar-corner {
     background: rgba(15, 23, 42, 0.84);
   }
 
+  .theme-tool-icon-image {
+    height: 1.12em;
+    width: 1.12em;
+    object-fit: contain;
+  }
+
+  .theme-tool-icon-image--light {
+    display: none;
+  }
+
+  .theme-tool-icon-image--dark {
+    display: block;
+  }
+
   .theme-tool-label,
   .theme-chip-label {
     color: var(--page-text-strong);
@@ -1276,6 +1290,14 @@ html[data-theme='light'] .theme-tool-icon,
 html[data-theme='light'] .theme-chip-icon,
 html[data-theme='light'] .theme-certification-media {
   background: rgba(245, 247, 250, 0.98);
+}
+
+html[data-theme='light'] .theme-tool-icon-image--light {
+  display: block;
+}
+
+html[data-theme='light'] .theme-tool-icon-image--dark {
+  display: none;
 }
 
 html[data-theme='light'] .theme-tool-label,
