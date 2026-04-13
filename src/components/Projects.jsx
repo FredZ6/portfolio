@@ -291,7 +291,7 @@ const Projects = () => {
 
           {/* Native Horizontal Scroll Container (Animated Entry) */}
           <motion.div
-            className="hidden sm:block sm:absolute sm:inset-0 sm:h-full sm:pt-20 lg:pt-28"
+            className="hidden sm:block sm:absolute sm:inset-0 sm:h-full sm:pt-24 lg:pt-32"
             initial={false}
           >
             <div
@@ -474,7 +474,7 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
 
   return (
     <div className="relative h-auto w-[92vw] shrink-0 sm:h-[clamp(40rem,79vh,52rem)] sm:w-[min(72vw,58rem)] lg:h-[clamp(42rem,78vh,54rem)] lg:w-[min(54vw,72rem)]">
-      <div className="project-shell-card relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem] px-4 pb-4 pt-0 sm:p-[clamp(1.5rem,1rem+0.9vw,2rem)] lg:p-[clamp(1.75rem,1.05rem+0.9vw,2.35rem)] group isolate transform-gpu transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1">
+      <div className="project-shell-card relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem] px-4 pb-4 pt-0 sm:translate-y-1 sm:p-[clamp(1.5rem,1rem+0.9vw,2rem)] sm:hover:translate-y-0 lg:p-[clamp(1.75rem,1.05rem+0.9vw,2.35rem)] group isolate transform-gpu transition-[transform,box-shadow,border-color] duration-300 ease-out">
         {/* Hover Gradient Overlay */}
         <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none mix-blend-overlay`} />
         <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
