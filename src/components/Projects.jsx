@@ -231,7 +231,7 @@ const Projects = () => {
 
   return (
     <>
-      <section ref={targetRef} className="relative mt-0 bg-transparent pt-[calc(env(safe-area-inset-top)+2rem)] pb-[calc(env(safe-area-inset-bottom)+10rem)] sm:-mt-[8vh] sm:h-[138vh] sm:pt-0 sm:pb-0 lg:-mt-[10vh] lg:h-[134vh]" id="projects">
+      <section ref={targetRef} className="relative mt-0 bg-transparent pt-[calc(env(safe-area-inset-top)+2rem)] pb-[calc(env(safe-area-inset-bottom)+6.5rem)] sm:-mt-[8vh] sm:h-[124vh] sm:pt-0 sm:pb-0 lg:-mt-[10vh] lg:h-[120vh]" id="projects">
         {/* Sticky wrapper */}
         <div className="relative w-full overflow-visible sm:sticky sm:top-0 sm:flex sm:h-screen sm:items-center sm:overflow-hidden">
           {/* Background Title (Animated) */}
@@ -301,7 +301,7 @@ const Projects = () => {
             >
               <motion.div
                 style={{ x: cardsX, opacity: cardsOpacity }}
-                className="flex w-max min-w-full items-start gap-8 sm:h-full sm:items-center sm:gap-16 lg:gap-24 pl-[calc((100vw-92vw)/2)] pr-[calc((100vw-85vw)/2)] sm:pl-[calc((100vw-min(72vw,58rem))/2)] sm:pr-[calc((100vw-50vw)/2)] lg:pl-[calc((100vw-min(54vw,72rem))/2)] lg:pr-[calc((100vw-30vw)/2)]"
+                className="flex w-max min-w-full items-start gap-8 sm:h-full sm:items-start sm:gap-16 lg:gap-24 pl-[calc((100vw-92vw)/2)] pr-[calc((100vw-85vw)/2)] sm:pl-[calc((100vw-min(72vw,58rem))/2)] sm:pr-[calc((100vw-50vw)/2)] lg:pl-[calc((100vw-min(54vw,72rem))/2)] lg:pr-[calc((100vw-30vw)/2)]"
                 initial={false}
               >
                 {PROJECTS.map((project, index) => (
@@ -309,7 +309,7 @@ const Projects = () => {
                     key={project.id}
                     data-scroll-card
                     onClick={(event) => handleDesktopCardClick(event, index)}
-                    className="snap-center shrink-0 flex items-start sm:h-full sm:items-center sm:cursor-pointer"
+                    className="snap-center shrink-0 flex items-start sm:h-full sm:items-start sm:cursor-pointer"
                   >
                     <ProjectCard
                       project={project}

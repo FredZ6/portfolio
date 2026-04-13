@@ -52,7 +52,7 @@ const About = () => {
       icon: <GraduationCap size={20} strokeWidth={1.5} />,
       title: "Education",
       org: "University of Manitoba",
-      period: "2019 - 2024",
+      period: "2020 - 2024",
       desc: "BSc. Computer Science (Minor in Mathematics)"
     },
     {
@@ -72,7 +72,7 @@ const About = () => {
   ]
 
   return (
-    <section className="min-h-screen flex items-center justify-center section-padding relative overflow-hidden bg-transparent" id="about">
+    <section className="relative z-10 flex min-h-screen items-center justify-center overflow-hidden bg-transparent px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-[4.5rem]" id="about">
       {submitStatus.show && (
         <Toast type={submitStatus.type} message={submitStatus.message} onClose={hideStatus} />
       )}
@@ -109,7 +109,7 @@ const About = () => {
           {/* Left Panel: Profile & Timeline */}
           <div className="about-terminal-sidebar relative w-full overflow-y-auto border-b p-8 scrollbar-none sm:p-10 lg:w-5/12 lg:border-b-0 lg:border-r">
 
-            <div className="flex items-center gap-4 mb-10">
+            <div className="mb-8 flex items-center gap-4 sm:mb-10">
               <div className="about-avatar-shell glass-panel flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-primary/50">
                 <div aria-hidden="true" className="about-avatar-mark h-full w-full scale-150" />
               </div>
@@ -122,7 +122,7 @@ const About = () => {
               </div>
             </div>
 
-            <p className="about-body-copy mb-10 text-sm leading-relaxed font-mono">
+            <p className="about-body-copy mb-8 text-sm leading-relaxed font-mono sm:mb-10">
               <span className="about-command">&gt; EXECUTE profile_summary.sh</span><br /><br />
               A <span className="theme-emphasis font-bold">Computer Science</span> graduate (minor in Mathematics) from the University of Manitoba.<br /><br />
               Focus: Building maintainable backend systems, clear API contracts, and deployable cloud infrastructure.<br />
@@ -148,9 +148,9 @@ const About = () => {
           {/* Right Panel: Contact Interface */}
           <div id="contact" className="about-terminal-main relative flex w-full flex-col justify-center p-8 sm:p-10 lg:w-7/12">
 
-            <div className="mb-10">
+            <div className="mb-7 sm:mb-10">
               <span className="about-command font-mono text-sm">&gt; INIT direct_transmission_protocol</span>
-              <h2 className="about-uplink-title mt-4 mb-2 text-3xl font-black tracking-tighter sm:text-5xl">
+              <h2 className="about-uplink-title mb-1.5 mt-3 text-3xl font-black tracking-tighter sm:mb-2 sm:mt-4 sm:text-5xl">
                 ESTABLISH UPLINK
               </h2>
               <p className="about-body-muted max-w-md text-xs sm:text-sm">Open to Software Engineer roles in backend, platform, and full-stack teams. Transmit your message below.</p>
