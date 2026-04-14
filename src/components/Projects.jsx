@@ -141,15 +141,20 @@ const buildDeepWikiUrl = (githubUrl) => {
   return githubUrl.replace('https://github.com/', 'https://deepwiki.com/')
 }
 
+const getIsMobileViewport = () => {
+  if (typeof window === 'undefined') return false
+  return window.innerWidth < 768
+}
+
 const Projects = () => {
   const targetRef = useRef(null)
   const [lightboxData, setLightboxData] = useState(null)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(getIsMobileViewport)
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+      setIsMobile(getIsMobileViewport())
     }
     
     checkMobile()
@@ -169,6 +174,9 @@ const Projects = () => {
   const cardsX = useTransform(scrollYProgress, [0.12, 0.72], ['-50vw', '0vw'])
   const cardsOpacity = useTransform(scrollYProgress, [0.12, 0.44], [0, 1])
 
+  const titleMotionStyle = isMobile ? { x: 0, opacity: 1 } : { x: titleX, opacity: titleOpacity }
+  const cardsMotionStyle = isMobile ? { x: 0, opacity: 1 } : { x: cardsX, opacity: cardsOpacity }
+
   const openLightbox = (projectImages) => {
     if (!projectImages?.length) return
 
@@ -186,14 +194,14 @@ const Projects = () => {
     <>
       <section ref={targetRef} className="relative z-10 py-24 sm:py-32 overflow-hidden" id="projects">
         <div className="container-width px-4 sm:px-6 lg:px-8">
-          <motion.div style={isMobile ? {} : { x: titleX, opacity: titleOpacity }} className="mb-16">
+          <motion.div style={titleMotionStyle} className="mb-16">
             <h2 className="heading inline-block">FEATURED SYSTEMS</h2>
             <p className="project-section-guidance mt-4 max-w-2xl text-sm md:text-base font-medium tracking-wide border-l-2 border-primary pl-4 opacity-80 uppercase shadow-[inset_1px_0_10px_rgba(56,189,248,0.12)]">
               Explore architectural implementations and detailed system galleries.
             </p>
           </motion.div>
 
-          <motion.div style={isMobile ? {} : { x: cardsX, opacity: cardsOpacity }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          <motion.div style={cardsMotionStyle} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {PROJECTS.map((project, index) => (
               <ProjectCard
                 key={project.id}
@@ -263,13 +271,13 @@ const ProjectCard = ({ project, index, onOpenLightbox }) => {
   const previewImage = project.images[0]?.src
 
   return (
-    <div className="group relative isolate flex flex-col overflow-hidden rounded-[2.5rem] glass-panel-strong transform-gpu [-webkit-mask-image:-webkit-radial-gradient(white,black)] transition-[transform,box-shadow] duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(56,189,248,0.15)] focus-within:-translate-y-2 focus-within:shadow-[0_20px_40px_rgba(56,189,248,0.15)]">
+    <div className="group relative isolate flex flex-col overflow-hidden rounded-[2.5rem] glass-panel-strong transition-[transform,box-shadow] duration-300 sm:transform-gpu sm:[-webkit-mask-image:-webkit-radial-gradient(white,black)] sm:hover:-translate-y-2 sm:hover:shadow-[0_20px_40px_rgba(56,189,248,0.15)] sm:focus-within:-translate-y-2 sm:focus-within:shadow-[0_20px_40px_rgba(56,189,248,0.15)]">
       {/* Background Hover Glow */}
       <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 group-hover:opacity-5 transition-opacity duration-700 pointer-events-none`} />
 
       {/* Image Preview Header */}
       <div
-        className="relative aspect-[16/10] w-full overflow-hidden rounded-t-[2.5rem] transform-gpu [-webkit-mask-image:-webkit-radial-gradient(white,black)] cursor-pointer"
+        className="relative aspect-[16/10] w-full overflow-hidden rounded-t-[2.5rem] cursor-pointer sm:transform-gpu sm:[-webkit-mask-image:-webkit-radial-gradient(white,black)]"
         onClick={onOpenLightbox}
         aria-label={`Open gallery for ${project.title}`}
       >
