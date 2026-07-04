@@ -1487,6 +1487,10 @@ body {
   color: var(--ink);
 }
 
+#contact {
+  scroll-margin-top: 6rem;
+}
+
 .editorial-header {
   position: fixed;
   inset: 0 0 auto;
@@ -1550,6 +1554,7 @@ body {
   display: flex;
   align-items: center;
   gap: clamp(0.25rem, 1vw, 0.75rem);
+  visibility: visible;
 }
 
 .editorial-nav-links a {
@@ -1675,13 +1680,16 @@ body {
     opacity: 0;
     pointer-events: none;
     transform: translateY(-0.5rem);
-    transition: opacity 180ms ease, transform 180ms ease;
+    visibility: hidden;
+    transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms;
   }
 
   .editorial-nav-links[data-open='true'] {
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0);
+    visibility: visible;
+    transition-delay: 0s;
   }
 
   .editorial-nav-links a {

@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const navItems = [
   { label: 'Work', href: '#projects' },
-  { label: 'Stack', href: '#stack' },
+  { label: 'Stack', href: '#skills' },
   { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },
 ]
@@ -11,12 +11,16 @@ const resumeUrl = '/portfolio/resume/FredCV-2025%20codex.pdf'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const menuButtonRef = useRef(null)
 
   useEffect(() => {
     if (!isMenuOpen) return undefined
 
     const handleEscape = (event) => {
-      if (event.key === 'Escape') setIsMenuOpen(false)
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false)
+        menuButtonRef.current?.focus()
+      }
     }
 
     window.addEventListener('keydown', handleEscape)
@@ -34,6 +38,7 @@ const Navbar = () => {
         </a>
 
         <button
+          ref={menuButtonRef}
           className="editorial-menu-button"
           type="button"
           aria-expanded={isMenuOpen}
