@@ -8,6 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "test:redesign": "node scripts/editorial-redesign-regression.mjs",
+    "test:resume-dialog": "node scripts/resume-dialog-regression.mjs",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
