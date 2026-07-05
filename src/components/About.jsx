@@ -1,13 +1,48 @@
-import { useState, useEffect } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
-import { GraduationCap, Briefcase, Code2, Terminal as TerminalIcon, Send, Mail, User, ShieldCheck } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { ArrowUpRight, Send } from 'lucide-react'
 import emailjs from '@emailjs/browser'
 import Toast from './Toast'
 
-const About = () => {
-  const shouldReduceMotion = useReducedMotion()
+const proofPoints = [
+  { value: '03', label: 'Featured systems', note: 'documented in the project archive' },
+  { value: '08', label: 'Verified credentials', note: 'linked in the credentials index' },
+  { value: '04', label: 'Delivery disciplines', note: 'mapped across the technology ticker' },
+]
 
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
+const workingMethod = [
+  {
+    number: '01',
+    title: 'Discover',
+    copy: 'Turn the problem into a shared, testable specification before implementation begins.',
+  },
+  {
+    number: '02',
+    title: 'Design',
+    copy: 'Shape clear contracts and maintainable Java, Spring Boot, and AWS architecture with human review.',
+  },
+  {
+    number: '03',
+    title: 'Deliver',
+    copy: 'Use automated verification and explicit quality gates to make each release explainable and repeatable.',
+  },
+]
+
+const initialFormData = { name: '', email: '', subject: '', message: '' }
+const birdAsset = '/portfolio/avatar.png'
+
+const About = () => {
+  const sectionRef = useRef(null)
+  const shouldReduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  })
+  const birdX = useTransform(scrollYProgress, [0, 0.5, 1], ['-12vw', '5vw', '18vw'])
+  const birdY = useTransform(scrollYProgress, [0, 0.55, 1], [56, -18, 34])
+  const birdRotate = useTransform(scrollYProgress, [0, 0.55, 1], [-12, 8, -5])
+
+  const [formData, setFormData] = useState(initialFormData)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState({ show: false, type: '', message: '' })
   const hideStatus = () => setSubmitStatus({ show: false, type: '', message: '' })
@@ -16,10 +51,11 @@ const About = () => {
     emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '')
   }, [])
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async (event) => {
+    event.preventDefault()
     setIsSubmitting(true)
     hideStatus()
+
     try {
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -30,196 +66,129 @@ const About = () => {
           subject: formData.subject,
           message: formData.message,
           to_name: 'Fred Zhang',
-        }
+        },
       )
-      setSubmitStatus({ show: true, type: 'success', message: 'Transmission successful.' })
-      setFormData({ name: '', email: '', subject: '', message: '' })
+      setSubmitStatus({ show: true, type: 'success', message: 'Message sent. I will be in touch soon.' })
+      setFormData(initialFormData)
     } catch {
-      setSubmitStatus({ show: true, type: 'error', message: 'Transmission failed.' })
+      setSubmitStatus({ show: true, type: 'error', message: 'Message could not be sent. Please email me directly.' })
     } finally {
       setIsSubmitting(false)
-      setTimeout(hideStatus, 5000)
     }
   }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
+  const handleChange = ({ target: { name, value } }) => {
+    setFormData((current) => ({ ...current, [name]: value }))
   }
 
-  const experiences = [
-    {
-      icon: <GraduationCap size={20} strokeWidth={1.5} />,
-      title: "Education",
-      org: "University of Manitoba",
-      period: "2020 - 2024",
-      desc: "BSc. Computer Science (Minor in Mathematics)"
-    },
-    {
-      icon: <Briefcase size={20} strokeWidth={1.5} />,
-      title: "Work Experience",
-      org: "DataAnnotation Teach",
-      period: "2023 - 2024",
-      desc: "Built and maintained web application features, APIs, and internal tooling."
-    },
-    {
-      icon: <Code2 size={20} strokeWidth={1.5} />,
-      title: "Personal Projects",
-      org: "Independent Dev",
-      period: "2022 - Present",
-      desc: "Delivered cloud-native microservices and commerce systems."
-    }
-  ]
+  const birdStyle = shouldReduceMotion
+    ? { x: 0, y: 0, rotate: 0 }
+    : { x: birdX, y: birdY, rotate: birdRotate }
 
   return (
-    <section className="relative z-10 flex min-h-screen items-center justify-center overflow-hidden bg-transparent px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-[4.5rem]" id="about">
+    <section className="why-fred-section" id="about" ref={sectionRef} aria-labelledby="why-fred-title">
       {submitStatus.show && (
         <Toast type={submitStatus.type} message={submitStatus.message} onClose={hideStatus} />
       )}
 
-      {/* Abstract Background for Terminal */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[1200px] h-full max-h-[800px] pointer-events-none z-0">
-        <div className="absolute top-10 right-10 w-96 h-96 bg-primary/20 rounded-full blur-[100px]" />
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-secondary/20 rounded-full blur-[100px]" />
+      <div className="why-fred-heading" aria-hidden="true">
+        <span>WHY FRED</span>
+        <span>WHY FRED</span>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 50, scale: 0.95 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        viewport={{ once: true, margin: "-100px" }}
-        className="about-terminal-shell relative z-10 flex w-full max-w-6xl flex-col overflow-hidden rounded-[2rem]"
-      >
-        {/* Terminal Header */}
-        <div className="about-terminal-header relative flex h-12 items-center px-6">
-          <div className="flex gap-2">
-            <div className="w-3 h-3 rounded-full bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.6)]" />
-            <div className="w-3 h-3 rounded-full bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.6)]" />
-            <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.6)]" />
+      <div className="why-fred-inner">
+        <header className="why-fred-intro">
+          <div>
+            <p className="why-fred-kicker">The case for thoughtful engineering</p>
+            <h2 id="why-fred-title">WHY FRED</h2>
           </div>
-          <div className="about-window-title absolute left-1/2 -translate-x-1/2 flex items-center gap-2 font-mono text-xs tracking-widest uppercase">
-            <TerminalIcon size={14} />
-            <span>sys.admin@fredz-core:~</span>
-          </div>
-        </div>
-
-        {/* Terminal Body Split Layout */}
-        <div className="flex flex-col lg:flex-row h-full lg:h-[700px]">
-
-          {/* Left Panel: Profile & Timeline */}
-          <div className="about-terminal-sidebar relative w-full overflow-y-auto border-b p-8 scrollbar-none sm:p-10 lg:w-5/12 lg:border-b-0 lg:border-r">
-
-            <div className="mb-8 flex items-center gap-4 sm:mb-10">
-              <div className="about-avatar-shell glass-panel flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-primary/50">
-                <div aria-hidden="true" className="about-avatar-mark h-full w-full scale-150" />
-              </div>
-              <div>
-                <h3 className="about-identity-title text-xl font-bold tracking-widest">USER_ID: FRED_ZHANG</h3>
-                <p className="text-xs font-mono uppercase tracking-[0.2em] flex items-center gap-1">
-                  <ShieldCheck size={12} className="text-emerald-400" />
-                  <span className="about-status-online">Status: Online</span>
-                </p>
-              </div>
-            </div>
-
-            <p className="about-body-copy mb-8 text-sm leading-relaxed font-mono sm:mb-10">
-              <span className="about-command">&gt; EXECUTE profile_summary.sh</span><br /><br />
-              A <span className="theme-emphasis font-bold">Computer Science</span> graduate (minor in Mathematics) from the University of Manitoba.<br /><br />
-              Focus: Building maintainable backend systems, clear API contracts, and deployable cloud infrastructure.<br />
-              Workflow: <span className="text-primary">AI-assisted, spec-driven</span> engineering for faster, more predictable delivery.
+          <motion.div className="why-fred-bird" style={birdStyle} aria-hidden="true">
+            <span style={{ '--bird-mask': `url(${birdAsset})` }} />
+          </motion.div>
+          <div className="why-fred-biography">
+            <p className="why-fred-role">Software Engineer &amp; Architect</p>
+            <p>
+              I build maintainable backend systems and cloud infrastructure with Java, Spring Boot, and AWS.
+              My AI-assisted, spec-driven practice pairs fast exploration with human review and hard quality gates.
             </p>
-
-            <div className="space-y-6">
-              <span className="about-command font-mono text-sm">&gt; CAT /var/log/experience_timeline</span>
-              {experiences.map((exp, idx) => (
-                <div key={idx} className="relative pl-6 border-l border-primary/30 group">
-                  <div className="about-timeline-node absolute -left-[6.5px] top-1 h-3 w-3 rounded-full border-2 border-primary transition-all group-hover:bg-primary group-hover:shadow-[0_0_10px_rgba(56,189,248,0.82)]" />
-                  <p className="about-timeline-period mb-1 text-xs font-bold tracking-widest uppercase">{exp.period}</p>
-                  <h4 className="about-heading-emphasis flex items-center gap-2 text-base font-bold tracking-wide">
-                    {exp.icon} {exp.title}
-                  </h4>
-                  <p className="text-primary text-xs font-mono mb-2">{exp.org}</p>
-                  <p className="about-body-muted text-xs leading-relaxed">{exp.desc}</p>
-                </div>
-              ))}
-            </div>
+            <p className="why-fred-availability">Open to Software Engineer roles in backend, platform, and full-stack teams.</p>
+            <p className="why-fred-status">
+              <span aria-hidden="true" />
+              <span className="about-status-online">Status: Online</span>
+              <span>Winnipeg, Canada · Available worldwide</span>
+            </p>
           </div>
+        </header>
 
-          {/* Right Panel: Contact Interface */}
-          <div id="contact" className="about-terminal-main relative flex w-full flex-col justify-center p-8 sm:p-10 lg:w-7/12">
-
-            <div className="mb-7 sm:mb-10">
-              <span className="about-command font-mono text-sm">&gt; INIT direct_transmission_protocol</span>
-              <h2 className="about-uplink-title mb-1.5 mt-3 text-3xl font-black tracking-tighter sm:mb-2 sm:mt-4 sm:text-5xl">
-                ESTABLISH UPLINK
-              </h2>
-              <p className="about-body-muted max-w-md text-xs sm:text-sm">Open to Software Engineer roles in backend, platform, and full-stack teams. Transmit your message below.</p>
+        <dl className="proof-points-grid" aria-label="Portfolio proof points">
+          {proofPoints.map((proof) => (
+            <div key={proof.label}>
+              <dt>{proof.label}</dt>
+              <dd>{proof.value}</dd>
+              <p>{proof.note}</p>
             </div>
+          ))}
+        </dl>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div className="relative group">
-                  <div className="absolute inset-x-0 bottom-0 h-0.5 bg-primary scale-x-0 group-focus-within:scale-x-100 transition-transform origin-left" />
-                  <label className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary/70 mb-1 block">Alias / Name</label>
-                  <div className="about-input-shell flex items-center gap-3 rounded-xl px-4 py-3">
-                    <User size={16} className="about-input-icon" />
-                    <input
-                      type="text" name="name" required value={formData.name} onChange={handleChange}
-                      className="about-input-control w-full bg-transparent text-sm font-mono outline-none" placeholder="GUEST_USER"
-                    />
-                  </div>
-                </div>
-                <div className="relative group">
-                  <div className="absolute inset-x-0 bottom-0 h-0.5 bg-primary scale-x-0 group-focus-within:scale-x-100 transition-transform origin-left" />
-                  <label className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary/70 mb-1 block">Network / Email</label>
-                  <div className="about-input-shell flex items-center gap-3 rounded-xl px-4 py-3">
-                    <Mail size={16} className="about-input-icon" />
-                    <input
-                      type="email" name="email" required value={formData.email} onChange={handleChange}
-                      className="about-input-control w-full bg-transparent text-sm font-mono outline-none" placeholder="address@node.net"
-                    />
-                  </div>
-                </div>
-              </div>
+        <section className="working-method" aria-labelledby="working-method-title">
+          <header>
+            <p>How I work</p>
+            <h3 id="working-method-title">A clear path from question to dependable system.</h3>
+          </header>
+          <ol>
+            {workingMethod.map((step) => (
+              <li key={step.title}>
+                <span>{step.number}</span>
+                <h3>{step.title}</h3>
+                <p>{step.copy}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
 
-              <div className="relative group">
-                <div className="absolute inset-x-0 bottom-0 h-0.5 bg-secondary scale-x-0 group-focus-within:scale-x-100 transition-transform origin-left" />
-                <label className="text-[10px] font-bold tracking-[0.2em] uppercase text-secondary/70 mb-1 block">Header / Subject</label>
-                <div className="about-input-shell rounded-xl px-4 py-3">
-                  <input
-                    type="text" name="subject" required value={formData.subject} onChange={handleChange}
-                    className="about-input-control w-full bg-transparent text-sm font-mono outline-none" placeholder="Transmission subject..."
-                  />
-                </div>
-              </div>
+        <section className="editorial-contact-form" aria-labelledby="message-title">
+          <header>
+            <p>Direct line</p>
+            <h3 id="message-title">Bring the hard problem.</h3>
+            <a href="mailto:fredzhang026@gmail.com">
+              Or email fredzhang026@gmail.com <ArrowUpRight aria-hidden="true" />
+            </a>
+          </header>
 
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-0 w-0.5 bg-accent scale-y-0 group-focus-within:scale-y-100 transition-transform origin-bottom" />
-                <label className="text-[10px] font-bold tracking-[0.2em] uppercase text-accent/70 mb-1 block">Payload / Message</label>
-                <div className="about-input-shell rounded-xl px-4 py-3">
-                  <textarea
-                    name="message" required rows={5} value={formData.message} onChange={handleChange}
-                    className="about-input-control w-full resize-none bg-transparent text-sm font-mono outline-none" placeholder="Enter transmission payload here..."
-                  />
-                </div>
-              </div>
-
+          <form onSubmit={handleSubmit}>
+            <div className="editorial-contact-fields">
+              <label htmlFor="contact-name">
+                Name
+                <input id="contact-name" type="text" name="name" required autoComplete="name" value={formData.name} onChange={handleChange} />
+              </label>
+              <label htmlFor="contact-email">
+                Email
+                <input id="contact-email" type="email" name="email" required autoComplete="email" value={formData.email} onChange={handleChange} />
+              </label>
+              <label className="editorial-contact-subject" htmlFor="contact-subject">
+                Subject
+                <input id="contact-subject" type="text" name="subject" required value={formData.subject} onChange={handleChange} />
+              </label>
+              <label className="editorial-contact-message" htmlFor="contact-message">
+                Message
+                <textarea id="contact-message" name="message" required rows={5} value={formData.message} onChange={handleChange} />
+              </label>
+            </div>
+            <div className="editorial-contact-submit">
+              <p aria-live="polite">{submitStatus.show ? submitStatus.message : 'All fields are required.'}</p>
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto px-8 py-4 rounded-xl glass-button flex items-center justify-center gap-3 mt-6 disabled:opacity-50 group hover:shadow-[0_0_20px_rgba(56,189,248,0.42)] transition-all"
-                whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+                whileHover={shouldReduceMotion ? undefined : { y: -2 }}
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
               >
-                <Send size={16} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
-                <span className="font-bold tracking-widest uppercase text-sm">
-                  {isSubmitting ? 'Transmitting...' : 'Send Uplink'}
-                </span>
+                <span>{isSubmitting ? 'Sending…' : 'Send message'}</span>
+                <Send aria-hidden="true" />
               </motion.button>
-            </form>
-          </div>
-        </div>
-      </motion.div>
+            </div>
+          </form>
+        </section>
+      </div>
     </section>
   )
 }

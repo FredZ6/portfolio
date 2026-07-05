@@ -34,7 +34,7 @@ function App() {
         <Projects />
         <About />
       </main>
-      <Footer />
+      <Footer onOpenResume={openResume} />
       <ResumeDialog isOpen={isResumeOpen} onClose={closeResume} />
     </div>
   )
