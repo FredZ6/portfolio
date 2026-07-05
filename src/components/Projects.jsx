@@ -87,12 +87,12 @@ const PROJECTS = [
     ctaLabel: 'View Gallery',
     images: [
       { src: '/portfolio/projects/cloud-order/dashboard_16x10.png', fullSrc: '/portfolio/projects/cloud-order/dashboard_full.png', caption: 'Cloud Order Platform dashboard' },
-      { src: '/portfolio/projects/cloud-order/cloud_01_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_01_full.png', caption: 'Cloud Order Platform interface view 1' },
-      { src: '/portfolio/projects/cloud-order/cloud_02_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_02_full.png', caption: 'Cloud Order Platform interface view 2' },
-      { src: '/portfolio/projects/cloud-order/cloud_03_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_03_full.png', caption: 'Cloud Order Platform interface view 3' },
-      { src: '/portfolio/projects/cloud-order/cloud_04_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_04_full.png', caption: 'Cloud Order Platform interface view 4' },
-      { src: '/portfolio/projects/cloud-order/cloud_05_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_05_full.png', caption: 'Cloud Order Platform interface view 5' },
-      { src: '/portfolio/projects/cloud-order/cloud_06_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_06_full.png', caption: 'Cloud Order Platform interface view 6' }
+      { src: '/portfolio/projects/cloud-order/cloud_01_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_01_full.png', caption: 'Inventory API Swagger / OpenAPI documentation' },
+      { src: '/portfolio/projects/cloud-order/cloud_02_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_02_full.png', caption: 'Grafana Inventory Service overview dashboard' },
+      { src: '/portfolio/projects/cloud-order/cloud_03_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_03_full.png', caption: 'Grafana multi-service throughput and latency dashboard' },
+      { src: '/portfolio/projects/cloud-order/cloud_04_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_04_full.png', caption: 'Jaeger auth-service trace search results' },
+      { src: '/portfolio/projects/cloud-order/cloud_05_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_05_full.png', caption: 'RabbitMQ management overview' },
+      { src: '/portfolio/projects/cloud-order/cloud_06_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_06_full.png', caption: 'Prometheus service target health' }
     ],
   },
   {
@@ -293,14 +293,16 @@ const Projects = () => {
                 </button>
               </div>
               <div className="project-lightbox__stage" aria-busy={isLightboxImageLoading}>
-                <div className="project-image-fallback project-image-fallback--lightbox">
-                  <ImageIcon size={42} aria-hidden="true" />
-                  <span>Preview unavailable</span>
-                </div>
-                {isLightboxImageLoading && !hasLightboxImageError && (
+                {isLightboxImageLoading && (
                   <div className="project-lightbox__loading" role="status" aria-live="polite">
                     <span aria-hidden="true" />
-                    Loading image
+                    Loading preview
+                  </div>
+                )}
+                {hasLightboxImageError && (
+                  <div className="project-image-fallback project-image-fallback--lightbox" role="alert" aria-live="assertive">
+                    <ImageIcon size={42} aria-hidden="true" />
+                    <span>{activeImage.caption}: Preview unavailable</span>
                   </div>
                 )}
                 <img
@@ -309,8 +311,6 @@ const Projects = () => {
                   alt={activeImage.caption}
                   className="project-lightbox__image"
                   decoding="async"
-                  width={1600}
-                  height={1000}
                   hidden={hasLightboxImageError}
                   onLoad={() => setIsLightboxImageLoading(false)}
                   onError={() => {
@@ -385,8 +385,6 @@ const ProjectCard = ({ project, index, animationVariants, onOpenLightbox }) => {
             alt={`${project.title} preview`}
             loading="lazy"
             decoding="async"
-            width={1600}
-            height={1000}
             onError={(event) => { event.currentTarget.hidden = true }}
           />
         ) : (

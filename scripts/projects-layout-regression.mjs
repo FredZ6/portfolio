@@ -52,14 +52,37 @@ assert.match(source, /if \(event\.key === 'ArrowLeft'\) \{\s*event\.preventDefau
 assert.match(source, /if \(event\.key === 'ArrowRight'\) \{\s*event\.preventDefault\(\)/)
 assert.match(source, /loading="lazy"/)
 assert.match(source, /decoding="async"/)
-assert.match(source, /width=\{1600\}/)
-assert.match(source, /height=\{1000\}/)
+assert.doesNotMatch(source, /width=\{1600\}|height=\{1000\}/)
+assert.match(css, /\.project-editorial-preview\s*\{[\s\S]*?aspect-ratio:\s*16 \/ 10;/)
+assert.match(css, /\.project-lightbox__stage\s*\{[\s\S]*?aspect-ratio:\s*16 \/ 10;/)
 assert.match(source, /isLightboxImageLoading/)
 assert.match(source, /setIsLightboxImageLoading\(true\)/)
 assert.match(source, /if \(nextIndex === activeImageIndexRef\.current\) return/)
 assert.match(source, /showImageAtIndex/)
 assert.match(source, /onLoad=\{\(\) => setIsLightboxImageLoading\(false\)\}/)
 assert.match(source, /aria-busy=\{isLightboxImageLoading\}/)
+assert.match(
+  source,
+  /\{isLightboxImageLoading && \(\s*<div className="project-lightbox__loading" role="status" aria-live="polite">[\s\S]*?Loading preview[\s\S]*?<\/div>\s*\)\}/,
+)
+assert.match(
+  source,
+  /\{hasLightboxImageError && \(\s*<div className="project-image-fallback project-image-fallback--lightbox" role="alert" aria-live="assertive">[\s\S]*?\{activeImage\.caption\}[\s\S]*?Preview unavailable[\s\S]*?<\/div>\s*\)\}/,
+)
+assert.match(source, /hidden=\{hasLightboxImageError\}/)
+assert.match(source, /onError=\{\(\) => \{\s*setIsLightboxImageLoading\(false\)\s*setHasLightboxImageError\(true\)/)
+assert.doesNotMatch(source, /<div className="project-image-fallback project-image-fallback--lightbox">/)
+
+for (const caption of [
+  'Inventory API Swagger / OpenAPI documentation',
+  'Grafana Inventory Service overview dashboard',
+  'Grafana multi-service throughput and latency dashboard',
+  'Jaeger auth-service trace search results',
+  'RabbitMQ management overview',
+  'Prometheus service target health',
+]) {
+  assert(projectData.includes(`caption: '${caption}'`), `Expected verified Cloud Order caption: ${caption}`)
+}
 assert.doesNotMatch(projectData, /desktopDelivery:|accent:|ctaUrl:/)
 assert.doesNotMatch(source, /desktopDelivery: PropTypes|accent: PropTypes|ctaUrl: PropTypes/)
 
