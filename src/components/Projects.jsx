@@ -1,6 +1,6 @@
-import { useRef, useState, useEffect } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { Github, Image as ImageIcon, X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { ArrowUpRight, ChevronLeft, ChevronRight, Github, Image as ImageIcon, X } from 'lucide-react'
 import PropTypes from 'prop-types'
 
 const PROJECTS = [
@@ -141,73 +141,118 @@ const buildDeepWikiUrl = (githubUrl) => {
   return githubUrl.replace('https://github.com/', 'https://deepwiki.com/')
 }
 
-const getIsMobileViewport = () => {
-  if (typeof window === 'undefined') return false
-  return window.innerWidth < 768
-}
-
 const Projects = () => {
-  const targetRef = useRef(null)
+  const shouldReduceMotion = useReducedMotion()
   const [lightboxData, setLightboxData] = useState(null)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
-  const [isMobile, setIsMobile] = useState(getIsMobileViewport)
+  const dialogRef = useRef(null)
+  const closeButtonRef = useRef(null)
+  const triggerRef = useRef(null)
+  const previousOverflowRef = useRef('')
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(getIsMobileViewport())
-    }
-    
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  const openLightbox = (project, event) => {
+    if (!project.images?.length) return
 
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ['start end', 'end center']
-  })
-
-  // Cinematic Entry Animations mapped to vertical scroll progress
-  const titleX = useTransform(scrollYProgress, [0.08, 0.48], ['-30vw', '0vw'])
-  const titleOpacity = useTransform(scrollYProgress, [0.08, 0.3], [0, 1])
-
-  const cardsX = useTransform(scrollYProgress, [0.12, 0.72], ['-50vw', '0vw'])
-  const cardsOpacity = useTransform(scrollYProgress, [0.12, 0.44], [0, 1])
-
-  const titleMotionStyle = isMobile ? { x: 0, opacity: 1 } : { x: titleX, opacity: titleOpacity }
-  const cardsMotionStyle = isMobile ? { x: 0, opacity: 1 } : { x: cardsX, opacity: cardsOpacity }
-
-  const openLightbox = (projectImages) => {
-    if (!projectImages?.length) return
-
-    setLightboxData(projectImages)
+    triggerRef.current = event.currentTarget
+    previousOverflowRef.current = document.body.style.overflow
+    setLightboxData({ images: project.images, title: project.title })
     setActiveImageIndex(0)
     document.body.style.overflow = 'hidden'
   }
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
+    const previousOverflow = previousOverflowRef.current
     setLightboxData(null)
-    document.body.style.overflow = ''
+    document.body.style.overflow = previousOverflow
+    window.requestAnimationFrame(() => triggerRef.current?.focus())
+  }, [])
+
+  useEffect(() => {
+    if (!lightboxData) return undefined
+
+    closeButtonRef.current?.focus()
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') closeLightbox()
+      if (event.key === 'ArrowLeft') {
+        setActiveImageIndex((previous) => Math.max(0, previous - 1))
+      }
+      if (event.key === 'ArrowRight') {
+        setActiveImageIndex((previous) => Math.min(lightboxData.images.length - 1, previous + 1))
+      }
+      if (event.key !== 'Tab') return
+
+      const focusable = dialogRef.current?.querySelectorAll('button:not(:disabled)')
+      if (!focusable?.length) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [closeLightbox, lightboxData])
+
+  useEffect(() => () => {
+    document.body.style.overflow = previousOverflowRef.current
+  }, [])
+
+  const activeImage = lightboxData?.images[activeImageIndex]
+  const headingMotion = shouldReduceMotion
+    ? {}
+    : { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 } }
+  const stackVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: shouldReduceMotion ? 0 : 0.13 } },
   }
+  const cardVariants = shouldReduceMotion
+    ? { hidden: {}, visible: {} }
+    : { hidden: { opacity: 0 }, visible: { opacity: 1 } }
 
   return (
     <>
-      <section ref={targetRef} className="relative z-10 py-24 sm:py-32 overflow-hidden" id="projects">
-        <div className="container-width px-4 sm:px-6 lg:px-8">
-          <motion.div style={titleMotionStyle} className="mb-16">
-            <h2 className="heading inline-block">FEATURED SYSTEMS</h2>
-            <p className="project-section-guidance mt-4 max-w-2xl text-sm md:text-base font-medium tracking-wide border-l-2 border-primary pl-4 opacity-80 uppercase shadow-[inset_1px_0_10px_rgba(56,189,248,0.12)]">
-              Explore architectural implementations and detailed system galleries.
-            </p>
-          </motion.div>
+      <section className="projects-editorial-section" id="projects">
+        <div className="projects-editorial-grid" aria-hidden="true" />
+        <div className="projects-editorial-orb projects-editorial-orb--one" aria-hidden="true" />
+        <div className="projects-editorial-orb projects-editorial-orb--two" aria-hidden="true" />
 
-          <motion.div style={cardsMotionStyle} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+        <div className="projects-editorial-inner">
+          <motion.header
+            className="projects-editorial-heading"
+            {...headingMotion}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <p className="projects-editorial-kicker">Selected systems / 2024—2026</p>
+            <h2>
+              <span>Choose Your</span>
+              <span className="projects-editorial-outline">Build</span>
+            </h2>
+            <p className="projects-editorial-intro">
+              Three production-minded builds. Pick a system, inspect the decisions, then open the full gallery.
+            </p>
+          </motion.header>
+
+          <motion.div
+            className="project-editorial-stack"
+            variants={stackVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.08 }}
+          >
             {PROJECTS.map((project, index) => (
               <ProjectCard
                 key={project.id}
                 project={project}
                 index={index}
-                onOpenLightbox={() => openLightbox(project.images)}
+                animationVariants={cardVariants}
+                onOpenLightbox={(event) => openLightbox(project, event)}
               />
             ))}
           </motion.div>
@@ -218,47 +263,67 @@ const Projects = () => {
       <AnimatePresence>
         {lightboxData && (
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={shouldReduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="theme-modal-overlay fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-8"
+            className="project-lightbox theme-modal-overlay"
             onClick={closeLightbox}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${lightboxData.title} gallery`}
           >
-            <div className="flex w-full max-w-6xl flex-col items-center gap-6" onClick={(e) => e.stopPropagation()}>
-              <div className="relative w-full aspect-[16/10] sm:aspect-video rounded-3xl overflow-hidden glass-panel-strong">
-                <div className="absolute top-4 right-4 z-50 flex gap-2">
-                  <button onClick={closeLightbox} className="theme-icon-button theme-danger-hover flex h-12 w-12 items-center justify-center rounded-full">
-                    <X size={24} />
-                  </button>
+            <motion.div
+              ref={dialogRef}
+              className="project-lightbox__dialog"
+              onClick={(event) => event.stopPropagation()}
+              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.98 }}
+            >
+              <div className="project-lightbox__topline">
+                <div>
+                  <span>{lightboxData.title}</span>
+                  <strong>{activeImage.caption}</strong>
                 </div>
-
+                <button ref={closeButtonRef} onClick={closeLightbox} className="project-lightbox__icon" aria-label="Close gallery">
+                  <X size={24} aria-hidden="true" />
+                </button>
+              </div>
+              <div className="project-lightbox__stage">
+                <div className="project-image-fallback project-image-fallback--lightbox">
+                  <ImageIcon size={42} aria-hidden="true" />
+                  <span>Preview unavailable</span>
+                </div>
                 <img
-                  src={lightboxData[activeImageIndex].fullSrc || lightboxData[activeImageIndex].src}
-                  alt={lightboxData[activeImageIndex].caption}
-                  className="theme-modal-image h-full w-full object-contain"
+                  key={activeImage.fullSrc || activeImage.src}
+                  src={activeImage.fullSrc || activeImage.src}
+                  alt={activeImage.caption}
+                  className="project-lightbox__image"
+                  onError={(event) => { event.currentTarget.hidden = true }}
                 />
               </div>
-
-              <div className="theme-lightbox-controls glass-panel z-10 flex items-center gap-6 rounded-full px-6 py-3">
+              <div className="project-lightbox__controls">
                 <button
                   disabled={activeImageIndex === 0}
                   onClick={() => setActiveImageIndex(prev => prev - 1)}
-                  className="theme-lightbox-nav disabled:opacity-30"
+                  className="project-lightbox__icon"
+                  aria-label="Previous image"
                 >
-                  <ChevronLeft size={24} />
+                  <ChevronLeft size={24} aria-hidden="true" />
                 </button>
-                <span className="theme-emphasis text-sm font-bold tracking-widest">
-                  {activeImageIndex + 1} / {lightboxData.length}
+                <span aria-live="polite">
+                  {String(activeImageIndex + 1).padStart(2, '0')} / {String(lightboxData.images.length).padStart(2, '0')}
                 </span>
                 <button
-                  disabled={activeImageIndex === lightboxData.length - 1}
+                  disabled={activeImageIndex === lightboxData.images.length - 1}
                   onClick={() => setActiveImageIndex(prev => prev + 1)}
-                  className="theme-lightbox-nav disabled:opacity-30"
+                  className="project-lightbox__icon"
+                  aria-label="Next image"
                 >
-                  <ChevronRight size={24} />
+                  <ChevronRight size={24} aria-hidden="true" />
                 </button>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -266,111 +331,108 @@ const Projects = () => {
   )
 }
 
-const ProjectCard = ({ project, index, onOpenLightbox }) => {
+const ProjectCard = ({ project, index, animationVariants, onOpenLightbox }) => {
   const deepWikiUrl = buildDeepWikiUrl(project.githubUrl)
   const previewImage = project.images[0]?.src
 
   return (
-    <div className="group relative isolate flex flex-col overflow-hidden rounded-[2.5rem] glass-panel-strong transition-[transform,box-shadow] duration-300 sm:transform-gpu sm:[-webkit-mask-image:-webkit-radial-gradient(white,black)] sm:hover:-translate-y-2 sm:hover:shadow-[0_20px_40px_rgba(56,189,248,0.15)] sm:focus-within:-translate-y-2 sm:focus-within:shadow-[0_20px_40px_rgba(56,189,248,0.15)]">
-      {/* Background Hover Glow */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 group-hover:opacity-5 transition-opacity duration-700 pointer-events-none`} />
+    <motion.article
+      className="project-editorial-card"
+      data-project={String(index + 1).padStart(2, '0')}
+      variants={animationVariants}
+      transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div className="project-editorial-card__rule" aria-hidden="true" />
+      <header className="project-editorial-card__header">
+        <span className="project-editorial-card__number">{String(index + 1).padStart(2, '0')}</span>
+        <span className="project-editorial-card__status">{project.status} / Build</span>
+      </header>
 
-      {/* Image Preview Header */}
-      <div
-        className="relative aspect-[16/10] w-full overflow-hidden rounded-t-[2.5rem] cursor-pointer sm:transform-gpu sm:[-webkit-mask-image:-webkit-radial-gradient(white,black)]"
+      <h3>{project.title}</h3>
+      <p className="project-editorial-card__description">{project.description}</p>
+      <p className="project-editorial-card__impact">{project.impact}</p>
+
+      <button
+        type="button"
+        className="project-editorial-preview"
         onClick={onOpenLightbox}
         aria-label={`Open gallery for ${project.title}`}
       >
+        <div className="project-image-fallback">
+          <ImageIcon size={42} aria-hidden="true" />
+          <span>Preview unavailable</span>
+        </div>
         {previewImage ? (
           <img
             src={previewImage}
-            alt={`${project.title} Preview`}
-            className="h-full w-full object-cover transform-gpu transition-transform duration-700 group-hover:scale-105"
+            alt={`${project.title} preview`}
+            onError={(event) => { event.currentTarget.hidden = true }}
           />
         ) : (
-          <div className="h-full w-full bg-black/20 flex items-center justify-center">
-            <ImageIcon size={48} className="text-white/20" />
-          </div>
+          <span className="project-editorial-preview__empty">No preview supplied</span>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
-        
-        {/* Gallery Indicator & Status */}
-        <div className="absolute bottom-4 left-5 right-5 flex justify-between items-end">
-          <span className="rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-[#f8fafc] backdrop-blur-md">
-            {project.status}
-          </span>
-          <span className="flex items-center gap-2 rounded-full border border-primary/30 bg-primary/20 pl-3 pr-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-[#f8fafc] backdrop-blur-md transition-all duration-300 group-hover:bg-primary/80">
-            <ImageIcon size={14} className="group-hover:scale-110 transition-transform" />
-            Gallery ({project.images.length})
-          </span>
-        </div>
-      </div>
+        <span className="project-editorial-preview__label">
+          <span>Open case gallery</span>
+          <span>{String(project.images.length).padStart(2, '0')} frames</span>
+        </span>
+      </button>
 
-      {/* Card Content */}
-      <div className="flex flex-1 flex-col p-6 sm:p-8">
-        <div>
-          <div className="mb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
-            Featured 0{index + 1}
-          </div>
-          <h3 className="text-2xl font-bold leading-tight theme-surface-title">
-            {project.title}
-          </h3>
-        </div>
+      <div className="project-editorial-card__body">
+        <section aria-label={`${project.title} delivery`}>
+          <span className="project-editorial-card__eyebrow">What shipped</span>
+          <ul>
+            {project.delivery.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+        </section>
 
-        <p className="mt-4 text-sm leading-relaxed theme-surface-copy line-clamp-3">
-          {project.description}
-        </p>
-
-        {/* Stack Tags */}
-        <div className="mt-6 flex flex-wrap gap-2">
-          {project.techStack.slice(0, 4).map((tech) => (
-            <span key={tech} className="rounded-full border border-[color:var(--surface-card-border)] bg-[color:var(--surface-card-bg)] px-3 py-1.5 text-[9px] font-semibold uppercase tracking-widest theme-surface-meta">
-              {tech}
-            </span>
-          ))}
-          {project.techStack.length > 4 && (
-            <span className="rounded-full border border-[color:var(--surface-card-border)] bg-[color:var(--surface-card-bg)] px-3 py-1.5 text-[9px] font-semibold uppercase tracking-widest theme-surface-meta">
-              +{project.techStack.length - 4}
-            </span>
-          )}
-        </div>
-
-        {/* Action Row */}
-        <div className="mt-auto pt-8 flex items-center gap-3">
-          <a
-            href={deepWikiUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="theme-nav-button project-gallery-cta project-card-link-glow group flex flex-1 items-center justify-between gap-2 rounded-2xl py-3 px-5 text-[11px] font-black uppercase tracking-[0.15em]"
-          >
-            <div className="relative z-[1] flex items-center gap-3">
-              <span className="project-gallery-cta__icon-shell flex h-8 w-8 items-center justify-center rounded-xl border border-[color:var(--icon-button-border)] bg-[color:var(--icon-button-bg)]">
-                <img
-                  src="/portfolio/devin.avif"
-                  alt="Devin Logo"
-                  className="h-4 w-4 rounded-sm object-cover"
-                />
-              </span>
-              <span>DEEP WIKI</span>
+        <div className="project-editorial-stats" aria-label={`${project.title} project statistics`}>
+          {project.stats.map((stat) => (
+            <div key={stat.label}>
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
             </div>
-            <span className="project-card-action-orb relative z-[1] flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--icon-button-border)] bg-[color:var(--icon-button-bg)] transition-transform duration-300 group-hover:translate-x-0.5">
-              <ChevronRight size={14} />
-            </span>
-          </a>
+          ))}
+        </div>
 
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="theme-nav-button project-card-link-glow project-card-link-glow--repo group flex h-[56px] w-[90px] items-center justify-center gap-2 rounded-2xl py-3 px-5 text-[11px] font-bold uppercase tracking-widest transition-all"
-          >
-            <span className="relative z-[1] flex items-center justify-center">
-              <Github size={16} />
-            </span>
-          </a>
+        <div className="project-editorial-tech" aria-label="Technologies used">
+          {project.techStack.map((tech) => (
+            <span key={tech}>{tech}</span>
+          ))}
         </div>
       </div>
-    </div>
+
+      <footer className="project-editorial-actions">
+        <button type="button" onClick={onOpenLightbox} className="project-editorial-action project-editorial-action--primary">
+          <ImageIcon size={18} aria-hidden="true" />
+          <span>{project.ctaLabel}</span>
+          <small>{project.images.length}</small>
+        </button>
+        <a
+          href={deepWikiUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="project-editorial-action"
+          aria-label={`Explore ${project.title} on DeepWiki`}
+        >
+          <img src="/portfolio/devin.avif" alt="" />
+          <span>DeepWiki</span>
+          <ArrowUpRight size={16} aria-hidden="true" />
+        </a>
+        <a
+          href={project.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="project-editorial-action project-editorial-action--icon"
+          aria-label={`View ${project.title} source on GitHub`}
+        >
+          <Github size={19} aria-hidden="true" />
+        </a>
+      </footer>
+      <div className="project-editorial-card__stamp" aria-hidden="true">
+        <span>FZ</span>
+        <span>ENGINEERED</span>
+      </div>
+    </motion.article>
   )
 }
 
@@ -403,6 +465,7 @@ ProjectCard.propTypes = {
     accent: PropTypes.string.isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,
+  animationVariants: PropTypes.object.isRequired,
   onOpenLightbox: PropTypes.func.isRequired,
 }
 
