@@ -229,7 +229,7 @@ const Projects = () => {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="projects-editorial-kicker">Selected systems / 2024—2026</p>
+            <p className="projects-editorial-kicker">Selected systems / Production-minded builds</p>
             <h2>
               <span>Choose Your</span>
               <span className="projects-editorial-outline">Build</span>

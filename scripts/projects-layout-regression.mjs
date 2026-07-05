@@ -10,6 +10,8 @@ const projectIds = projectData.match(/\n\s+id:\s*\d+,/g) ?? []
 assert.match(source, /<section\b[^>]*\bid="projects"/)
 assert.match(source, /Choose Your/i)
 assert.match(source, />\s*Build\s*</i)
+assert.match(source, /Selected systems \/ Production-minded builds/)
+assert.doesNotMatch(source, /Selected systems \/ 2024—2026/)
 assert.equal(projectIds.length, 3, `Expected exactly 3 project data entries, found ${projectIds.length}.`)
 assert.match(source, /PROJECTS\.map\(\(project, index\)/)
 assert.match(source, /<motion\.article\b[\s\S]*?className="project-editorial-card/)
