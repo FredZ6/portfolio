@@ -158,8 +158,8 @@ CertificationCard.propTypes = {
 
 const Skills = () => {
   const shouldReduceMotion = useReducedMotion()
-  const stackRef = useRef(null)
-  const isStackInView = useInView(stackRef, { amount: 0.1 })
+  const tickerRef = useRef(null)
+  const isTickerInView = useInView(tickerRef, { amount: 0.1 })
   const [isTickerPaused, setIsTickerPaused] = useState(false)
   const [isCertificationsOpen, setIsCertificationsOpen] = useState(false)
   const [isMobileViewport, setIsMobileViewport] = useState(false)
@@ -176,10 +176,10 @@ const Skills = () => {
   const visibleCertifications = isCertificationsOpen
     ? certifications
     : certifications.slice(0, visibleLimit)
-  const tickerPaused = isTickerPaused || !isStackInView || shouldReduceMotion
+  const tickerPaused = isTickerPaused || !isTickerInView || shouldReduceMotion
 
   return (
-    <section className="editorial-stack-section" id="stack" ref={stackRef}>
+    <section className="editorial-stack-section" id="stack">
       <div className="editorial-stack-grid" aria-hidden="true" />
       <div className="editorial-stack-inner">
         <header className="editorial-stack-heading">
@@ -237,6 +237,7 @@ const Skills = () => {
 
         <div
           className="technology-ticker"
+          ref={tickerRef}
           aria-label="Technology stack"
           data-paused={tickerPaused ? 'true' : 'false'}
         >
@@ -244,14 +245,16 @@ const Skills = () => {
             <span>Technology index</span>
             <div>
               <span>Backend → cloud → verified delivery</span>
-              <button
-                type="button"
-                aria-pressed={isTickerPaused}
-                aria-label={isTickerPaused ? 'Resume stack motion' : 'Pause stack motion'}
-                onClick={() => setIsTickerPaused((current) => !current)}
-              >
-                {isTickerPaused ? 'Resume stack motion' : 'Pause stack motion'}
-              </button>
+              {!shouldReduceMotion && (
+                <button
+                  type="button"
+                  aria-pressed={isTickerPaused}
+                  aria-label={isTickerPaused ? 'Resume stack motion' : 'Pause stack motion'}
+                  onClick={() => setIsTickerPaused((current) => !current)}
+                >
+                  {isTickerPaused ? 'Resume stack motion' : 'Pause stack motion'}
+                </button>
+              )}
             </div>
           </div>
           <div className="technology-ticker-viewport">

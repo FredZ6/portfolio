@@ -787,64 +787,6 @@ html::-webkit-scrollbar-corner {
     color: var(--page-card-meta);
   }
 
-  .theme-surface-accent {
-    color: var(--page-accent-soft);
-  }
-
-  .theme-surface-card {
-    border: 1px solid var(--surface-card-border);
-    background: var(--surface-card-bg);
-    box-shadow: var(--surface-card-shadow);
-  }
-
-  .theme-tool-chip,
-  .theme-certification-card,
-  .theme-credentials-button {
-    border: 1px solid var(--surface-card-border);
-    background: var(--surface-card-bg);
-    box-shadow: var(--surface-card-shadow);
-  }
-
-  .theme-tool-chip:hover,
-  .theme-certification-card:hover,
-  .theme-credentials-button:hover {
-    border-color: rgba(56, 189, 248, 0.28);
-  }
-
-  .theme-tool-icon,
-  .theme-chip-icon,
-  .theme-certification-media {
-    border: 1px solid var(--surface-card-border);
-    background: rgba(15, 23, 42, 0.84);
-  }
-
-  .theme-tool-icon-image {
-    height: 1.12em;
-    width: 1.12em;
-    object-fit: contain;
-  }
-
-  .theme-tool-icon-image--light {
-    display: none;
-  }
-
-  .theme-tool-icon-image--dark {
-    display: block;
-  }
-
-  .theme-tool-label,
-  .theme-chip-label {
-    color: var(--page-text-strong);
-  }
-
-  .theme-certification-fallback {
-    color: var(--page-text-strong);
-  }
-
-  .theme-card-arrow {
-    color: var(--page-card-copy);
-  }
-
   .glass-input::placeholder {
     color: var(--glass-input-placeholder);
   }
@@ -1159,26 +1101,6 @@ html[data-theme='light'] .project-shell-card:hover {
     0 28px 46px -30px rgba(194, 204, 221, 0.46),
     0 0 16px rgba(125, 211, 252, 0.05),
     inset 0 1px 5px rgba(255, 255, 255, 0.98);
-}
-
-html[data-theme='light'] .theme-tool-icon,
-html[data-theme='light'] .theme-chip-icon,
-html[data-theme='light'] .theme-certification-media {
-  background: rgba(245, 247, 250, 0.98);
-}
-
-html[data-theme='light'] .theme-tool-icon-image--light {
-  display: block;
-}
-
-html[data-theme='light'] .theme-tool-icon-image--dark {
-  display: none;
-}
-
-html[data-theme='light'] .theme-tool-label,
-html[data-theme='light'] .theme-chip-label,
-html[data-theme='light'] .theme-card-arrow {
-  color: #0b1020;
 }
 
 html[data-theme='light'] .project-shell-card .border-b,

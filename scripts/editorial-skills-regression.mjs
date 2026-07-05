@@ -71,9 +71,14 @@ check(
   'Hero next link must target #stack and must not retain the retired #skills anchor.',
 )
 check(
-  /useInView\(stackRef,\s*\{\s*amount:\s*0\.1\s*\}\)/.test(skillsSource)
-    && /const\s+tickerPaused\s*=\s*isTickerPaused\s*\|\|\s*!isStackInView\s*\|\|\s*shouldReduceMotion/.test(skillsSource),
+  /const\s+tickerRef\s*=\s*useRef\(null\)/.test(skillsSource)
+    && /useInView\(tickerRef,\s*\{\s*amount:\s*0\.1\s*\}\)/.test(skillsSource)
+    && /const\s+tickerPaused\s*=\s*isTickerPaused\s*\|\|\s*!isTickerInView\s*\|\|\s*shouldReduceMotion/.test(skillsSource),
   'Ticker motion must pause for user preference, off-screen state, and reduced motion.',
+)
+check(
+  /<div(?=[^>]*className=["']technology-ticker["'])(?=[^>]*ref=\{tickerRef\})[^>]*>/.test(skillsSource),
+  'tickerRef must observe the technology-ticker element itself.',
 )
 check(
   /data-paused=\{tickerPaused\s*\?\s*['"]true['"]\s*:\s*['"]false['"]\}/.test(skillsSource)
@@ -81,6 +86,10 @@ check(
     && /Pause stack motion/.test(skillsSource)
     && /Resume stack motion/.test(skillsSource),
   'Technology ticker must expose an accessible pause/resume control and paused data state.',
+)
+check(
+  /!shouldReduceMotion\s*&&\s*\(\s*<button[\s\S]*?Pause stack motion[\s\S]*?<\/button>\s*\)/.test(skillsSource),
+  'Reduced-motion users must not be shown a misleading ticker motion control.',
 )
 check(
   /\.technology-ticker\[data-paused=['"]true['"]\]\s+\.technology-ticker-track\s*\{[^}]*animation-play-state:\s*paused;/s.test(cssSource),

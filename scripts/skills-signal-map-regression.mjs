@@ -35,6 +35,14 @@ const removedCssTokens = [
   '.signal-node-chip',
   '@keyframes signalCorePulse',
   '@keyframes signalGridDrift',
+  '.theme-tool-chip',
+  '.theme-tool-icon',
+  '.theme-chip-icon',
+  '.theme-certification-card',
+  '.theme-certification-media',
+  '.theme-certification-fallback',
+  '.theme-credentials-button',
+  '.theme-card-arrow',
 ]
 
 for (const token of requiredSkillsTokens) {
