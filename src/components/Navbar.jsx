@@ -28,6 +28,7 @@ const Navbar = ({ onOpenResume }) => {
 
   const closeMenu = () => setIsMenuOpen(false)
   const openResume = () => {
+    if (isMenuOpen) menuButtonRef.current?.focus()
     closeMenu()
     onOpenResume()
   }

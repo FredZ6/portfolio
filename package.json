@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "test:redesign": "node scripts/editorial-redesign-regression.mjs",
     "test:resume-dialog": "node scripts/resume-dialog-regression.mjs",
+    "test:resume-dialog-behavior": "node scripts/resume-dialog-behavior-regression.mjs",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"

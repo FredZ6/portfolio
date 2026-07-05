@@ -2137,17 +2137,35 @@ body {
   }
 }
 
+@media (min-width: 768px) and (max-width: 900px) {
+  .hero-stage {
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+  }
+
+  .hero-bottomline {
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+  }
+
+  .hero-meta {
+    display: none;
+  }
+
+  .hero-actions {
+    min-width: 0;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-actions a,
   .hero-actions button,
   .hero-next,
   .resume-dialog-actions a,
-  .resume-dialog-actions button {
-    transition: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
+  .resume-dialog-actions button,
   .editorial-brand-mark,
   .editorial-menu-icon span,
   .editorial-nav-links,

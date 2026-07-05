@@ -2,6 +2,11 @@ import { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ExternalLink, X } from 'lucide-react'
+import {
+  collectVisibleFocusableElements,
+  getFocusWrapTarget,
+  lockPageScroll,
+} from '../utils/dialogAccessibility'
 
 const resumePdfUrl = '/portfolio/resume/FredCV-2025%20codex.pdf'
 
@@ -14,9 +19,8 @@ const ResumeDialog = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (!isOpen) return undefined
 
-    const previousOverflow = document.body.style.overflow
     previouslyFocusedElement.current = document.activeElement
-    document.body.style.overflow = 'hidden'
+    const restorePageScroll = lockPageScroll(document)
     closeButtonRef.current?.focus()
 
     const handleKeyDown = (event) => {
@@ -26,26 +30,18 @@ const ResumeDialog = ({ isOpen, onClose }) => {
       }
 
       if (event.key === 'Tab') {
-        const focusableElements = dialogRef.current?.querySelectorAll(
-          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
-        )
-        if (!focusableElements?.length) return
-
-        const firstElement = focusableElements[0]
-        const lastElement = focusableElements[focusableElements.length - 1]
-        if (event.shiftKey && document.activeElement === firstElement) {
+        const focusableElements = collectVisibleFocusableElements(dialogRef.current)
+        const focusTarget = getFocusWrapTarget(event, focusableElements, document.activeElement)
+        if (focusTarget) {
           event.preventDefault()
-          lastElement.focus()
-        } else if (!event.shiftKey && document.activeElement === lastElement) {
-          event.preventDefault()
-          firstElement.focus()
+          focusTarget.focus()
         }
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => {
-      document.body.style.overflow = previousOverflow
+      restorePageScroll()
       window.removeEventListener('keydown', handleKeyDown)
       previouslyFocusedElement.current?.focus()
     }
