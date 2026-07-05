@@ -76,7 +76,7 @@ const Hero = ({ onOpenResume }) => {
             </button>
           </div>
 
-          <a className="hero-next" href="#skills" aria-label="Continue to skills">
+          <a className="hero-next" href="#stack" aria-label="Continue to stack">
             <span>Next</span>
             <ArrowDownRight aria-hidden="true" size={28} />
           </a>

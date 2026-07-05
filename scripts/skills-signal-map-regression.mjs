@@ -5,24 +5,36 @@ const skillsSource = readFileSync(new URL('../src/components/Skills.jsx', import
 const cssSource = readFileSync(new URL('../src/index.css', import.meta.url), 'utf8')
 
 const requiredSkillsTokens = [
-  'const capabilityClusters = [',
-  'const signalPillars = [',
-  'className="signal-map-shell',
-  'className="signal-cluster-card',
-  'className="signal-node-chip',
+  'const principles = [',
+  'const technologyGroups = [',
+  'className="principle-card"',
+  'className="technology-ticker"',
+  '<TechnologySet hidden />',
+  'aria-hidden={hidden || undefined}',
+  'aria-pressed={isTickerPaused}',
 ]
 
 const removedSkillsTokens = [
-  'const skillsData = [',
-  'const OrbitRing = ({ radius, duration, reverse, skills, color }) => {',
-  'skill-orbit-ring',
-  'skill-orbit-counter',
+  'tabIndex={0}',
+  'signal-map-shell',
+  'signal-cluster-card',
+  'signal-node-chip',
 ]
 
 const requiredCssTokens = [
-  '.signal-map-shell {',
-  '.signal-cluster-card {',
-  '.signal-node-chip {',
+  '.principle-card {',
+  '.technology-ticker-track {',
+  "animation-play-state: paused;",
+]
+
+const removedCssTokens = [
+  '.signal-map-shell',
+  '.signal-core-panel',
+  '.signal-core-pulse',
+  '.signal-cluster-card',
+  '.signal-node-chip',
+  '@keyframes signalCorePulse',
+  '@keyframes signalGridDrift',
 ]
 
 for (const token of requiredSkillsTokens) {
@@ -34,7 +46,11 @@ for (const token of removedSkillsTokens) {
 }
 
 for (const token of requiredCssTokens) {
-  assert(cssSource.includes(token), `Expected Skills signal-map CSS token to exist: ${token}`)
+  assert(cssSource.includes(token), `Expected editorial Skills CSS token to exist: ${token}`)
 }
 
-console.log('Skills signal map regression checks passed.')
+for (const token of removedCssTokens) {
+  assert(!cssSource.includes(token), `Expected stale signal-map CSS to be removed: ${token}`)
+}
+
+console.log('Skills principles and ticker regression checks passed.')

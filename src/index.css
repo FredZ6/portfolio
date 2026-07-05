@@ -867,29 +867,6 @@ html {
   scroll-behavior: smooth;
 }
 
-@keyframes signalCorePulse {
-  0%,
-  100% {
-    opacity: 0.46;
-    transform: scale(0.96);
-  }
-
-  50% {
-    opacity: 0.82;
-    transform: scale(1.04);
-  }
-}
-
-@keyframes signalGridDrift {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    transform: translate3d(0, 18px, 0);
-  }
-}
-
 @keyframes galleryCtaDrift {
   0% {
     transform: translate3d(-4%, -2%, 0) scale(1.02);
@@ -930,116 +907,6 @@ html {
   100% {
     transform: translate3d(1%, 4%, 0) scale(1);
   }
-}
-
-.signal-map-shell {
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background:
-    radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.14) 0%, rgba(56, 189, 248, 0.04) 24%, rgba(8, 17, 31, 0) 48%),
-    radial-gradient(circle at 14% 16%, rgba(103, 232, 249, 0.12) 0%, rgba(8, 17, 31, 0) 34%),
-    radial-gradient(circle at 86% 18%, rgba(129, 140, 248, 0.12) 0%, rgba(8, 17, 31, 0) 32%),
-    linear-gradient(180deg, rgba(8, 17, 31, 0.96) 0%, rgba(6, 13, 25, 0.94) 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 30px 90px rgba(0, 0, 0, 0.45),
-    0 0 0 1px rgba(255, 255, 255, 0.02);
-}
-
-.signal-map-shell::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 34px 34px;
-  mask-image: radial-gradient(circle at 50% 50%, black 35%, transparent 88%);
-  opacity: 0.38;
-  animation: signalGridDrift 18s linear infinite alternate;
-  pointer-events: none;
-}
-
-.signal-map-shell::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.06), transparent 28%, transparent 72%, rgba(255, 255, 255, 0.04));
-  pointer-events: none;
-}
-
-.signal-core-panel {
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background:
-    radial-gradient(circle at 50% 26%, rgba(103, 232, 249, 0.18) 0%, rgba(8, 17, 31, 0) 48%),
-    linear-gradient(180deg, rgba(11, 23, 42, 0.94) 0%, rgba(6, 14, 28, 0.94) 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 24px 50px rgba(0, 0, 0, 0.28),
-    0 0 30px rgba(34, 211, 238, 0.08);
-}
-
-.signal-core-panel::before {
-  content: '';
-  position: absolute;
-  inset: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 1.45rem;
-  pointer-events: none;
-}
-
-.signal-core-pulse {
-  animation: signalCorePulse 5.6s ease-in-out infinite;
-}
-
-.signal-cluster-card {
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.02) 100%),
-    linear-gradient(180deg, rgba(9, 19, 35, 0.92) 0%, rgba(6, 13, 25, 0.92) 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 18px 40px rgba(0, 0, 0, 0.24);
-  transition:
-    border-color 240ms ease,
-    box-shadow 240ms ease,
-    background-color 240ms ease;
-}
-
-.signal-cluster-card::before {
-  content: '';
-  position: absolute;
-  inset: auto 1.5rem 0;
-  height: 7rem;
-  background: radial-gradient(circle at 50% 100%, var(--cluster-accent) 0%, transparent 72%);
-  opacity: 0.14;
-  pointer-events: none;
-}
-
-.signal-cluster-card:hover {
-  border-color: rgba(255, 255, 255, 0.14);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 24px 50px rgba(0, 0, 0, 0.28),
-    0 0 28px rgba(56, 189, 248, 0.08);
-}
-
-.signal-node-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.625rem;
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(2, 6, 23, 0.6);
-  padding: 0.45rem 0.75rem 0.45rem 0.45rem;
-  backdrop-filter: blur(18px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 10px 24px rgba(0, 0, 0, 0.2);
 }
 
 .project-gallery-cta {
@@ -1211,71 +1078,6 @@ html[data-theme='light'] .about-avatar-mark {
   mix-blend-mode: normal;
 }
 
-html[data-theme='light'] .signal-map-shell {
-  border-color: rgba(223, 230, 239, 1);
-  background:
-    radial-gradient(circle at 50% 50%, rgba(125, 211, 252, 0.18) 0%, rgba(125, 211, 252, 0.06) 24%, rgba(255, 255, 255, 0) 48%),
-    radial-gradient(circle at 14% 16%, rgba(191, 219, 254, 0.18) 0%, rgba(255, 255, 255, 0) 34%),
-    radial-gradient(circle at 86% 18%, rgba(196, 181, 253, 0.14) 0%, rgba(255, 255, 255, 0) 32%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(247, 249, 252, 0.96) 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.98),
-    0 24px 54px rgba(148, 159, 178, 0.14),
-    0 0 0 1px rgba(255, 255, 255, 0.65);
-}
-
-html[data-theme='light'] .signal-map-shell::before {
-  background-image:
-    linear-gradient(rgba(180, 190, 207, 0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(180, 190, 207, 0.12) 1px, transparent 1px);
-  opacity: 0.54;
-}
-
-html[data-theme='light'] .signal-map-shell::after {
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.88), transparent 32%, transparent 70%, rgba(226, 232, 240, 0.42));
-}
-
-html[data-theme='light'] .signal-core-panel {
-  border-color: rgba(223, 230, 239, 1);
-  background:
-    radial-gradient(circle at 50% 24%, rgba(125, 211, 252, 0.22) 0%, rgba(255, 255, 255, 0) 48%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 248, 252, 0.96) 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.98),
-    0 22px 48px rgba(148, 159, 178, 0.14),
-    0 0 24px rgba(125, 211, 252, 0.08);
-}
-
-html[data-theme='light'] .signal-core-panel::before {
-  border-color: rgba(223, 230, 239, 0.96);
-}
-
-html[data-theme='light'] .signal-cluster-card {
-  border-color: rgba(223, 230, 239, 1);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(248, 250, 252, 0.96) 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.98),
-    0 18px 40px rgba(148, 159, 178, 0.12);
-}
-
-html[data-theme='light'] .signal-cluster-card:hover {
-  border-color: rgba(56, 189, 248, 0.3);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.98),
-    0 22px 46px rgba(148, 159, 178, 0.16),
-    0 0 26px rgba(125, 211, 252, 0.08);
-}
-
-html[data-theme='light'] .signal-node-chip {
-  border-color: rgba(223, 230, 239, 1);
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.98),
-    0 12px 24px rgba(148, 159, 178, 0.1);
-}
-
 html[data-theme='light'] .project-gallery-cta {
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(238, 243, 250, 0.92));
@@ -1379,8 +1181,6 @@ html[data-theme='light'] .theme-card-arrow {
   color: #0b1020;
 }
 
-html[data-theme='light'] .signal-map-shell .border-b,
-html[data-theme='light'] .signal-map-shell .border-t,
 html[data-theme='light'] .project-shell-card .border-b,
 html[data-theme='light'] .project-shell-card .border-t {
   border-color: rgba(223, 230, 239, 1);
@@ -1438,8 +1238,6 @@ html[data-theme='light'] .project-shell-card .border-white\/\[0\.08\] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .signal-map-shell::before,
-  .signal-core-pulse,
   .project-gallery-cta::before,
   .project-card-action-orb::before {
     animation: none;
@@ -1533,7 +1331,6 @@ html[data-theme='light'] .project-shell-card .border-white\/\[0\.08\] {
   border-radius: 0.25rem;
   background: rgba(255, 255, 255, 0.97);
   box-shadow: 0 28px 60px rgba(29, 82, 151, 0.13), 0 3px 0 rgba(18, 104, 243, 0.08);
-  outline: none;
   transform-origin: 50% 100%;
 }
 
@@ -1545,15 +1342,9 @@ html[data-theme='light'] .project-shell-card .border-white\/\[0\.08\] {
 .principle-card:nth-child(2) { z-index: 2; }
 .principle-card:nth-child(3) { z-index: 3; }
 
-.principle-card:hover,
-.principle-card:focus-visible {
+.principle-card:hover {
   border-color: #1268f3;
   box-shadow: 0 35px 75px rgba(29, 82, 151, 0.2), 0 0 0 3px rgba(18, 104, 243, 0.13);
-}
-
-.principle-card:focus-visible {
-  outline: 3px solid #1268f3;
-  outline-offset: 4px;
 }
 
 .principle-card-band {
@@ -1683,7 +1474,37 @@ html[data-theme='light'] .project-shell-card .border-white\/\[0\.08\] {
   text-transform: uppercase;
 }
 
-.technology-ticker-heading span:last-child { color: #527091; }
+.technology-ticker-heading > div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.technology-ticker-heading > div > span { color: #527091; }
+
+.technology-ticker-heading button {
+  min-height: 2.4rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid #8bb9f5;
+  border-radius: 999px;
+  background: #f4f9ff;
+  color: #1268f3;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.technology-ticker-heading button:hover {
+  border-color: #1268f3;
+  background: #e8f3ff;
+}
+
+.technology-ticker-heading button:focus-visible {
+  outline: 3px solid #1268f3;
+  outline-offset: 3px;
+}
+
 .technology-ticker-viewport { overflow: hidden; border-top: 1px solid #d5e5f9; }
 
 .technology-ticker-track {
@@ -1691,6 +1512,10 @@ html[data-theme='light'] .project-shell-card .border-white\/\[0\.08\] {
   width: max-content;
   animation: editorial-stack-ticker 36s linear infinite;
   will-change: transform;
+}
+
+.technology-ticker[data-paused='true'] .technology-ticker-track {
+  animation-play-state: paused;
 }
 
 .technology-ticker-set {
@@ -1865,6 +1690,7 @@ html[data-theme='light'] .project-shell-card .border-white\/\[0\.08\] {
   .principle-card-band { align-items: flex-start; }
   .principle-card-band span:last-child { max-width: 13rem; text-align: right; }
   .technology-ticker-heading { align-items: flex-start; flex-direction: column; }
+  .technology-ticker-heading > div { width: 100%; align-items: flex-start; flex-direction: column; }
   .editorial-certifications > header { align-items: flex-start; flex-direction: column; gap: 1rem; }
   .editorial-certifications-grid { grid-template-columns: 1fr; }
   .editorial-certification-card { grid-template-columns: 3.6rem minmax(0, 1fr) auto; }

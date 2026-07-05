@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useInView, useReducedMotion } from 'framer-motion'
 import {
   ArrowUpRight,
   Award,
@@ -158,7 +158,10 @@ CertificationCard.propTypes = {
 
 const Skills = () => {
   const shouldReduceMotion = useReducedMotion()
-  const [showAllCertifications, setShowAllCertifications] = useState(false)
+  const stackRef = useRef(null)
+  const isStackInView = useInView(stackRef, { amount: 0.1 })
+  const [isTickerPaused, setIsTickerPaused] = useState(false)
+  const [isCertificationsOpen, setIsCertificationsOpen] = useState(false)
   const [isMobileViewport, setIsMobileViewport] = useState(false)
 
   useEffect(() => {
@@ -170,12 +173,13 @@ const Skills = () => {
   }, [])
 
   const visibleLimit = isMobileViewport ? 3 : 6
-  const visibleCertifications = showAllCertifications
+  const visibleCertifications = isCertificationsOpen
     ? certifications
     : certifications.slice(0, visibleLimit)
+  const tickerPaused = isTickerPaused || !isStackInView || shouldReduceMotion
 
   return (
-    <section className="editorial-stack-section" id="stack">
+    <section className="editorial-stack-section" id="stack" ref={stackRef}>
       <div className="editorial-stack-grid" aria-hidden="true" />
       <div className="editorial-stack-inner">
         <header className="editorial-stack-heading">
@@ -194,7 +198,6 @@ const Skills = () => {
                 className="principle-card"
                 data-tone={principle.tone}
                 key={principle.id}
-                tabIndex={0}
                 initial={shouldReduceMotion ? false : {
                   opacity: 0,
                   rotate: principle.rotation * 2.4,
@@ -210,7 +213,6 @@ const Skills = () => {
                 viewport={{ once: true, amount: 0.32 }}
                 transition={{ duration: 0.72, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={shouldReduceMotion ? undefined : { y: -9, scale: 1.008 }}
-                whileFocus={shouldReduceMotion ? undefined : { y: -7, scale: 1.006 }}
               >
                 <div className="principle-card-band">
                   <span>{principle.number}</span>
@@ -233,10 +235,24 @@ const Skills = () => {
           })}
         </div>
 
-        <div className="technology-ticker" aria-label="Technology stack">
+        <div
+          className="technology-ticker"
+          aria-label="Technology stack"
+          data-paused={tickerPaused ? 'true' : 'false'}
+        >
           <div className="technology-ticker-heading">
             <span>Technology index</span>
-            <span>Backend → cloud → verified delivery</span>
+            <div>
+              <span>Backend → cloud → verified delivery</span>
+              <button
+                type="button"
+                aria-pressed={isTickerPaused}
+                aria-label={isTickerPaused ? 'Resume stack motion' : 'Pause stack motion'}
+                onClick={() => setIsTickerPaused((current) => !current)}
+              >
+                {isTickerPaused ? 'Resume stack motion' : 'Pause stack motion'}
+              </button>
+            </div>
           </div>
           <div className="technology-ticker-viewport">
             <div className="technology-ticker-track">
@@ -254,7 +270,7 @@ const Skills = () => {
             </div>
             <span>{certifications.length.toString().padStart(2, '0')} credentials</span>
           </header>
-          <div className="editorial-certifications-grid">
+          <div className="editorial-certifications-grid" id="certification-list">
             {visibleCertifications.map((certification) => (
               <CertificationCard
                 certification={certification}
@@ -266,10 +282,12 @@ const Skills = () => {
             <button
               className="editorial-certifications-toggle"
               type="button"
-              onClick={() => setShowAllCertifications((current) => !current)}
+              aria-expanded={isCertificationsOpen}
+              aria-controls="certification-list"
+              onClick={() => setIsCertificationsOpen((current) => !current)}
             >
-              {showAllCertifications ? 'Show fewer' : `Show all ${certifications.length}`}
-              {showAllCertifications ? <ChevronUp aria-hidden="true" /> : <ChevronDown aria-hidden="true" />}
+              {isCertificationsOpen ? 'Show fewer' : `Show all ${certifications.length}`}
+              {isCertificationsOpen ? <ChevronUp aria-hidden="true" /> : <ChevronDown aria-hidden="true" />}
             </button>
           )}
         </section>

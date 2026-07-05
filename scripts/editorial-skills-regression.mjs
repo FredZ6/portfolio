@@ -5,8 +5,12 @@ import process from 'node:process'
 const root = process.cwd()
 const skillsPath = path.join(root, 'src/components/Skills.jsx')
 const navbarPath = path.join(root, 'src/components/Navbar.jsx')
+const heroPath = path.join(root, 'src/components/Hero.jsx')
+const cssPath = path.join(root, 'src/index.css')
 const skillsSource = fs.readFileSync(skillsPath, 'utf8')
 const navbarSource = fs.readFileSync(navbarPath, 'utf8')
+const heroSource = fs.readFileSync(heroPath, 'utf8')
+const cssSource = fs.readFileSync(cssPath, 'utf8')
 const failures = []
 
 const check = (condition, message) => {
@@ -60,6 +64,33 @@ check(
 check(
   /\{\s*label:\s*['"]Stack['"],\s*href:\s*['"]#stack['"]\s*\}/.test(navbarSource),
   'Navbar Stack link must target #stack.',
+)
+check(
+  /className=["']hero-next["'][^>]*href=["']#stack["']/.test(heroSource)
+    && !heroSource.includes('#skills'),
+  'Hero next link must target #stack and must not retain the retired #skills anchor.',
+)
+check(
+  /useInView\(stackRef,\s*\{\s*amount:\s*0\.1\s*\}\)/.test(skillsSource)
+    && /const\s+tickerPaused\s*=\s*isTickerPaused\s*\|\|\s*!isStackInView\s*\|\|\s*shouldReduceMotion/.test(skillsSource),
+  'Ticker motion must pause for user preference, off-screen state, and reduced motion.',
+)
+check(
+  /data-paused=\{tickerPaused\s*\?\s*['"]true['"]\s*:\s*['"]false['"]\}/.test(skillsSource)
+    && /aria-pressed=\{isTickerPaused\}/.test(skillsSource)
+    && /Pause stack motion/.test(skillsSource)
+    && /Resume stack motion/.test(skillsSource),
+  'Technology ticker must expose an accessible pause/resume control and paused data state.',
+)
+check(
+  /\.technology-ticker\[data-paused=['"]true['"]\]\s+\.technology-ticker-track\s*\{[^}]*animation-play-state:\s*paused;/s.test(cssSource),
+  'Paused technology ticker state must set animation-play-state: paused.',
+)
+check(
+  /aria-expanded=\{isCertificationsOpen\}/.test(skillsSource)
+    && /aria-controls=["']certification-list["']/.test(skillsSource)
+    && /id=["']certification-list["']/.test(skillsSource),
+  'Certification toggle must expose aria-expanded and control certification-list.',
 )
 
 if (failures.length > 0) {
