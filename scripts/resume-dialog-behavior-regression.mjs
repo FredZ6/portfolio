@@ -16,13 +16,19 @@ restorePageScroll()
 assert.equal(fakePage.documentElement.style.overflow, 'auto')
 assert.equal(fakePage.body.style.overflow, 'scroll')
 
-const makeElement = ({ visible = true, ariaHidden = null, disabled = false } = {}) => ({
+const makeElement = ({ visible = true, ariaHidden = null, disabled = false, tabIndex = null } = {}) => ({
   disabled,
-  getAttribute: (name) => (name === 'aria-hidden' ? ariaHidden : null),
+  getAttribute: (name) => {
+    if (name === 'aria-hidden') return ariaHidden
+    if (name === 'tabindex') return tabIndex
+    return null
+  },
   getClientRects: () => (visible ? [{ width: 100, height: 20 }] : []),
 })
 
-const visibleObject = makeElement()
+const visibleObjectPreview = makeElement({ tabIndex: '-1' })
+const visibleExternalLink = makeElement()
+const visibleCloseButton = makeElement()
 const hiddenFallbackLink = makeElement({ visible: false })
 const ariaHiddenButton = makeElement({ ariaHidden: 'true' })
 const disabledButton = makeElement({ disabled: true })
@@ -30,18 +36,30 @@ let focusableSelector = ''
 const fakeContainer = {
   querySelectorAll(selector) {
     focusableSelector = selector
-    return [visibleObject, hiddenFallbackLink, ariaHiddenButton, disabledButton]
+    return [
+      visibleObjectPreview,
+      visibleExternalLink,
+      visibleCloseButton,
+      hiddenFallbackLink,
+      ariaHiddenButton,
+      disabledButton,
+    ]
   },
 }
 
-assert.deepEqual(collectVisibleFocusableElements(fakeContainer), [visibleObject])
+const visibleFocusableElements = collectVisibleFocusableElements(fakeContainer)
+assert.deepEqual(visibleFocusableElements, [visibleExternalLink, visibleCloseButton])
 assert.match(focusableSelector, /object/)
 
-const first = { id: 'first' }
-const middle = { id: 'middle' }
-const last = { id: 'last' }
-const elements = [first, middle, last]
-assert.equal(getFocusWrapTarget({ key: 'Tab', shiftKey: false }, elements, last), first)
-assert.equal(getFocusWrapTarget({ key: 'Tab', shiftKey: true }, elements, first), last)
-assert.equal(getFocusWrapTarget({ key: 'Tab', shiftKey: false }, elements, middle), null)
-assert.equal(getFocusWrapTarget({ key: 'Escape', shiftKey: false }, elements, last), null)
+assert.equal(
+  getFocusWrapTarget({ key: 'Tab', shiftKey: false }, visibleFocusableElements, visibleCloseButton),
+  visibleExternalLink,
+)
+assert.equal(
+  getFocusWrapTarget({ key: 'Tab', shiftKey: true }, visibleFocusableElements, visibleExternalLink),
+  visibleCloseButton,
+)
+assert.equal(
+  getFocusWrapTarget({ key: 'Escape', shiftKey: false }, visibleFocusableElements, visibleCloseButton),
+  null,
+)

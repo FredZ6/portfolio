@@ -27,6 +27,7 @@ export const collectVisibleFocusableElements = (container) => {
 
   return Array.from(container.querySelectorAll(focusableSelector)).filter((element) => {
     if (element.disabled || element.getAttribute?.('aria-hidden') === 'true') return false
+    if (element.getAttribute?.('tabindex') === '-1') return false
     if (element.closest?.('[inert], [aria-hidden="true"]')) return false
     if (typeof element.getClientRects === 'function' && element.getClientRects().length === 0) return false
 
