@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const navItems = [
   { label: 'Work', href: '#projects' },
-  { label: 'Stack', href: '#skills' },
+  { label: 'Stack', href: '#stack' },
   { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },
 ]
