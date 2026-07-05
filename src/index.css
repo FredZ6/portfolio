@@ -2055,6 +2055,12 @@ body {
   background: #ffffff;
 }
 
+.resume-dialog-preview-object {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 @media (max-width: 767px) {
   .editorial-hero::before {
     inset: 64px 0 0;

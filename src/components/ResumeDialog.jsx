@@ -91,7 +91,13 @@ const ResumeDialog = ({ isOpen, onClose }) => {
             </header>
 
             <div className="resume-dialog-document">
-              <object data={resumePdfUrl} type="application/pdf" tabIndex={-1} aria-label="Fred Zhang résumé PDF preview">
+              <object
+                className="resume-dialog-preview-object"
+                data={resumePdfUrl}
+                type="application/pdf"
+                tabIndex={-1}
+                aria-hidden="true"
+              >
                 <p>
                   Your browser cannot display this PDF.{' '}
                   <a href={resumePdfUrl} target="_blank" rel="noopener noreferrer">Open the résumé instead.</a>

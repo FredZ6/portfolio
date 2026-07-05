@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 
-const [dialog, app, navbar, hero] = await Promise.all([
+const [dialog, app, navbar, hero, css] = await Promise.all([
   readFile('src/components/ResumeDialog.jsx', 'utf8'),
   readFile('src/App.jsx', 'utf8'),
   readFile('src/components/Navbar.jsx', 'utf8'),
   readFile('src/components/Hero.jsx', 'utf8'),
+  readFile('src/index.css', 'utf8'),
 ])
 
 assert.match(dialog, /role=["']dialog["']/)
@@ -16,7 +17,11 @@ assert.match(dialog, /lockPageScroll\(document\)/)
 assert.match(dialog, /FredCV-2025%20codex\.pdf/)
 assert.match(dialog, /onClose/)
 assert.match(dialog, /<object/)
-assert.match(dialog, /<object[\s\S]*tabIndex={-1}/)
+const previewObjectTag = dialog.match(/<object[\s\S]*?>/)?.[0] ?? ''
+assert.match(previewObjectTag, /tabIndex={-1}/)
+assert.match(previewObjectTag, /aria-hidden="true"/)
+assert.match(previewObjectTag, /className="resume-dialog-preview-object"/)
+assert.match(css, /\.resume-dialog-preview-object\s*{[\s\S]*pointer-events:\s*none;[\s\S]*user-select:\s*none;/)
 assert.match(dialog, /document\.activeElement/)
 assert.match(dialog, /event\.key === 'Tab'/)
 assert.match(dialog, /collectVisibleFocusableElements/)

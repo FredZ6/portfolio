@@ -26,7 +26,7 @@ const makeElement = ({ visible = true, ariaHidden = null, disabled = false, tabI
   getClientRects: () => (visible ? [{ width: 100, height: 20 }] : []),
 })
 
-const visibleObjectPreview = makeElement({ tabIndex: '-1' })
+const visibleObjectPreview = makeElement({ tabIndex: '-1', ariaHidden: 'true' })
 const visibleExternalLink = makeElement()
 const visibleCloseButton = makeElement()
 const hiddenFallbackLink = makeElement({ visible: false })
