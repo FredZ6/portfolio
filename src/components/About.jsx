@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { ArrowUpRight, Send } from 'lucide-react'
 import emailjs from '@emailjs/browser'
-import Toast from './Toast'
+import {
+  CONTACT_FORM_LIMITS,
+  createContactSubmissionGate,
+  normalizeContactForm,
+  validateContactForm,
+} from '../utils/contactForm.js'
 
 const proofPoints = [
   { value: '03', label: 'Featured systems', note: 'documented in the project archive' },
@@ -33,6 +38,10 @@ const birdAsset = '/portfolio/avatar.png'
 
 const About = () => {
   const sectionRef = useRef(null)
+  const isSubmittingRef = useRef(false)
+  const mountedRef = useRef(true)
+  const submissionGateRef = useRef(null)
+  if (!submissionGateRef.current) submissionGateRef.current = createContactSubmissionGate()
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -44,36 +53,60 @@ const About = () => {
 
   const [formData, setFormData] = useState(initialFormData)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState({ show: false, type: '', message: '' })
-  const hideStatus = () => setSubmitStatus({ show: false, type: '', message: '' })
+  const [submitStatus, setSubmitStatus] = useState({ type: '', message: '' })
 
   useEffect(() => {
+    mountedRef.current = true
     emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '')
+    return () => {
+      mountedRef.current = false
+    }
   }, [])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    if (isSubmittingRef.current) return
+
+    const submittedDraft = { ...formData }
+    const normalizedDraft = normalizeContactForm(submittedDraft)
+    const validation = validateContactForm(normalizedDraft)
+    if (!validation.isValid) {
+      const firstError = Object.values(validation.errors)[0]
+      setSubmitStatus({ type: 'error', message: firstError })
+      return
+    }
+
+    isSubmittingRef.current = true
     setIsSubmitting(true)
-    hideStatus()
+    setSubmitStatus({ type: '', message: '' })
 
     try {
-      await emailjs.send(
+      await submissionGateRef.current.run(() => emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
-          from_name: formData.name,
-          from_email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
+          from_name: validation.data.name,
+          from_email: validation.data.email,
+          subject: validation.data.subject,
+          message: validation.data.message,
           to_name: 'Fred Zhang',
         },
-      )
-      setSubmitStatus({ show: true, type: 'success', message: 'Message sent. I will be in touch soon.' })
-      setFormData(initialFormData)
+      ))
+      if (!mountedRef.current) return
+
+      setSubmitStatus({ type: 'success', message: 'Message sent. I will be in touch soon.' })
+      setFormData((currentDraft) => (
+        Object.keys(initialFormData).every((field) => currentDraft[field] === submittedDraft[field])
+          ? initialFormData
+          : currentDraft
+      ))
     } catch {
-      setSubmitStatus({ show: true, type: 'error', message: 'Message could not be sent. Please email me directly.' })
+      if (mountedRef.current) {
+        setSubmitStatus({ type: 'error', message: 'Message could not be sent. Please email me directly.' })
+      }
     } finally {
-      setIsSubmitting(false)
+      isSubmittingRef.current = false
+      if (mountedRef.current) setIsSubmitting(false)
     }
   }
 
@@ -87,10 +120,6 @@ const About = () => {
 
   return (
     <section className="why-fred-section" id="about" ref={sectionRef} aria-labelledby="why-fred-title">
-      {submitStatus.show && (
-        <Toast type={submitStatus.type} message={submitStatus.message} onClose={hideStatus} />
-      )}
-
       <div className="why-fred-heading" aria-hidden="true">
         <span>WHY FRED</span>
         <span>WHY FRED</span>
@@ -156,26 +185,30 @@ const About = () => {
           </header>
 
           <form onSubmit={handleSubmit}>
-            <div className="editorial-contact-fields">
-              <label htmlFor="contact-name">
-                Name
-                <input id="contact-name" type="text" name="name" required autoComplete="name" value={formData.name} onChange={handleChange} />
-              </label>
-              <label htmlFor="contact-email">
-                Email
-                <input id="contact-email" type="email" name="email" required autoComplete="email" value={formData.email} onChange={handleChange} />
-              </label>
-              <label className="editorial-contact-subject" htmlFor="contact-subject">
-                Subject
-                <input id="contact-subject" type="text" name="subject" required value={formData.subject} onChange={handleChange} />
-              </label>
-              <label className="editorial-contact-message" htmlFor="contact-message">
-                Message
-                <textarea id="contact-message" name="message" required rows={5} value={formData.message} onChange={handleChange} />
-              </label>
-            </div>
+            <fieldset disabled={isSubmitting}>
+              <div className="editorial-contact-fields">
+                <label htmlFor="contact-name">
+                  Name
+                  <input id="contact-name" type="text" name="name" required maxLength={CONTACT_FORM_LIMITS.name} autoComplete="name" value={formData.name} onChange={handleChange} />
+                </label>
+                <label htmlFor="contact-email">
+                  Email
+                  <input id="contact-email" type="email" name="email" required maxLength={CONTACT_FORM_LIMITS.email} autoComplete="email" value={formData.email} onChange={handleChange} />
+                </label>
+                <label className="editorial-contact-subject" htmlFor="contact-subject">
+                  Subject
+                  <input id="contact-subject" type="text" name="subject" required maxLength={CONTACT_FORM_LIMITS.subject} value={formData.subject} onChange={handleChange} />
+                </label>
+                <label className="editorial-contact-message" htmlFor="contact-message">
+                  Message
+                  <textarea id="contact-message" name="message" required maxLength={CONTACT_FORM_LIMITS.message} rows={5} value={formData.message} onChange={handleChange} />
+                </label>
+              </div>
+            </fieldset>
             <div className="editorial-contact-submit">
-              <p aria-live="polite">{submitStatus.show ? submitStatus.message : 'All fields are required.'}</p>
+              <p className={submitStatus.type ? `contact-form-status contact-form-status--${submitStatus.type}` : 'contact-form-status'} role="status" aria-live="polite">
+                {submitStatus.message || 'All fields are required.'}
+              </p>
               <motion.button
                 type="submit"
                 disabled={isSubmitting}

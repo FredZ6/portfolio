@@ -27,11 +27,21 @@ assert.match(proofBlock, /value:\s*['"]04['"][\s\S]*Delivery disciplines/i)
 assert.match(about, /Status:\s*Online/, 'The visible online status must remain available.')
 assert.match(about, /Open to Software Engineer roles/i, 'The existing availability statement must remain visible.')
 assert.match(about, /emailjs\.send\(/, 'The working EmailJS contact path must not be removed.')
+assert.match(about, /from ['"]\.\.\/utils\/contactForm\.js['"]/, 'About must import the executable contact helpers.')
+assert.match(about, /normalizeContactForm\(/, 'About must normalize submitted values.')
+assert.match(about, /validateContactForm\(/, 'About must validate submitted values.')
+assert.match(about, /createContactSubmissionGate\(/, 'About must use the shared submission gate.')
+assert.match(about, /const isSubmittingRef = useRef\(false\)/, 'About needs a synchronous duplicate-submit gate.')
+assert.match(about, /const mountedRef = useRef\(true\)/, 'About must track whether async completion is still safe to render.')
+assert.match(about, /return \(\) => \{[\s\S]*mountedRef\.current = false[\s\S]*\}/, 'About must disable async state writes during unmount cleanup.')
 for (const field of ['name', 'email', 'subject', 'message']) {
   assert.match(about, new RegExp(`name=["']${field}["']`), `Contact form must retain the ${field} field.`)
 }
 assert.match(about, /aria-live=["']polite["']/, 'Form submission status must be announced.')
 assert.match(about, /disabled=\{isSubmitting\}/, 'The submit button must prevent duplicate submissions.')
+assert.match(about, /<fieldset disabled=\{isSubmitting\}>/, 'All editable fields must lock during submission.')
+assert.equal((about.match(/aria-live=["']polite["']/g) ?? []).length, 1, 'About must expose exactly one polite live region.')
+assert.doesNotMatch(about, /import Toast|<Toast/, 'About must not duplicate live announcements through Toast.')
 assert.match(about, /<h2[^>]*>[\s\S]*WHY FRED/i, 'About must use a semantic section heading.')
 assert.match(about, /<h3/g, 'Working-method content must have semantic subheadings.')
 
@@ -49,6 +59,9 @@ for (const selector of ['.why-fred-section', '.why-fred-bird', '.proof-points-gr
   assert(css.includes(selector), `Missing editorial contact styling for ${selector}.`)
 }
 assert.match(css, /@media\s*\(max-width:\s*420px\)/, 'Contact layout must include a narrow-phone breakpoint.')
+const footerPhoneRule = css.match(/@media\s*\(max-width:\s*620px\)\s*\{([\s\S]*?)\n\}/)?.[1] ?? ''
+assert.match(footerPhoneRule, /\.contact-footer-title\s*\{[\s\S]*?white-space:\s*normal;/, 'Footer headline must wrap before the 420px breakpoint.')
 assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/, 'CSS motion must honor reduced-motion preferences.')
+assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{[\s\S]*?html\s*\{\s*scroll-behavior:\s*auto;/, 'Reduced motion must disable document smooth scrolling.')
 
 console.log('Editorial Why Fred and contact footer regression checks passed.')
