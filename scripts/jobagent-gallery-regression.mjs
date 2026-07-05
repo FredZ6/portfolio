@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 
 const source = readFileSync(new URL('../src/components/Projects.jsx', import.meta.url), 'utf8')
 
-const jobAgentBlockMatch = source.match(/id:\s*3,[\s\S]*?accent:\s*'from-emerald-300 to-cyan-500'/)
+const jobAgentBlockMatch = source.match(/id:\s*3,[\s\S]*?(?=\n\s*\{\n\s*id:\s*1,)/)
 
 assert(jobAgentBlockMatch, 'Expected to find the JobAgent project block.')
 

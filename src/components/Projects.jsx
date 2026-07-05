@@ -2,6 +2,11 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, ChevronLeft, ChevronRight, Github, Image as ImageIcon, X } from 'lucide-react'
 import PropTypes from 'prop-types'
+import {
+  collectVisibleFocusableElements,
+  getFocusWrapTarget,
+  lockPageScroll,
+} from '../utils/dialogAccessibility'
 
 const PROJECTS = [
   {
@@ -13,11 +18,6 @@ const PROJECTS = [
       'End-to-end flow from job import to submission tracking.',
       'Observable automation with screenshots, logs, retries, and run history.',
       'Manual final submit by design.',
-    ],
-    desktopDelivery: [
-      'End-to-end flow from profile setup and job import through analysis, resume review, and submission tracking.',
-      'Observable automation with field results, screenshots, worker logs, retries, cancellations, and run history.',
-      'Manual final submit by design, keeping review checkpoints visible instead of hiding risk behind one-click apply.',
     ],
     stats: [
       { value: '2', label: 'Providers' },
@@ -65,7 +65,6 @@ const PROJECTS = [
         caption: 'Overview dark mode',
       },
     ],
-    accent: 'from-emerald-300 to-cyan-500',
   },
   {
     id: 1,
@@ -77,11 +76,6 @@ const PROJECTS = [
       'Coordinated order, payment, and inventory flows with saga orchestration.',
       'Protected releases with required CI checks and Terraform updates.',
     ],
-    desktopDelivery: [
-      'Delivered auth, catalog, orders, inventory, payment, and notification services in one event-driven platform.',
-      'Used saga orchestration to coordinate order, payment, and inventory state changes.',
-      'Protected releases with required CI checks, Terraform updates, and safer deployment discipline.',
-    ],
     stats: [
       { value: '6', label: 'Services' },
       { value: '3', label: 'Sagas' },
@@ -92,15 +86,14 @@ const PROJECTS = [
     githubUrl: 'https://github.com/FredZ6/cloud-project',
     ctaLabel: 'View Gallery',
     images: [
-      { src: '/portfolio/projects/cloud-order/dashboard_16x10.png', fullSrc: '/portfolio/projects/cloud-order/dashboard_full.png', caption: 'Dashboard' },
-      { src: '/portfolio/projects/cloud-order/cloud_01_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_01_full.png', caption: 'System Screen 1' },
-      { src: '/portfolio/projects/cloud-order/cloud_02_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_02_full.png', caption: 'System Screen 2' },
-      { src: '/portfolio/projects/cloud-order/cloud_03_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_03_full.png', caption: 'System Screen 3' },
-      { src: '/portfolio/projects/cloud-order/cloud_04_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_04_full.png', caption: 'System Screen 4' },
-      { src: '/portfolio/projects/cloud-order/cloud_05_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_05_full.png', caption: 'System Screen 5' },
-      { src: '/portfolio/projects/cloud-order/cloud_06_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_06_full.png', caption: 'System Screen 6' }
+      { src: '/portfolio/projects/cloud-order/dashboard_16x10.png', fullSrc: '/portfolio/projects/cloud-order/dashboard_full.png', caption: 'Cloud Order Platform dashboard' },
+      { src: '/portfolio/projects/cloud-order/cloud_01_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_01_full.png', caption: 'Cloud Order Platform interface view 1' },
+      { src: '/portfolio/projects/cloud-order/cloud_02_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_02_full.png', caption: 'Cloud Order Platform interface view 2' },
+      { src: '/portfolio/projects/cloud-order/cloud_03_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_03_full.png', caption: 'Cloud Order Platform interface view 3' },
+      { src: '/portfolio/projects/cloud-order/cloud_04_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_04_full.png', caption: 'Cloud Order Platform interface view 4' },
+      { src: '/portfolio/projects/cloud-order/cloud_05_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_05_full.png', caption: 'Cloud Order Platform interface view 5' },
+      { src: '/portfolio/projects/cloud-order/cloud_06_16x10.png', fullSrc: '/portfolio/projects/cloud-order/cloud_06_full.png', caption: 'Cloud Order Platform interface view 6' }
     ],
-    accent: 'from-sky-400 to-blue-600',
   },
   {
     id: 2,
@@ -111,11 +104,6 @@ const PROJECTS = [
       'Shipped customer flows for auth, browsing, cart, checkout, and order management.',
       'Built admin tooling for product maintenance and operational order handling.',
       'Backed the demo with seeded catalog data, Docker orchestration, and CI/E2E automation.',
-    ],
-    desktopDelivery: [
-      'Shipped customer flows for auth, browsing, cart, checkout, and order management across the full storefront path.',
-      'Built admin tooling for product maintenance, inventory-facing updates, and operational order handling.',
-      'Backed the demo with seeded catalog data, Docker orchestration, and CI/E2E automation for repeatable setup.',
     ],
     stats: [
       { value: '39', label: 'Tests' },
@@ -132,7 +120,6 @@ const PROJECTS = [
       { src: '/portfolio/projects/ecommerce/product_detail_16x10.png', fullSrc: '/portfolio/projects/ecommerce/product_detail.png', caption: 'Product Detail' },
       { src: '/portfolio/projects/ecommerce/manage_16x10.png', fullSrc: '/portfolio/projects/ecommerce/manage.png', caption: 'Admin Management' },
     ],
-    accent: 'from-cyan-400 to-sky-500',
   },
 ]
 
@@ -145,63 +132,79 @@ const Projects = () => {
   const shouldReduceMotion = useReducedMotion()
   const [lightboxData, setLightboxData] = useState(null)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
+  const [isLightboxImageLoading, setIsLightboxImageLoading] = useState(false)
+  const [hasLightboxImageError, setHasLightboxImageError] = useState(false)
   const dialogRef = useRef(null)
   const closeButtonRef = useRef(null)
   const triggerRef = useRef(null)
-  const previousOverflowRef = useRef('')
+  const activeImageIndexRef = useRef(0)
 
   const openLightbox = (project, event) => {
     if (!project.images?.length) return
 
     triggerRef.current = event.currentTarget
-    previousOverflowRef.current = document.body.style.overflow
     setLightboxData({ images: project.images, title: project.title })
+    activeImageIndexRef.current = 0
     setActiveImageIndex(0)
-    document.body.style.overflow = 'hidden'
+    setIsLightboxImageLoading(true)
+    setHasLightboxImageError(false)
   }
 
   const closeLightbox = useCallback(() => {
-    const previousOverflow = previousOverflowRef.current
     setLightboxData(null)
-    document.body.style.overflow = previousOverflow
-    window.requestAnimationFrame(() => triggerRef.current?.focus())
   }, [])
+
+  const showImageAtIndex = useCallback((nextIndex) => {
+    if (nextIndex === activeImageIndexRef.current) return
+
+    activeImageIndexRef.current = nextIndex
+    setIsLightboxImageLoading(true)
+    setHasLightboxImageError(false)
+    setActiveImageIndex(nextIndex)
+  }, [])
+
+  const showPreviousImage = () => {
+    showImageAtIndex(Math.max(0, activeImageIndexRef.current - 1))
+  }
+
+  const showNextImage = () => {
+    showImageAtIndex(Math.min(lightboxData.images.length - 1, activeImageIndexRef.current + 1))
+  }
 
   useEffect(() => {
     if (!lightboxData) return undefined
 
+    const restorePageScroll = lockPageScroll(document)
     closeButtonRef.current?.focus()
 
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') closeLightbox()
       if (event.key === 'ArrowLeft') {
-        setActiveImageIndex((previous) => Math.max(0, previous - 1))
+        event.preventDefault()
+        showImageAtIndex(Math.max(0, activeImageIndexRef.current - 1))
       }
       if (event.key === 'ArrowRight') {
-        setActiveImageIndex((previous) => Math.min(lightboxData.images.length - 1, previous + 1))
+        event.preventDefault()
+        showImageAtIndex(Math.min(lightboxData.images.length - 1, activeImageIndexRef.current + 1))
       }
-      if (event.key !== 'Tab') return
 
-      const focusable = dialogRef.current?.querySelectorAll('button:not(:disabled)')
-      if (!focusable?.length) return
-      const first = focusable[0]
-      const last = focusable[focusable.length - 1]
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault()
-        last.focus()
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault()
-        first.focus()
+      if (event.key === 'Tab') {
+        const focusableElements = collectVisibleFocusableElements(dialogRef.current)
+        const focusTarget = getFocusWrapTarget(event, focusableElements, document.activeElement)
+        if (focusTarget) {
+          event.preventDefault()
+          focusTarget.focus()
+        }
       }
     }
 
     document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [closeLightbox, lightboxData])
-
-  useEffect(() => () => {
-    document.body.style.overflow = previousOverflowRef.current
-  }, [])
+    return () => {
+      restorePageScroll()
+      document.removeEventListener('keydown', handleKeyDown)
+      triggerRef.current?.focus()
+    }
+  }, [closeLightbox, lightboxData, showImageAtIndex])
 
   const activeImage = lightboxData?.images[activeImageIndex]
   const headingMotion = shouldReduceMotion
@@ -266,7 +269,7 @@ const Projects = () => {
             initial={shouldReduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="project-lightbox theme-modal-overlay"
+            className="project-lightbox"
             onClick={closeLightbox}
             role="dialog"
             aria-modal="true"
@@ -289,23 +292,37 @@ const Projects = () => {
                   <X size={24} aria-hidden="true" />
                 </button>
               </div>
-              <div className="project-lightbox__stage">
+              <div className="project-lightbox__stage" aria-busy={isLightboxImageLoading}>
                 <div className="project-image-fallback project-image-fallback--lightbox">
                   <ImageIcon size={42} aria-hidden="true" />
                   <span>Preview unavailable</span>
                 </div>
+                {isLightboxImageLoading && !hasLightboxImageError && (
+                  <div className="project-lightbox__loading" role="status" aria-live="polite">
+                    <span aria-hidden="true" />
+                    Loading image
+                  </div>
+                )}
                 <img
                   key={activeImage.fullSrc || activeImage.src}
                   src={activeImage.fullSrc || activeImage.src}
                   alt={activeImage.caption}
                   className="project-lightbox__image"
-                  onError={(event) => { event.currentTarget.hidden = true }}
+                  decoding="async"
+                  width={1600}
+                  height={1000}
+                  hidden={hasLightboxImageError}
+                  onLoad={() => setIsLightboxImageLoading(false)}
+                  onError={() => {
+                    setIsLightboxImageLoading(false)
+                    setHasLightboxImageError(true)
+                  }}
                 />
               </div>
               <div className="project-lightbox__controls">
                 <button
                   disabled={activeImageIndex === 0}
-                  onClick={() => setActiveImageIndex(prev => prev - 1)}
+                  onClick={showPreviousImage}
                   className="project-lightbox__icon"
                   aria-label="Previous image"
                 >
@@ -316,7 +333,7 @@ const Projects = () => {
                 </span>
                 <button
                   disabled={activeImageIndex === lightboxData.images.length - 1}
-                  onClick={() => setActiveImageIndex(prev => prev + 1)}
+                  onClick={showNextImage}
                   className="project-lightbox__icon"
                   aria-label="Next image"
                 >
@@ -366,6 +383,10 @@ const ProjectCard = ({ project, index, animationVariants, onOpenLightbox }) => {
           <img
             src={previewImage}
             alt={`${project.title} preview`}
+            loading="lazy"
+            decoding="async"
+            width={1600}
+            height={1000}
             onError={(event) => { event.currentTarget.hidden = true }}
           />
         ) : (
@@ -443,7 +464,6 @@ ProjectCard.propTypes = {
     description: PropTypes.string.isRequired,
     impact: PropTypes.string.isRequired,
     delivery: PropTypes.arrayOf(PropTypes.string).isRequired,
-    desktopDelivery: PropTypes.arrayOf(PropTypes.string),
     stats: PropTypes.arrayOf(
       PropTypes.shape({
         value: PropTypes.string.isRequired,
@@ -454,7 +474,6 @@ ProjectCard.propTypes = {
     techStack: PropTypes.arrayOf(PropTypes.string).isRequired,
     githubUrl: PropTypes.string.isRequired,
     ctaLabel: PropTypes.string.isRequired,
-    ctaUrl: PropTypes.string,
     images: PropTypes.arrayOf(
       PropTypes.shape({
         src: PropTypes.string.isRequired,
@@ -462,7 +481,6 @@ ProjectCard.propTypes = {
         caption: PropTypes.string.isRequired,
       })
     ).isRequired,
-    accent: PropTypes.string.isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,
   animationVariants: PropTypes.object.isRequired,

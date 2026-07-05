@@ -63,3 +63,11 @@ assert.equal(
   getFocusWrapTarget({ key: 'Escape', shiftKey: false }, visibleFocusableElements, visibleCloseButton),
   null,
 )
+assert.equal(
+  getFocusWrapTarget({ key: 'Tab', shiftKey: false }, visibleFocusableElements, disabledButton),
+  visibleExternalLink,
+)
+assert.equal(
+  getFocusWrapTarget({ key: 'Tab', shiftKey: true }, visibleFocusableElements, disabledButton),
+  visibleCloseButton,
+)
