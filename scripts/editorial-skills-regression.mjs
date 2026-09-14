@@ -73,8 +73,8 @@ check(
 check(
   /const\s+tickerRef\s*=\s*useRef\(null\)/.test(skillsSource)
     && /useInView\(tickerRef,\s*\{\s*amount:\s*0\.1\s*\}\)/.test(skillsSource)
-    && /const\s+tickerPaused\s*=\s*isTickerPaused\s*\|\|\s*!isTickerInView\s*\|\|\s*shouldReduceMotion/.test(skillsSource),
-  'Ticker motion must pause for user preference, off-screen state, and reduced motion.',
+    && /const\s+tickerPaused\s*=\s*!isTickerInView\s*\|\|\s*shouldReduceMotion/.test(skillsSource),
+  'Ticker motion must pause off-screen and for reduced-motion users.',
 )
 check(
   /<div(?=[^>]*className=["']technology-ticker["'])(?=[^>]*ref=\{tickerRef\})[^>]*>/.test(skillsSource),
@@ -82,18 +82,70 @@ check(
 )
 check(
   /data-paused=\{tickerPaused\s*\?\s*['"]true['"]\s*:\s*['"]false['"]\}/.test(skillsSource)
-    && /aria-pressed=\{isTickerPaused\}/.test(skillsSource)
-    && /Pause stack motion/.test(skillsSource)
-    && /Resume stack motion/.test(skillsSource),
-  'Technology ticker must expose an accessible pause/resume control and paused data state.',
+    && !/isTickerPaused|Pause stack motion|Resume stack motion/.test(skillsSource),
+  'Technology ticker must retain automatic pause behavior without the removed manual pause control.',
 )
 check(
-  /!shouldReduceMotion\s*&&\s*\(\s*<button[\s\S]*?Pause stack motion[\s\S]*?<\/button>\s*\)/.test(skillsSource),
-  'Reduced-motion users must not be shown a misleading ticker motion control.',
+  /\.technology-ticker-heading button\s*\{[^}]*display:\s*inline-flex;[^}]*align-items:\s*center;[^}]*gap:\s*0\.4rem;[^}]*white-space:\s*nowrap;/s.test(cssSource)
+    && /\.technology-ticker-heading button svg\s*\{[^}]*margin:\s*0;[^}]*flex-shrink:\s*0;/s.test(cssSource),
+  'Technology index button label and icon must stay centered and aligned on one line.',
+)
+check(
+  /const\s+\[isTechnologyIndexOpen,\s*setIsTechnologyIndexOpen\]\s*=\s*useState\(false\)/.test(skillsSource)
+    && /aria-expanded=\{isTechnologyIndexOpen\}/.test(skillsSource)
+    && /aria-controls=["']technology-index-panel["']/.test(skillsSource)
+    && /id=["']technology-index-panel["']/.test(skillsSource),
+  'Technology index must expose an accessible expand/collapse control and controlled panel.',
+)
+check(
+  /Expand stack/.test(skillsSource) && /Collapse stack/.test(skillsSource),
+  'Technology index control must clearly label both collapsed and expanded states.',
+)
+const technologyGroupsBlock = skillsSource.match(
+  /const\s+technologyGroups\s*=\s*\[([\s\S]*?)\]\s*\n\s*const\s+certifications\b/,
+)
+check(Boolean(technologyGroupsBlock), 'Skills must declare structured technology groups.')
+if (technologyGroupsBlock) {
+  const technologyCount = (technologyGroupsBlock[1].match(/name:\s*['"][^'"]+['"]/g) || []).length
+  const technologyIcons = [...technologyGroupsBlock[1].matchAll(/icon:\s*([A-Za-z][A-Za-z0-9]*)/g)]
+    .map((match) => match[1])
+  const colorCount = (technologyGroupsBlock[1].match(/color:\s*['"]#[0-9A-Fa-f]{6}['"]/g) || []).length
+  const reactIconImports = [...skillsSource.matchAll(
+    /import\s*\{([^}]*)\}\s*from\s*['"]react-icons\/[^'"]+['"]/g,
+  )].flatMap((match) => match[1].split(',').map((name) => name.trim()).filter(Boolean))
+  check(technologyCount === 22, `Expected 22 named technologies, found ${technologyCount}.`)
+  check(
+    /label:\s*['"]Frontend['"][\s\S]*?name:\s*['"]React['"][\s\S]*?name:\s*['"]Next\.js['"][\s\S]*?name:\s*['"]TypeScript['"][\s\S]*?name:\s*['"]JavaScript['"][\s\S]*?name:\s*['"]Vite['"]/.test(technologyGroupsBlock[1]),
+    'Technology groups must restore the approved Frontend section and its five tools.',
+  )
+  check(technologyIcons.length === technologyCount, 'Every technology must declare a corresponding icon.')
+  check(colorCount === technologyCount, 'Every technology must declare a six-digit theme color.')
+  check(
+    technologyIcons.every((icon) => reactIconImports.includes(icon)),
+    'Every technology icon must be imported from react-icons.',
+  )
+}
+check(
+  /const\s+TechnologyItem\b/.test(skillsSource)
+    && /className=["']technology-icon["']/.test(skillsSource)
+    && /['"]--technology-color['"]:\s*technology\.color/.test(skillsSource)
+    && /<TechnologyItem[\s\S]*?technology=\{technology\}/.test(skillsSource),
+  'Ticker and expanded index must reuse a theme-color-driven TechnologyItem icon wrapper.',
 )
 check(
   /\.technology-ticker\[data-paused=['"]true['"]\]\s+\.technology-ticker-track\s*\{[^}]*animation-play-state:\s*paused;/s.test(cssSource),
   'Paused technology ticker state must set animation-play-state: paused.',
+)
+check(
+  /\.technology-icon\s*\{[^}]*background:\s*rgba\([^}]*backdrop-filter:\s*blur\(/s.test(cssSource)
+    && /\.technology-icon\s+svg\s*\{[^}]*color:\s*var\(--technology-color\)/s.test(cssSource),
+  'Technology icons must use their configured theme color on a shared frosted plate.',
+)
+check(
+  /\.technology-index-grid\s*\{[^}]*grid-template-columns:\s*repeat\(5,\s*minmax\(0,\s*1fr\)\)/s.test(cssSource)
+    && /@media\s*\(max-width:\s*980px\)[\s\S]*?\.technology-index-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/s.test(cssSource)
+    && /@media\s*\(max-width:\s*700px\)[\s\S]*?\.technology-index-grid\s*\{[^}]*grid-template-columns:\s*1fr/s.test(cssSource),
+  'Expanded technology index must use responsive 5/2/1-column layouts.',
 )
 check(
   /aria-expanded=\{isCertificationsOpen\}/.test(skillsSource)

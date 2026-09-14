@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useInView, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
 import {
   ArrowUpRight,
   Award,
@@ -10,6 +10,24 @@ import {
   CloudCog,
   ShieldCheck,
 } from 'lucide-react'
+import { FaAws, FaDocker, FaJava, FaReact } from 'react-icons/fa'
+import { LuMousePointer2, LuUserCheck } from 'react-icons/lu'
+import { RiOpenaiLine } from 'react-icons/ri'
+import {
+  SiAnthropic,
+  SiApachekafka,
+  SiGithubactions,
+  SiJavascript,
+  SiKubernetes,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiPostgresql,
+  SiSpringboot,
+  SiTerraform,
+  SiTypescript,
+  SiVite,
+} from 'react-icons/si'
+import { TbActivityHeartbeat, TbGitBranch, TbTestPipe } from 'react-icons/tb'
 import PropTypes from 'prop-types'
 
 const principles = [
@@ -52,10 +70,53 @@ const principles = [
 ]
 
 const technologyGroups = [
-  { label: 'Backend', items: ['Java', 'Spring Boot', 'Node.js', 'PostgreSQL', 'Kafka'] },
-  { label: 'Cloud', items: ['AWS', 'Terraform', 'Docker', 'Kubernetes'] },
-  { label: 'Delivery', items: ['GitHub Actions', 'CI/CD', 'Testing', 'Observability'] },
-  { label: 'AI Workflow', items: ['Claude Code', 'Codex', 'Cursor', 'Human review'] },
+  {
+    label: 'Frontend',
+    items: [
+      { name: 'React', icon: FaReact, color: '#61DAFB' },
+      { name: 'Next.js', icon: SiNextdotjs, color: '#111827' },
+      { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+      { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
+      { name: 'Vite', icon: SiVite, color: '#646CFF' },
+    ],
+  },
+  {
+    label: 'Backend',
+    items: [
+      { name: 'Java', icon: FaJava, color: '#ED8B00' },
+      { name: 'Spring Boot', icon: SiSpringboot, color: '#6DB33F' },
+      { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
+      { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
+      { name: 'Kafka', icon: SiApachekafka, color: '#231F20' },
+    ],
+  },
+  {
+    label: 'Cloud',
+    items: [
+      { name: 'AWS', icon: FaAws, color: '#FF9900' },
+      { name: 'Terraform', icon: SiTerraform, color: '#844FBA' },
+      { name: 'Docker', icon: FaDocker, color: '#2496ED' },
+      { name: 'Kubernetes', icon: SiKubernetes, color: '#326CE5' },
+    ],
+  },
+  {
+    label: 'Delivery',
+    items: [
+      { name: 'GitHub Actions', icon: SiGithubactions, color: '#2088FF' },
+      { name: 'CI/CD', icon: TbGitBranch, color: '#8B5CF6' },
+      { name: 'Testing', icon: TbTestPipe, color: '#F43F5E' },
+      { name: 'Observability', icon: TbActivityHeartbeat, color: '#14B8A6' },
+    ],
+  },
+  {
+    label: 'AI Workflow',
+    items: [
+      { name: 'Claude Code', icon: SiAnthropic, color: '#D97757' },
+      { name: 'Codex', icon: RiOpenaiLine, color: '#10A37F' },
+      { name: 'Cursor', icon: LuMousePointer2, color: '#7C3AED' },
+      { name: 'Human review', icon: LuUserCheck, color: '#F59E0B' },
+    ],
+  },
 ]
 
 const certifications = [
@@ -109,13 +170,39 @@ const certifications = [
   },
 ]
 
+const TechnologyItem = ({ technology }) => {
+  const Icon = technology.icon
+  return (
+    <li className="technology-item">
+      <span
+        className="technology-icon"
+        style={{ '--technology-color': technology.color }}
+        aria-hidden="true"
+      >
+        <Icon focusable="false" />
+      </span>
+      <span>{technology.name}</span>
+    </li>
+  )
+}
+
+TechnologyItem.propTypes = {
+  technology: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    icon: PropTypes.elementType.isRequired,
+    color: PropTypes.string.isRequired,
+  }).isRequired,
+}
+
 const TechnologySet = ({ hidden = false }) => (
   <div className="technology-ticker-set" aria-hidden={hidden || undefined}>
     {technologyGroups.map((group) => (
       <div className="technology-ticker-group" key={group.label}>
         <span className="technology-ticker-label">{group.label}</span>
         <ul aria-label={`${group.label} technologies`}>
-          {group.items.map((item) => <li key={item}>{item}</li>)}
+          {group.items.map((technology) => (
+            <TechnologyItem technology={technology} key={technology.name} />
+          ))}
         </ul>
       </div>
     ))}
@@ -160,7 +247,7 @@ const Skills = () => {
   const shouldReduceMotion = useReducedMotion()
   const tickerRef = useRef(null)
   const isTickerInView = useInView(tickerRef, { amount: 0.1 })
-  const [isTickerPaused, setIsTickerPaused] = useState(false)
+  const [isTechnologyIndexOpen, setIsTechnologyIndexOpen] = useState(false)
   const [isCertificationsOpen, setIsCertificationsOpen] = useState(false)
   const [isMobileViewport, setIsMobileViewport] = useState(false)
 
@@ -176,7 +263,7 @@ const Skills = () => {
   const visibleCertifications = isCertificationsOpen
     ? certifications
     : certifications.slice(0, visibleLimit)
-  const tickerPaused = isTickerPaused || !isTickerInView || shouldReduceMotion
+  const tickerPaused = !isTickerInView || shouldReduceMotion
 
   return (
     <section className="editorial-stack-section" id="stack">
@@ -243,18 +330,21 @@ const Skills = () => {
         >
           <div className="technology-ticker-heading">
             <span>Technology index</span>
-            <div>
+            <div className="technology-ticker-controls">
               <span>Backend → cloud → verified delivery</span>
-              {!shouldReduceMotion && (
+              <div className="technology-ticker-actions">
                 <button
                   type="button"
-                  aria-pressed={isTickerPaused}
-                  aria-label={isTickerPaused ? 'Resume stack motion' : 'Pause stack motion'}
-                  onClick={() => setIsTickerPaused((current) => !current)}
+                  aria-expanded={isTechnologyIndexOpen}
+                  aria-controls="technology-index-panel"
+                  onClick={() => setIsTechnologyIndexOpen((current) => !current)}
                 >
-                  {isTickerPaused ? 'Resume stack motion' : 'Pause stack motion'}
+                  {isTechnologyIndexOpen ? 'Collapse stack' : 'Expand stack'}
+                  {isTechnologyIndexOpen
+                    ? <ChevronUp aria-hidden="true" />
+                    : <ChevronDown aria-hidden="true" />}
                 </button>
-              )}
+              </div>
             </div>
           </div>
           <div className="technology-ticker-viewport">
@@ -263,6 +353,31 @@ const Skills = () => {
               <TechnologySet hidden />
             </div>
           </div>
+          <AnimatePresence initial={false}>
+            {isTechnologyIndexOpen && (
+              <motion.div
+                className="technology-index-panel"
+                id="technology-index-panel"
+                initial={shouldReduceMotion ? false : { height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.42, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div className="technology-index-grid">
+                  {technologyGroups.map((group) => (
+                    <section className="technology-index-group" key={group.label}>
+                      <h3>{group.label}</h3>
+                      <ul aria-label={`${group.label} technology index`}>
+                        {group.items.map((technology) => (
+                          <TechnologyItem technology={technology} key={technology.name} />
+                        ))}
+                      </ul>
+                    </section>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <section className="editorial-certifications" aria-labelledby="certifications-title">
