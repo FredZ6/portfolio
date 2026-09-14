@@ -2107,9 +2107,11 @@ body {
   border: clamp(0.55rem, 0.8vw, 0.9rem) solid #ffffff;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 32% 25%, rgba(255, 255, 255, 0.28), transparent 22%),
-    var(--blue);
-  box-shadow: 0 28px 70px rgba(6, 71, 173, 0.27), 0 0 0 1px rgba(8, 27, 51, 0.08);
+    radial-gradient(circle at 32% 25%, rgba(255, 255, 255, 0.24), transparent 24%),
+    rgba(18, 104, 243, 0.58);
+  -webkit-backdrop-filter: blur(12px) saturate(135%);
+  backdrop-filter: blur(12px) saturate(135%);
+  box-shadow: 0 28px 70px rgba(6, 71, 173, 0.2), 0 0 0 1px rgba(8, 27, 51, 0.08);
   translate: -50% -50%;
   transform-origin: center;
 }
@@ -2128,16 +2130,6 @@ body {
   filter: drop-shadow(0 10px 18px rgba(6, 71, 173, 0.22));
   -webkit-mask: url('/portfolio/avatar.png') center / contain no-repeat;
   mask: url('/portfolio/avatar.png') center / contain no-repeat;
-}
-
-.hero-bird-stamp {
-  position: absolute;
-  right: 13%;
-  bottom: 12%;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.6rem;
-  font-weight: 900;
-  letter-spacing: 0.16em;
 }
 
 .hero-bottomline {

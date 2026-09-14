@@ -50,7 +50,6 @@ const Hero = ({ onOpenResume }) => {
         >
           <span className="hero-bird-ring" />
           <span className="hero-bird-silhouette" />
-          <span className="hero-bird-stamp">FZ / 26</span>
         </motion.div>
 
         <motion.div className="hero-bottomline" variants={reveal}>
