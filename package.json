@@ -7,6 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
+    "test:redesign": "node scripts/editorial-redesign-regression.mjs",
+    "test:skills": "node scripts/editorial-skills-regression.mjs",
+    "test:contact": "node scripts/editorial-contact-regression.mjs && node scripts/contact-form-behavior-regression.mjs",
+    "test:projects": "node scripts/projects-layout-regression.mjs && node scripts/projects-mobile-layout-regression.mjs && node scripts/resume-dialog-behavior-regression.mjs",
+    "test:resume-dialog": "node scripts/resume-dialog-regression.mjs",
+    "test:resume-dialog-behavior": "node scripts/resume-dialog-behavior-regression.mjs",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"

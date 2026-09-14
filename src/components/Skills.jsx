@@ -1,209 +1,300 @@
-import { useReducedMotion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useInView, useReducedMotion } from 'framer-motion'
 import {
-  FaReact,
-  FaAws,
-  FaGitAlt,
-  FaDocker,
-  FaNodeJs,
-  FaLinux,
-  FaJava,
-  FaHtml5,
-  FaCss3Alt
-} from 'react-icons/fa'
-import {
-  SiTypescript,
-  SiTailwindcss,
-  SiNextdotjs,
-  SiSpring,
-  SiRedis,
-  SiMongodb,
-  SiPostgresql,
-  SiGithubactions,
-  SiKubernetes,
-  SiApachekafka,
-  SiRabbitmq,
-  SiVuedotjs,
-  SiRedux,
-  SiTerraform,
-  SiGraphql,
-  SiNginx,
-  SiJenkins
-} from 'react-icons/si'
-// Add PropTypes import
+  ArrowUpRight,
+  Award,
+  Bot,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  CloudCog,
+  ShieldCheck,
+} from 'lucide-react'
 import PropTypes from 'prop-types'
 
-const skillsData = [
+const principles = [
   {
-    title: 'Frontend',
-    radius: 160,
-    duration: 35,
-    reverse: false,
-    color: 'rgba(97, 218, 251, 0.4)',
-    skills: [
-      { name: 'React', icon: <FaReact />, color: '#61DAFB' },
-      { name: 'TypeScript', icon: <SiTypescript />, color: '#3178C6' },
-      { name: 'Next.js', icon: <SiNextdotjs />, color: '#ffffff' },
-      { name: 'Tailwind', icon: <SiTailwindcss />, color: '#06B6D4' },
-      { name: 'Vue', icon: <SiVuedotjs />, color: '#42B883' },
-      { name: 'Redux', icon: <SiRedux />, color: '#3B82F6' },
-      { name: 'HTML5', icon: <FaHtml5 />, color: '#E34F26' },
-      { name: 'CSS3', icon: <FaCss3Alt />, color: '#1572B6' },
-    ],
+    id: 'reliability',
+    number: '01',
+    title: 'Reliable by default',
+    kicker: 'Build for the real operating day',
+    description: 'Java and Spring Boot services shaped by tests, observable signals, and quality gates before a release reaches production.',
+    supports: ['Java / Spring Boot', 'Testing', 'Observability', 'Quality gates'],
+    icon: ShieldCheck,
+    rotation: -2.2,
+    offset: 42,
+    tone: 'cobalt',
   },
   {
-    title: 'Backend',
-    radius: 280,
-    duration: 45,
-    reverse: true,
-    color: 'rgba(109, 179, 63, 0.4)',
-    skills: [
-      { name: 'Spring Boot', icon: <SiSpring />, color: '#6DB33F' },
-      { name: 'Node.js', icon: <FaNodeJs />, color: '#339933' },
-      { name: 'PostgreSQL', icon: <SiPostgresql />, color: '#4169E1' },
-      { name: 'MongoDB', icon: <SiMongodb />, color: '#47A248' },
-      { name: 'Redis', icon: <SiRedis />, color: '#DC382D' },
-      { name: 'Kafka', icon: <SiApachekafka />, color: '#aaaaaa' },
-      { name: 'RabbitMQ', icon: <SiRabbitmq />, color: '#FF6600' },
-      { name: 'Java', icon: <FaJava />, color: '#F89820' },
-      { name: 'GraphQL', icon: <SiGraphql />, color: '#E10098' },
-    ],
+    id: 'cloud-intent',
+    number: '02',
+    title: 'Cloud with intent',
+    kicker: 'Infrastructure should explain itself',
+    description: 'AWS delivery with Terraform, Docker, and CI/CD that stays operable, repeatable, and conscious of ongoing cost.',
+    supports: ['AWS', 'Terraform', 'Docker', 'CI/CD'],
+    icon: CloudCog,
+    rotation: 1.7,
+    offset: -34,
+    tone: 'azure',
   },
   {
-    title: 'DevOps',
-    radius: 420,
-    duration: 55,
-    reverse: false,
-    color: 'rgba(255, 153, 0, 0.4)',
-    skills: [
-      { name: 'AWS', icon: <FaAws />, color: '#FF9900' },
-      { name: 'Docker', icon: <FaDocker />, color: '#2496ED' },
-      { name: 'Kubernetes', icon: <SiKubernetes />, color: '#326CE5' },
-      { name: 'Git Actions', icon: <SiGithubactions />, color: '#2088FF' },
-      { name: 'Terraform', icon: <SiTerraform />, color: '#38BDF8' },
-      { name: 'Linux', icon: <FaLinux />, color: '#aaaaaa' },
-      { name: 'Nginx', icon: <SiNginx />, color: '#009639' },
-      { name: 'Jenkins', icon: <SiJenkins />, color: '#D24939' },
-      { name: 'Git', icon: <FaGitAlt />, color: '#F05032' },
-    ],
+    id: 'ai-guardrails',
+    number: '03',
+    title: 'AI, with guardrails',
+    kicker: 'Speed earns trust through proof',
+    description: 'Spec-driven AI workflows stay accountable through human review and automated verification—not inflated claims.',
+    supports: ['Spec-driven', 'Human review', 'Automated verification'],
+    icon: Bot,
+    rotation: -1.3,
+    offset: 30,
+    tone: 'sky',
   },
 ]
 
-const OrbitRing = ({ radius, duration, reverse, skills, color }) => {
-  const shouldReduceMotion = useReducedMotion()
-  const orbitRotationStyle = shouldReduceMotion
-    ? { animation: 'none' }
-    : {
-        '--orbit-duration': `${duration}s`,
-        '--orbit-direction': reverse ? 'reverse' : 'normal'
-      }
-  const iconRotationStyle = shouldReduceMotion
-    ? { animation: 'none' }
-    : {
-        '--orbit-duration': `${duration}s`,
-        '--orbit-direction': reverse ? 'normal' : 'reverse'
-      }
+const technologyGroups = [
+  { label: 'Backend', items: ['Java', 'Spring Boot', 'Node.js', 'PostgreSQL', 'Kafka'] },
+  { label: 'Cloud', items: ['AWS', 'Terraform', 'Docker', 'Kubernetes'] },
+  { label: 'Delivery', items: ['GitHub Actions', 'CI/CD', 'Testing', 'Observability'] },
+  { label: 'AI Workflow', items: ['Claude Code', 'Codex', 'Cursor', 'Human review'] },
+]
 
-  return (
-    <div
-      className="skill-orbit-ring absolute top-1/2 left-1/2 rounded-full border border-dashed border-white/10 pointer-events-none"
-      style={{
-        width: radius * 2,
-        height: radius * 2,
-        boxShadow: `0 0 40px ${color} inset`,
-        ...orbitRotationStyle
-      }}
-    >
-      {skills.map((skill, index) => {
-        const angle = (index / skills.length) * 360
-        return (
-          <div
-            key={skill.name}
-            className="absolute top-1/2 left-1/2 pointer-events-auto"
-            style={{
-              transform: `rotate(${angle}deg) translateX(${radius}px) rotate(-${angle}deg)`
-            }}
-          >
-            <div className="relative h-12 w-12 -translate-x-1/2 -translate-y-1/2 md:h-16 md:w-16">
-              <div className="skill-orbit-counter flex h-full w-full items-center justify-center" style={iconRotationStyle}>
-                <div className="group relative flex h-full w-full items-center justify-center rounded-full glass-panel-strong shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(56,189,248,0.58)] hover:scale-125 transition-all cursor-pointer z-20">
-                  <div
-                    className="text-xl md:text-2xl drop-shadow-md"
-                    style={{ color: skill.color }}
-                  >
-                    {skill.icon}
-                  </div>
+const certifications = [
+  {
+    issuer: 'AWS', title: 'Developer Associate', name: 'DVA-C02',
+    summary: 'Associate badge validating application delivery across core AWS services.',
+    image: '/portfolio/dvac02.png',
+    href: 'https://www.credly.com/badges/f68690b3-1e68-46d8-ae56-366bd880c0e5/linked_in_profile',
+  },
+  {
+    issuer: 'AWS', title: 'Cloud Practitioner', name: 'CLF-C02',
+    summary: 'Foundational certification covering cloud concepts, billing, security, and operations.',
+    image: '/portfolio/clf-c02.png',
+    href: 'https://www.credly.com/badges/ff21fdcd-97e7-42a1-9e15-ddf052af8c57/linked_in_profile',
+  },
+  {
+    issuer: 'Skilljar', title: 'Introduction to agent skills', name: 'Verified Certificate',
+    summary: 'Course completion credential focused on agent skills fundamentals and workflow literacy.',
+    image: '/portfolio/anthropic-icon.svg',
+    href: 'http://verify.skilljar.com/c/7owbue56fohe',
+  },
+  {
+    issuer: 'Skilljar', title: 'Introduction to subagents', name: 'Verified Certificate',
+    summary: 'Credential covering the structure, delegation model, and practical use of subagents.',
+    image: '/portfolio/anthropic-icon.svg',
+    href: 'http://verify.skilljar.com/c/muit9mnrkf6k',
+  },
+  {
+    issuer: 'Skilljar', title: 'AI Fluency for students', name: 'Verified Certificate',
+    summary: 'Course credential highlighting prompt fluency, AI literacy, and student-facing workflows.',
+    image: '/portfolio/anthropic-icon.svg',
+    href: 'http://verify.skilljar.com/c/uincy7b9xx7n',
+  },
+  {
+    issuer: 'Skilljar', title: 'AI Fluency: Framework & Foundations', name: 'Verified Certificate',
+    summary: 'Credential focused on core AI fluency concepts and responsible practical foundations.',
+    image: '/portfolio/anthropic-icon.svg',
+    href: 'http://verify.skilljar.com/c/dhsm37rahfvo',
+  },
+  {
+    issuer: 'Skilljar', title: 'Introduction to Model Context Protocol', name: 'Verified Certificate',
+    summary: 'Credential covering MCP fundamentals, interoperability, and practical integration patterns.',
+    image: '/portfolio/anthropic-icon.svg',
+    href: 'http://verify.skilljar.com/c/bug9uruh9bov',
+  },
+  {
+    issuer: 'Skilljar', title: 'Model Context Protocol: Advanced Topics', name: 'Verified Certificate',
+    summary: 'Advanced credential covering deeper MCP patterns and higher-confidence integrations.',
+    image: '/portfolio/anthropic-icon.svg',
+    href: 'https://verify.skilljar.com/c/a3h5owxvhpzu',
+  },
+]
 
-                  {/* Tooltip */}
-                  <div className="absolute -bottom-8 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/80 backdrop-blur border border-white/20 text-white text-[10px] sm:text-xs px-2 py-1 rounded whitespace-nowrap z-50 shadow-xl font-bold tracking-widest">
-                    {skill.name}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )
-      })}
-    </div>
-  )
+const TechnologySet = ({ hidden = false }) => (
+  <div className="technology-ticker-set" aria-hidden={hidden || undefined}>
+    {technologyGroups.map((group) => (
+      <div className="technology-ticker-group" key={group.label}>
+        <span className="technology-ticker-label">{group.label}</span>
+        <ul aria-label={`${group.label} technologies`}>
+          {group.items.map((item) => <li key={item}>{item}</li>)}
+        </ul>
+      </div>
+    ))}
+  </div>
+)
+
+TechnologySet.propTypes = {
+  hidden: PropTypes.bool,
 }
 
-OrbitRing.propTypes = {
-  radius: PropTypes.number.isRequired,
-  duration: PropTypes.number.isRequired,
-  reverse: PropTypes.bool.isRequired,
-  skills: PropTypes.array.isRequired,
-  color: PropTypes.string.isRequired,
+const CertificationCard = ({ certification }) => (
+  <a
+    className="editorial-certification-card"
+    href={certification.href}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <span className="editorial-certification-media">
+      {certification.image ? <img src={certification.image} alt="" /> : <Award aria-hidden="true" />}
+    </span>
+    <span className="editorial-certification-copy">
+      <span className="editorial-certification-issuer">{certification.issuer} · {certification.name}</span>
+      <strong>{certification.title}</strong>
+      <span>{certification.summary}</span>
+    </span>
+    <ArrowUpRight className="editorial-certification-arrow" aria-hidden="true" />
+  </a>
+)
+
+CertificationCard.propTypes = {
+  certification: PropTypes.shape({
+    issuer: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    summary: PropTypes.string.isRequired,
+    image: PropTypes.string,
+    href: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 const Skills = () => {
+  const shouldReduceMotion = useReducedMotion()
+  const tickerRef = useRef(null)
+  const isTickerInView = useInView(tickerRef, { amount: 0.1 })
+  const [isTickerPaused, setIsTickerPaused] = useState(false)
+  const [isCertificationsOpen, setIsCertificationsOpen] = useState(false)
+  const [isMobileViewport, setIsMobileViewport] = useState(false)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 639px)')
+    const syncViewport = () => setIsMobileViewport(mediaQuery.matches)
+    syncViewport()
+    mediaQuery.addEventListener?.('change', syncViewport)
+    return () => mediaQuery.removeEventListener?.('change', syncViewport)
+  }, [])
+
+  const visibleLimit = isMobileViewport ? 3 : 6
+  const visibleCertifications = isCertificationsOpen
+    ? certifications
+    : certifications.slice(0, visibleLimit)
+  const tickerPaused = isTickerPaused || !isTickerInView || shouldReduceMotion
+
   return (
-    <section className="relative -mt-14 sm:-mt-[16vh] lg:-mt-[20vh] min-h-screen w-full overflow-hidden bg-transparent flex flex-col items-center justify-center pt-2 sm:pt-0" id="skills">
+    <section className="editorial-stack-section" id="stack">
+      <div className="editorial-stack-grid" aria-hidden="true" />
+      <div className="editorial-stack-inner">
+        <header className="editorial-stack-heading">
+          <p>How I shape dependable software</p>
+          <h2>
+            <span>ENGINEERING</span>
+            <strong>PRINCIPLES</strong>
+          </h2>
+        </header>
 
-      {/* Absolute headers so they don't break the orbital centering */}
-      <div className="absolute top-1 sm:top-3 left-1/2 -translate-x-1/2 text-center z-10 w-full px-4">
-        <h2 className="text-4xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_15px_rgba(56,189,248,0.42)] mix-blend-plus-lighter mb-4">
-          TECHNICAL CORE
-        </h2>
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-2 text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.45em] text-secondary/90 sm:text-xl">
-            AI-NATIVE DEV WORKFLOW
-          </p>
-          <p className="text-sm font-medium tracking-[0.02em] text-slate-300/90 sm:text-lg">
-            Any stack, lower learning cost, faster delivery.
-          </p>
+        <div className="principle-stack">
+          {principles.map((principle, index) => {
+            const Icon = principle.icon
+            return (
+              <motion.article
+                className="principle-card"
+                data-tone={principle.tone}
+                key={principle.id}
+                initial={shouldReduceMotion ? false : {
+                  opacity: 0,
+                  rotate: principle.rotation * 2.4,
+                  x: principle.offset,
+                  y: 54,
+                }}
+                whileInView={shouldReduceMotion ? undefined : {
+                  opacity: 1,
+                  rotate: principle.rotation,
+                  x: 0,
+                  y: 0,
+                }}
+                viewport={{ once: true, amount: 0.32 }}
+                transition={{ duration: 0.72, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={shouldReduceMotion ? undefined : { y: -9, scale: 1.008 }}
+              >
+                <div className="principle-card-band">
+                  <span>{principle.number}</span>
+                  <span>{principle.kicker}</span>
+                </div>
+                <div className="principle-card-body">
+                  <div className="principle-card-icon" aria-hidden="true"><Icon /></div>
+                  <div className="principle-card-copy">
+                    <h3>{principle.title}</h3>
+                    <p>{principle.description}</p>
+                    <ul aria-label={`${principle.title} supporting technologies`}>
+                      {principle.supports.map((support) => (
+                        <li key={support}><CheckCircle2 aria-hidden="true" />{support}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </motion.article>
+            )
+          })}
         </div>
-      </div>
 
-      {/* Orbital Star System */}
-      <div className="relative w-full max-w-[1000px] aspect-square flex items-center justify-center mt-20 sm:mt-24 scale-[0.46] sm:scale-75 md:scale-90 lg:scale-100">
-
-        {/* Core AI/Me Node */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-24 h-24 sm:w-32 sm:h-32 glass-panel-strong rounded-full flex flex-col items-center justify-center shadow-[0_0_50px_rgba(13,244,230,0.5),inset_0_0_20px_rgba(255,255,255,0.5)]">
-          <div className="absolute inset-2 border-2 border-primary/50 border-dashed rounded-full animate-[spin_10s_linear_infinite]" />
-          <p className="text-white font-black text-sm sm:text-lg tracking-widest relative z-10 text-center uppercase">Dev<br />Core</p>
+        <div
+          className="technology-ticker"
+          ref={tickerRef}
+          aria-label="Technology stack"
+          data-paused={tickerPaused ? 'true' : 'false'}
+        >
+          <div className="technology-ticker-heading">
+            <span>Technology index</span>
+            <div>
+              <span>Backend → cloud → verified delivery</span>
+              {!shouldReduceMotion && (
+                <button
+                  type="button"
+                  aria-pressed={isTickerPaused}
+                  aria-label={isTickerPaused ? 'Resume stack motion' : 'Pause stack motion'}
+                  onClick={() => setIsTickerPaused((current) => !current)}
+                >
+                  {isTickerPaused ? 'Resume stack motion' : 'Pause stack motion'}
+                </button>
+              )}
+            </div>
+          </div>
+          <div className="technology-ticker-viewport">
+            <div className="technology-ticker-track">
+              <TechnologySet />
+              <TechnologySet hidden />
+            </div>
+          </div>
         </div>
 
-        {/* Orbit Rings */}
-        {skillsData.map((orbit) => (
-          <OrbitRing key={orbit.title} {...orbit} />
-        ))}
+        <section className="editorial-certifications" aria-labelledby="certifications-title">
+          <header>
+            <div>
+              <p>Verified credentials</p>
+              <h3 id="certifications-title">Proof behind the practice.</h3>
+            </div>
+            <span>{certifications.length.toString().padStart(2, '0')} credentials</span>
+          </header>
+          <div className="editorial-certifications-grid" id="certification-list">
+            {visibleCertifications.map((certification) => (
+              <CertificationCard
+                certification={certification}
+                key={`${certification.issuer}-${certification.title}`}
+              />
+            ))}
+          </div>
+          {certifications.length > visibleLimit && (
+            <button
+              className="editorial-certifications-toggle"
+              type="button"
+              aria-expanded={isCertificationsOpen}
+              aria-controls="certification-list"
+              onClick={() => setIsCertificationsOpen((current) => !current)}
+            >
+              {isCertificationsOpen ? 'Show fewer' : `Show all ${certifications.length}`}
+              {isCertificationsOpen ? <ChevronUp aria-hidden="true" /> : <ChevronDown aria-hidden="true" />}
+            </button>
+          )}
+        </section>
       </div>
-
-      {/* Certs Section at the bottom */}
-      <div className="absolute bottom-6 sm:bottom-8 w-full z-10 flex flex-col items-center justify-center px-4">
-        <div className="flex gap-4 glass-panel-strong rounded-full px-7 py-4 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
-          <a href="https://www.credly.com/badges/f68690b3-1e68-46d8-ae56-366bd880c0e5/linked_in_profile" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition-opacity flex items-center gap-3">
-            <img src="/portfolio/dvac02.png" alt="AWS DVA" className="w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-lg" />
-            <span className="text-xs sm:text-sm text-white font-bold tracking-widest hidden sm:inline">DVA-C02</span>
-          </a>
-          <div className="w-px bg-white/20 mx-2"></div>
-          <a href="https://www.credly.com/badges/ff21fdcd-97e7-42a1-9e15-ddf052af8c57/linked_in_profile" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition-opacity flex items-center gap-3">
-            <img src="/portfolio/clf-c02.png" alt="AWS CLF" className="w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-lg" />
-            <span className="text-xs sm:text-sm text-white font-bold tracking-widest hidden sm:inline">CLF-C02</span>
-          </a>
-        </div>
-      </div>
-
     </section>
   )
 }

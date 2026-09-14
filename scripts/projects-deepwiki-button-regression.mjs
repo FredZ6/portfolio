@@ -7,7 +7,7 @@ const iconPath = new URL('../public/devin.avif', import.meta.url)
 assert(source.includes("const buildDeepWikiUrl = (githubUrl) => {"), 'Expected DeepWiki URL builder helper to exist.')
 assert(source.includes("replace('https://github.com/', 'https://deepwiki.com/')"), 'Expected GitHub URLs to be rewritten to DeepWiki URLs.')
 assert(source.includes("src=\"/portfolio/devin.avif\""), 'Expected the Devin icon asset to be used in the project header button.')
-assert(source.includes('aria-label="Open repo on DeepWiki"'), 'Expected a DeepWiki header button aria label.')
+assert(source.includes('aria-label={`Explore ${project.title} on DeepWiki`}'), 'Expected each DeepWiki link to have a project-specific aria label.')
 assert(existsSync(iconPath), 'Expected the Devin icon asset to exist at public/devin.avif.')
 
 console.log('Projects DeepWiki button regression checks passed.')
