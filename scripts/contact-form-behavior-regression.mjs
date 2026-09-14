@@ -5,10 +5,23 @@ assert(contactForm, 'Expected a reusable contact form behavior module.')
 
 const {
   CONTACT_FORM_LIMITS,
+  clearContactDraftIfUnchanged,
+  createContactSubmissionController,
   createContactSubmissionGate,
   normalizeContactForm,
   validateContactForm,
 } = contactForm
+
+assert.equal(
+  typeof createContactSubmissionController,
+  'function',
+  'Expected an executable contact submission controller.',
+)
+assert.equal(
+  typeof clearContactDraftIfUnchanged,
+  'function',
+  'Expected a reusable safe-clear helper.',
+)
 
 const validDraft = {
   name: '  Fred  ',
@@ -47,6 +60,18 @@ for (const [field, maxLength] of Object.entries(CONTACT_FORM_LIMITS)) {
 
 assert.deepEqual(validateContactForm(validDraft), { isValid: true, data: normalized, errors: {} })
 
+assert.deepEqual(
+  clearContactDraftIfUnchanged(validDraft, validDraft),
+  { name: '', email: '', subject: '', message: '' },
+  'An unchanged draft should clear after a successful send.',
+)
+const newerDraft = { ...validDraft, message: 'A new message typed while the request was pending.' }
+assert.strictEqual(
+  clearContactDraftIfUnchanged(newerDraft, validDraft),
+  newerDraft,
+  'A newer draft must survive completion of an older request.',
+)
+
 const gate = createContactSubmissionGate()
 let sendCalls = 0
 let releaseSend
@@ -76,5 +101,92 @@ assert.equal(await gate.run(async () => {
   return 'retried'
 }), 'retried')
 assert.equal(retryCalls, 2, 'A failed request must allow a later retry.')
+
+const statusUpdates = []
+const submittingUpdates = []
+const successfulDrafts = []
+const sentPayloads = []
+let releaseControllerSend
+const controller = createContactSubmissionController({
+  send: (payload) => {
+    sentPayloads.push(payload)
+    return new Promise((resolve) => { releaseControllerSend = resolve })
+  },
+  onStatus: (status) => statusUpdates.push(status),
+  onSubmittingChange: (isSubmitting) => submittingUpdates.push(isSubmitting),
+  onSuccess: (draft) => successfulDrafts.push(draft),
+})
+
+const invalidSubmission = await controller.submit({ name: '', email: '', subject: '', message: '' })
+assert.equal(invalidSubmission.ok, false)
+assert.equal(invalidSubmission.reason, 'validation')
+assert.equal(sentPayloads.length, 0, 'Invalid drafts must not reach the email service.')
+assert.match(statusUpdates.at(-1).message, /required/i)
+
+const submittedDraft = { ...validDraft }
+const controllerSubmission = controller.submit(submittedDraft)
+const duplicateControllerSubmission = controller.submit({
+  ...validDraft,
+  message: 'A duplicate that must not be sent.',
+})
+assert.strictEqual(
+  duplicateControllerSubmission,
+  controllerSubmission,
+  'Concurrent controller submissions must share one in-flight request.',
+)
+assert.deepEqual(submittingUpdates, [true])
+assert.deepEqual(statusUpdates.at(-1), { type: 'pending', message: 'Sending your message…' })
+assert.deepEqual(sentPayloads, [normalized], 'The email service must receive normalized form values.')
+
+releaseControllerSend('sent')
+assert.deepEqual(await controllerSubmission, { ok: true })
+assert.deepEqual(submittingUpdates, [true, false])
+assert.deepEqual(statusUpdates.at(-1), {
+  type: 'success',
+  message: 'Message sent. I will be in touch soon.',
+})
+assert.deepEqual(successfulDrafts, [submittedDraft], 'Success must identify the submitted draft for safe clearing.')
+assert.notStrictEqual(successfulDrafts[0], submittedDraft, 'The submitted draft snapshot must not share object identity.')
+
+const failedStatuses = []
+const failedSubmittingUpdates = []
+let failedSendCalls = 0
+const retryingController = createContactSubmissionController({
+  send: () => {
+    failedSendCalls += 1
+    if (failedSendCalls === 1) throw new Error('service unavailable')
+    return Promise.resolve()
+  },
+  onStatus: (status) => failedStatuses.push(status),
+  onSubmittingChange: (isSubmitting) => failedSubmittingUpdates.push(isSubmitting),
+})
+
+const failedSubmission = await retryingController.submit(normalized)
+assert.equal(failedSubmission.ok, false)
+assert.equal(failedSubmission.reason, 'send')
+assert.deepEqual(failedStatuses.at(-1), {
+  type: 'error',
+  message: 'Message could not be sent. Please email me directly.',
+})
+assert.deepEqual(failedSubmittingUpdates, [true, false])
+assert.deepEqual(await retryingController.submit(normalized), { ok: true })
+assert.equal(failedSendCalls, 2, 'A failed controller submission must release its retry gate.')
+
+let active = true
+let releaseUnmountedSend
+const unmountedStatuses = []
+const unmountedSubmittingUpdates = []
+const unmountedController = createContactSubmissionController({
+  send: () => new Promise((resolve) => { releaseUnmountedSend = resolve }),
+  onStatus: (status) => unmountedStatuses.push(status),
+  onSubmittingChange: (isSubmitting) => unmountedSubmittingUpdates.push(isSubmitting),
+  isActive: () => active,
+})
+const unmountedSubmission = unmountedController.submit(normalized)
+active = false
+releaseUnmountedSend()
+assert.deepEqual(await unmountedSubmission, { ok: true })
+assert.deepEqual(unmountedStatuses, [{ type: 'pending', message: 'Sending your message…' }])
+assert.deepEqual(unmountedSubmittingUpdates, [true], 'Completion after unmount must not write component state.')
 
 console.log('Contact form validation and submission gate behavior checks passed.')

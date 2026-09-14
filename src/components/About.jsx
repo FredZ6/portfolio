@@ -4,9 +4,8 @@ import { ArrowUpRight, Send } from 'lucide-react'
 import emailjs from '@emailjs/browser'
 import {
   CONTACT_FORM_LIMITS,
-  createContactSubmissionGate,
-  normalizeContactForm,
-  validateContactForm,
+  clearContactDraftIfUnchanged,
+  createContactSubmissionController,
 } from '../utils/contactForm.js'
 
 const proofPoints = [
@@ -38,10 +37,7 @@ const birdAsset = '/portfolio/avatar.png'
 
 const About = () => {
   const sectionRef = useRef(null)
-  const isSubmittingRef = useRef(false)
   const mountedRef = useRef(true)
-  const submissionGateRef = useRef(null)
-  if (!submissionGateRef.current) submissionGateRef.current = createContactSubmissionGate()
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -54,6 +50,28 @@ const About = () => {
   const [formData, setFormData] = useState(initialFormData)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState({ type: '', message: '' })
+  const submissionControllerRef = useRef(null)
+  if (!submissionControllerRef.current) {
+    submissionControllerRef.current = createContactSubmissionController({
+      send: (data) => emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: data.name,
+          from_email: data.email,
+          subject: data.subject,
+          message: data.message,
+          to_name: 'Fred Zhang',
+        },
+      ),
+      onStatus: setSubmitStatus,
+      onSubmittingChange: setIsSubmitting,
+      onSuccess: (submittedDraft) => {
+        setFormData((currentDraft) => clearContactDraftIfUnchanged(currentDraft, submittedDraft))
+      },
+      isActive: () => mountedRef.current,
+    })
+  }
 
   useEffect(() => {
     mountedRef.current = true
@@ -63,51 +81,9 @@ const About = () => {
     }
   }, [])
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
-    if (isSubmittingRef.current) return
-
-    const submittedDraft = { ...formData }
-    const normalizedDraft = normalizeContactForm(submittedDraft)
-    const validation = validateContactForm(normalizedDraft)
-    if (!validation.isValid) {
-      const firstError = Object.values(validation.errors)[0]
-      setSubmitStatus({ type: 'error', message: firstError })
-      return
-    }
-
-    isSubmittingRef.current = true
-    setIsSubmitting(true)
-    setSubmitStatus({ type: '', message: '' })
-
-    try {
-      await submissionGateRef.current.run(() => emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          from_name: validation.data.name,
-          from_email: validation.data.email,
-          subject: validation.data.subject,
-          message: validation.data.message,
-          to_name: 'Fred Zhang',
-        },
-      ))
-      if (!mountedRef.current) return
-
-      setSubmitStatus({ type: 'success', message: 'Message sent. I will be in touch soon.' })
-      setFormData((currentDraft) => (
-        Object.keys(initialFormData).every((field) => currentDraft[field] === submittedDraft[field])
-          ? initialFormData
-          : currentDraft
-      ))
-    } catch {
-      if (mountedRef.current) {
-        setSubmitStatus({ type: 'error', message: 'Message could not be sent. Please email me directly.' })
-      }
-    } finally {
-      isSubmittingRef.current = false
-      if (mountedRef.current) setIsSubmitting(false)
-    }
+    return submissionControllerRef.current.submit(formData)
   }
 
   const handleChange = ({ target: { name, value } }) => {
@@ -207,7 +183,7 @@ const About = () => {
             </fieldset>
             <div className="editorial-contact-submit">
               <p className={submitStatus.type ? `contact-form-status contact-form-status--${submitStatus.type}` : 'contact-form-status'} role="status" aria-live="polite">
-                {submitStatus.message || 'All fields are required.'}
+                {submitStatus.message}
               </p>
               <motion.button
                 type="submit"

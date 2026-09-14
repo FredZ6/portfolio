@@ -31,6 +31,12 @@ export const validateContactForm = (draft) => {
   return { isValid: Object.keys(errors).length === 0, data, errors }
 }
 
+export const clearContactDraftIfUnchanged = (currentDraft, submittedDraft) => (
+  fields.every((field) => currentDraft[field] === submittedDraft[field])
+    ? Object.fromEntries(fields.map((field) => [field, '']))
+    : currentDraft
+)
+
 export const createContactSubmissionGate = () => {
   let pendingPromise = null
 
@@ -50,6 +56,56 @@ export const createContactSubmissionGate = () => {
       }
 
       return pendingPromise
+    },
+  }
+}
+
+const noop = () => {}
+
+export const createContactSubmissionController = ({
+  send,
+  onStatus = noop,
+  onSubmittingChange = noop,
+  onSuccess = noop,
+  isActive = () => true,
+}) => {
+  const gate = createContactSubmissionGate()
+
+  return {
+    isPending: gate.isPending,
+    submit(draft) {
+      return gate.run(async () => {
+        const submittedDraft = { ...draft }
+        const validation = validateContactForm(submittedDraft)
+
+        if (!validation.isValid) {
+          if (isActive()) {
+            onStatus({ type: 'error', message: Object.values(validation.errors)[0] })
+          }
+          return { ok: false, reason: 'validation', errors: validation.errors }
+        }
+
+        if (isActive()) {
+          onSubmittingChange(true)
+          onStatus({ type: 'pending', message: 'Sending your message…' })
+        }
+
+        try {
+          await send(validation.data)
+          if (isActive()) {
+            onStatus({ type: 'success', message: 'Message sent. I will be in touch soon.' })
+            onSuccess(submittedDraft)
+          }
+          return { ok: true }
+        } catch (error) {
+          if (isActive()) {
+            onStatus({ type: 'error', message: 'Message could not be sent. Please email me directly.' })
+          }
+          return { ok: false, reason: 'send', error }
+        } finally {
+          if (isActive()) onSubmittingChange(false)
+        }
+      })
     },
   }
 }
