@@ -25,6 +25,11 @@ assert.match(css, /rgba\(18,\s*104,\s*243,\s*0\.58\)/)
 assert.match(css, /-webkit-backdrop-filter:\s*blur\(12px\) saturate\(135%\)/)
 assert.match(css, /(?<!-webkit-)backdrop-filter:\s*blur\(12px\) saturate\(135%\)/)
 assert.match(css, /prefers-reduced-motion/)
+assert.match(
+  css,
+  /\.principle-card:hover,\s*\.principle-card:focus-within\s*\{[^}]*z-index:\s*10;/s,
+  'Every hovered or keyboard-focused principle card must rise above the full card stack.',
+)
 
 const frostedSurfaceBlock = css.match(
   /\/\* Shared blue frosted surfaces\. \*\/([\s\S]*?)\/\* End shared blue frosted surfaces\. \*\//,

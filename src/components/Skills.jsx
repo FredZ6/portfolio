@@ -73,48 +73,48 @@ const technologyGroups = [
   {
     label: 'Frontend',
     items: [
-      { name: 'React', icon: FaReact, color: '#61DAFB' },
-      { name: 'Next.js', icon: SiNextdotjs, color: '#111827' },
-      { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
-      { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
-      { name: 'Vite', icon: SiVite, color: '#646CFF' },
+      { name: 'React', icon: FaReact, color: '#61DAFB', iconStyle: 'detail' },
+      { name: 'Next.js', icon: SiNextdotjs, color: '#111827', iconStyle: 'solid' },
+      { name: 'TypeScript', icon: SiTypescript, color: '#3178C6', iconStyle: 'solid' },
+      { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E', iconStyle: 'solid' },
+      { name: 'Vite', icon: SiVite, color: '#646CFF', iconStyle: 'solid' },
     ],
   },
   {
     label: 'Backend',
     items: [
-      { name: 'Java', icon: FaJava, color: '#ED8B00' },
-      { name: 'Spring Boot', icon: SiSpringboot, color: '#6DB33F' },
-      { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
-      { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
-      { name: 'Kafka', icon: SiApachekafka, color: '#231F20' },
+      { name: 'Java', icon: FaJava, color: '#ED8B00', iconStyle: 'detail' },
+      { name: 'Spring Boot', icon: SiSpringboot, color: '#6DB33F', iconStyle: 'detail' },
+      { name: 'Node.js', icon: SiNodedotjs, color: '#339933', iconStyle: 'detail' },
+      { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1', iconStyle: 'detail' },
+      { name: 'Kafka', icon: SiApachekafka, color: '#231F20', iconStyle: 'detail' },
     ],
   },
   {
     label: 'Cloud',
     items: [
-      { name: 'AWS', icon: FaAws, color: '#FF9900' },
-      { name: 'Terraform', icon: SiTerraform, color: '#844FBA' },
-      { name: 'Docker', icon: FaDocker, color: '#2496ED' },
-      { name: 'Kubernetes', icon: SiKubernetes, color: '#326CE5' },
+      { name: 'AWS', icon: FaAws, color: '#FF9900', iconStyle: 'detail' },
+      { name: 'Terraform', icon: SiTerraform, color: '#844FBA', iconStyle: 'solid' },
+      { name: 'Docker', icon: FaDocker, color: '#2496ED', iconStyle: 'detail' },
+      { name: 'Kubernetes', icon: SiKubernetes, color: '#326CE5', iconStyle: 'detail' },
     ],
   },
   {
     label: 'Delivery',
     items: [
-      { name: 'GitHub Actions', icon: SiGithubactions, color: '#2088FF' },
-      { name: 'CI/CD', icon: TbGitBranch, color: '#8B5CF6' },
-      { name: 'Testing', icon: TbTestPipe, color: '#F43F5E' },
-      { name: 'Observability', icon: TbActivityHeartbeat, color: '#14B8A6' },
+      { name: 'GitHub Actions', icon: SiGithubactions, color: '#2088FF', iconStyle: 'detail' },
+      { name: 'CI/CD', icon: TbGitBranch, color: '#8B5CF6', iconStyle: 'outline' },
+      { name: 'Testing', icon: TbTestPipe, color: '#F43F5E', iconStyle: 'outline' },
+      { name: 'Observability', icon: TbActivityHeartbeat, color: '#14B8A6', iconStyle: 'outline' },
     ],
   },
   {
     label: 'AI Workflow',
     items: [
-      { name: 'Claude Code', icon: SiAnthropic, color: '#D97757' },
-      { name: 'Codex', icon: RiOpenaiLine, color: '#10A37F' },
-      { name: 'Cursor', icon: LuMousePointer2, color: '#7C3AED' },
-      { name: 'Human review', icon: LuUserCheck, color: '#F59E0B' },
+      { name: 'Claude Code', icon: SiAnthropic, color: '#D97757', iconStyle: 'solid' },
+      { name: 'Codex', icon: RiOpenaiLine, color: '#10A37F', iconStyle: 'solid' },
+      { name: 'Cursor', icon: LuMousePointer2, color: '#7C3AED', iconStyle: 'outline' },
+      { name: 'Human review', icon: LuUserCheck, color: '#F59E0B', iconStyle: 'outline' },
     ],
   },
 ]
@@ -176,6 +176,7 @@ const TechnologyItem = ({ technology }) => {
     <li className="technology-item">
       <span
         className="technology-icon"
+        data-icon-style={technology.iconStyle}
         style={{ '--technology-color': technology.color }}
         aria-hidden="true"
       >
@@ -191,6 +192,7 @@ TechnologyItem.propTypes = {
     name: PropTypes.string.isRequired,
     icon: PropTypes.elementType.isRequired,
     color: PropTypes.string.isRequired,
+    iconStyle: PropTypes.oneOf(['detail', 'solid', 'outline']).isRequired,
   }).isRequired,
 }
 

@@ -110,6 +110,7 @@ if (technologyGroupsBlock) {
   const technologyIcons = [...technologyGroupsBlock[1].matchAll(/icon:\s*([A-Za-z][A-Za-z0-9]*)/g)]
     .map((match) => match[1])
   const colorCount = (technologyGroupsBlock[1].match(/color:\s*['"]#[0-9A-Fa-f]{6}['"]/g) || []).length
+  const iconStyleCount = (technologyGroupsBlock[1].match(/iconStyle:\s*['"](?:detail|solid|outline)['"]/g) || []).length
   const reactIconImports = [...skillsSource.matchAll(
     /import\s*\{([^}]*)\}\s*from\s*['"]react-icons\/[^'"]+['"]/g,
   )].flatMap((match) => match[1].split(',').map((name) => name.trim()).filter(Boolean))
@@ -120,6 +121,7 @@ if (technologyGroupsBlock) {
   )
   check(technologyIcons.length === technologyCount, 'Every technology must declare a corresponding icon.')
   check(colorCount === technologyCount, 'Every technology must declare a six-digit theme color.')
+  check(iconStyleCount === technologyCount, 'Every technology must declare a visual icon style.')
   check(
     technologyIcons.every((icon) => reactIconImports.includes(icon)),
     'Every technology icon must be imported from react-icons.',
@@ -128,6 +130,7 @@ if (technologyGroupsBlock) {
 check(
   /const\s+TechnologyItem\b/.test(skillsSource)
     && /className=["']technology-icon["']/.test(skillsSource)
+    && /data-icon-style=\{technology\.iconStyle\}/.test(skillsSource)
     && /['"]--technology-color['"]:\s*technology\.color/.test(skillsSource)
     && /<TechnologyItem[\s\S]*?technology=\{technology\}/.test(skillsSource),
   'Ticker and expanded index must reuse a theme-color-driven TechnologyItem icon wrapper.',
@@ -140,6 +143,13 @@ check(
   /\.technology-icon\s*\{[^}]*background:\s*rgba\([^}]*backdrop-filter:\s*blur\(/s.test(cssSource)
     && /\.technology-icon\s+svg\s*\{[^}]*color:\s*var\(--technology-color\)/s.test(cssSource),
   'Technology icons must use their configured theme color on a shared frosted plate.',
+)
+check(
+  !/\.technology-icon\s+svg\s*\{[^}]*stroke-width:/s.test(cssSource)
+    && /\.technology-icon\[data-icon-style=['"]solid['"]\]\s+svg\s*\{[^}]*width:\s*0\.82rem/s.test(cssSource)
+    && /\.technology-icon\[data-icon-style=['"]detail['"]\]\s+svg\s*\{[^}]*width:\s*1\.08rem/s.test(cssSource)
+    && /\.technology-icon\[data-icon-style=['"]outline['"]\]\s+svg\s*\{[^}]*stroke-width:\s*1\.55/s.test(cssSource),
+  'Technology icons must normalize solid, detailed, and outline artwork separately.',
 )
 check(
   /\.technology-index-grid\s*\{[^}]*grid-template-columns:\s*repeat\(5,\s*minmax\(0,\s*1fr\)\)/s.test(cssSource)
