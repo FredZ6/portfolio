@@ -1,10 +1,75 @@
-import { useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { ArrowDownRight, FileText, Github, Linkedin, Mail } from 'lucide-react'
 
 const Hero = ({ onOpenResume }) => {
   const heroRef = useRef(null)
+  const birdRef = useRef(null)
+  useLayoutEffect(() => {
+    const bird = birdRef.current
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!bird || reduced) return undefined
+
+    // Keep the live hero as the destination; the portal-like copy never affects layout.
+    const overlay = bird.cloneNode(true)
+    overlay.classList.add('hero-opening')
+    overlay.removeAttribute('style')
+    overlay.setAttribute('aria-hidden', 'true')
+    const diameter = Math.hypot(window.innerWidth, window.innerHeight)
+    const start = {
+      top: `${(window.innerHeight - diameter) / 2}px`,
+      left: `${(window.innerWidth - diameter) / 2}px`,
+      width: `${diameter}px`,
+      height: `${diameter}px`,
+      borderRadius: '50%',
+      borderWidth: '0px',
+      backgroundColor: 'rgba(18, 104, 243, 0.58)',
+    }
+    Object.assign(overlay.style, start)
+    document.body.appendChild(overlay)
+    bird.style.visibility = 'hidden'
+    const previousOverflow = document.documentElement.style.overflow
+    document.documentElement.style.overflow = 'hidden'
+    let animation
+    let finished = false
+    const finish = () => {
+      if (finished) return
+      finished = true
+      animation?.cancel()
+      overlay.remove()
+      bird.style.visibility = ''
+      document.documentElement.style.overflow = previousOverflow
+    }
+    const timer = window.setTimeout(() => {
+      if (finished) return
+      const rect = bird.getBoundingClientRect()
+      const style = getComputedStyle(bird)
+      animation = overlay.animate([
+        start,
+        { top: `${rect.top}px`, left: `${rect.left}px`, width: `${rect.width}px`, height: `${rect.height}px`, borderRadius: `${rect.width / 2}px`, borderWidth: style.borderTopWidth, backgroundColor: style.backgroundColor },
+      ], { duration: 900, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'forwards' })
+      // Match the resting shadow before handing back to the live hero.
+      overlay.animate(
+        [{ boxShadow: 'none' }, { boxShadow: style.boxShadow }],
+        { delay: 400, duration: 500, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', fill: 'forwards' },
+      )
+      overlay.querySelector('.hero-bird-ring').animate(
+        [{ opacity: 0 }, { opacity: 1 }],
+        { delay: 650, duration: 250, fill: 'forwards' },
+      )
+      animation.finished.then(finish).catch(() => {})
+    }, 1000)
+    const onKey = (event) => { if (event.key === 'Escape' || event.key === 'Tab') finish() }
+    window.addEventListener('keydown', onKey)
+    window.addEventListener('resize', finish)
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('resize', finish)
+      finish()
+    }
+  }, [])
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -43,6 +108,7 @@ const Hero = ({ onOpenResume }) => {
         </div>
 
         <motion.div
+          ref={birdRef}
           className="hero-bird-mark"
           aria-hidden="true"
           variants={reveal}

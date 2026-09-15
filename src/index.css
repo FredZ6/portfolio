@@ -2237,12 +2237,13 @@ body {
   aspect-ratio: 1;
   border: clamp(0.55rem, 0.8vw, 0.9rem) solid #ffffff;
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 32% 25%, rgba(255, 255, 255, 0.24), transparent 24%),
-    rgba(18, 104, 243, 0.58);
+  background: rgba(18, 104, 243, 0.58);
   -webkit-backdrop-filter: blur(12px) saturate(135%);
   backdrop-filter: blur(12px) saturate(135%);
-  box-shadow: 0 28px 70px rgba(6, 71, 173, 0.2), 0 0 0 1px rgba(8, 27, 51, 0.08);
+  box-shadow:
+    0 10px 28px -8px rgba(6, 71, 173, 0.07),
+    0 28px 64px -16px rgba(6, 71, 173, 0.10),
+    0 48px 100px -24px rgba(6, 71, 173, 0.06);
   translate: -50% -50%;
   transform-origin: center;
 }
@@ -2252,6 +2253,36 @@ body {
   inset: 7%;
   border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: inherit;
+}
+
+/* The opening surface shares the hero material and lands on its measured bounds. */
+.hero-bird-mark.hero-opening {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 10000;
+  width: 100vw;
+  height: 100dvh;
+  aspect-ratio: auto;
+  translate: none;
+  transform: none;
+  border-width: 0;
+  border-radius: 0;
+  pointer-events: none;
+  opacity: 1;
+  background: rgba(18, 104, 243, 0.58);
+  box-shadow: none;
+}
+
+.hero-opening .hero-bird-ring {
+  opacity: 0;
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .hero-bird-mark {
+    background-color: #467ad5;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 .hero-bird-silhouette {
