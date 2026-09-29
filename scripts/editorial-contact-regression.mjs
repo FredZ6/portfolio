@@ -51,10 +51,10 @@ assert.match(footer, /LET(?:'|&apos;|’)?S BUILD/i, 'Footer must close with the
 assert.match(footer, /mailto:fredzhang026@gmail\.com/, 'Footer must expose Fred’s direct email address.')
 assert.match(footer, /github\.com\/FredZ6/i, 'Footer must link to Fred’s GitHub profile.')
 assert.match(footer, /linkedin\.com/i, 'Footer must link to Fred’s LinkedIn profile.')
-assert.match(footer, /onClick=\{onOpenResume\}/, 'Footer Resume control must open the resume dialog.')
-assert.match(footer, /Footer\.propTypes[\s\S]*onOpenResume:\s*PropTypes\.func\.isRequired/, 'Footer must validate its resume callback.')
+assert.match(footer, /<button\s+type="button"\s+disabled>[\s\S]*?Resume/, 'Footer Resume control must be inert.')
+assert.doesNotMatch(footer, /onOpenResume/, 'Footer must not receive a resume dialog callback.')
 assert.match(footer, /target=["']_blank["'][\s\S]*rel=["']noopener noreferrer["']/, 'External links must use safe rel attributes.')
-assert.match(app, /<Footer\s+onOpenResume=\{openResume\}\s*\/>/, 'App must wire its resume dialog callback into Footer.')
+assert.match(app, /<Footer\s*\/>/, 'App must render Footer without a resume dialog callback.')
 
 for (const selector of ['.why-fred-section', '.why-fred-bird', '.proof-points-grid', '.contact-footer', '.contact-footer-title']) {
   assert(css.includes(selector), `Missing editorial contact styling for ${selector}.`)

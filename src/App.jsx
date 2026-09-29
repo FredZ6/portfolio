@@ -27,14 +27,14 @@ function App() {
 
   return (
     <div className="editorial-app-shell relative isolate min-h-[100dvh] overflow-hidden">
-      <Navbar onOpenResume={openResume} />
+      <Navbar />
       <main>
         <Hero onOpenResume={openResume} />
         <Skills />
         <Projects />
         <About />
       </main>
-      <Footer onOpenResume={openResume} />
+      <Footer />
       <ResumeDialog isOpen={isResumeOpen} onClose={closeResume} />
     </div>
   )

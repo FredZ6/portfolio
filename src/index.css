@@ -1660,9 +1660,15 @@ html[data-theme='light'] .theme-hero-avatar {
 }
 
 .contact-footer-links a:hover,
-.contact-footer-links button:hover {
+.contact-footer-links button:hover:not(:disabled) {
   border-color: #87bfff;
   background: rgba(18, 104, 243, 0.34);
+}
+
+.contact-footer-links button:disabled,
+.editorial-nav-links .editorial-resume-link:disabled {
+  opacity: 1;
+  cursor: default;
 }
 
 .contact-footer-links svg:last-child {
@@ -2025,7 +2031,7 @@ body {
   display: none;
 }
 
-.editorial-nav-links .editorial-resume-link:hover {
+.editorial-nav-links .editorial-resume-link:hover:not(:disabled) {
   background: var(--blue-deep);
   color: #ffffff;
   box-shadow: 0 12px 28px rgba(6, 71, 173, 0.26);
@@ -3503,7 +3509,7 @@ body {
 .project-editorial-action--primary:hover,
 .editorial-contact-submit button:hover:not(:disabled),
 .hero-next:hover,
-.editorial-nav-links .editorial-resume-link:hover {
+.editorial-nav-links .editorial-resume-link:hover:not(:disabled) {
   background: var(--blue-glass-surface-hover);
   box-shadow: none;
 }

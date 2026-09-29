@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types'
 import { ArrowUpRight, FileText, Github, Linkedin, Mail } from 'lucide-react'
 
-const Footer = ({ onOpenResume }) => {
+const Footer = () => {
   return (
     <footer className="contact-footer" id="contact" aria-labelledby="contact-footer-title">
       <div className="contact-footer-inner">
@@ -25,7 +24,7 @@ const Footer = ({ onOpenResume }) => {
           <a href="https://www.linkedin.com/in/haifeng-zhang26/" target="_blank" rel="noopener noreferrer">
             <Linkedin aria-hidden="true" /> LinkedIn <ArrowUpRight aria-hidden="true" />
           </a>
-          <button type="button" onClick={onOpenResume}>
+          <button type="button" disabled>
             <FileText aria-hidden="true" /> Resume <ArrowUpRight aria-hidden="true" />
           </button>
         </nav>
@@ -38,10 +37,6 @@ const Footer = ({ onOpenResume }) => {
       </div>
     </footer>
   )
-}
-
-Footer.propTypes = {
-  onOpenResume: PropTypes.func.isRequired,
 }
 
 export default Footer

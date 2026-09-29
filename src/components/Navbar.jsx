@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import PropTypes from 'prop-types'
 
 const navItems = [
   { label: 'Work', href: '#projects' },
@@ -8,7 +7,7 @@ const navItems = [
   { label: 'Contact', href: '#contact' },
 ]
 
-const Navbar = ({ onOpenResume }) => {
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const menuButtonRef = useRef(null)
 
@@ -27,12 +26,6 @@ const Navbar = ({ onOpenResume }) => {
   }, [isMenuOpen])
 
   const closeMenu = () => setIsMenuOpen(false)
-  const openResume = () => {
-    if (isMenuOpen) menuButtonRef.current?.focus()
-    closeMenu()
-    onOpenResume()
-  }
-
   return (
     <header className="editorial-header">
       <nav className="editorial-nav" aria-label="Primary navigation">
@@ -66,7 +59,7 @@ const Navbar = ({ onOpenResume }) => {
               {item.label}
             </a>
           ))}
-          <button className="editorial-resume-link" type="button" onClick={openResume}>
+          <button className="editorial-resume-link" type="button" disabled>
             Resume
             <span aria-hidden="true">↗</span>
           </button>
@@ -74,10 +67,6 @@ const Navbar = ({ onOpenResume }) => {
       </nav>
     </header>
   )
-}
-
-Navbar.propTypes = {
-  onOpenResume: PropTypes.func.isRequired,
 }
 
 export default Navbar
