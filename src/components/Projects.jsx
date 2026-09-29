@@ -10,6 +10,34 @@ import {
 
 const PROJECTS = [
   {
+    id: 4,
+    title: 'AI Agent Stock Research & Paper Trading',
+    description: 'Evidence-grounded US stock research platform with traceable AI analysis, deterministic risk checks, and paper-trading workflows.',
+    impact: 'POINT-IN-TIME EVIDENCE | AI RESEARCH | PAPER TRADING | AUDITABLE DECISIONS',
+    delivery: [
+      'Built an end-to-end workflow from market data and SEC filings to evidence-backed research, portfolio proposals, and weekly reviews.',
+      'Implemented paper execution with deterministic risk gates, double-entry accounting, and historical data controls that prevent future-data leakage.',
+      'Delivered eight responsive pages, durable execution traces, and a reproducible demo with a 200-case offline evaluation suite.',
+    ],
+    stats: [
+      { value: '8', label: 'Product Pages' },
+      { value: '200', label: 'Evaluation Cases' },
+      { value: '3', label: 'MCP Servers' },
+    ],
+    status: 'Completed',
+    techStack: ['Python', 'FastAPI', 'LangGraph', 'Next.js', 'PostgreSQL', 'Redis', 'Celery', 'Docker'],
+    githubUrl: 'https://github.com/FredZ6/AIstock',
+    ctaLabel: 'View Gallery',
+    previewFit: 'contain',
+    images: [
+      {
+        src: '/portfolio/projects/ai-stock/today-dashboard.png',
+        fullSrc: '/portfolio/projects/ai-stock/today-dashboard.png',
+        caption: 'Today dashboard — frozen synthetic fixture data, paper trading only',
+      },
+    ],
+  },
+  {
     id: 3,
     title: 'Local-First AI Job Copilot',
     description: 'Imports roles, scores fit, generates tailored resumes, and runs reviewable browser prefills before a human decides the final submit.',
@@ -121,6 +149,7 @@ const PROJECTS = [
       { src: '/portfolio/projects/ecommerce/manage_16x10.png', fullSrc: '/portfolio/projects/ecommerce/manage.png', caption: 'Admin Management' },
     ],
   },
+
 ]
 
 const buildDeepWikiUrl = (githubUrl) => {
@@ -134,6 +163,33 @@ const Projects = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [isLightboxImageLoading, setIsLightboxImageLoading] = useState(false)
   const [hasLightboxImageError, setHasLightboxImageError] = useState(false)
+  const trackRef = useRef(null)
+  const [scrollEdges, setScrollEdges] = useState({ start: true, end: false })
+
+  useEffect(() => {
+    const track = trackRef.current
+    const updateEdges = () => setScrollEdges({
+      start: track.scrollLeft <= 2,
+      end: track.scrollLeft + track.clientWidth >= track.scrollWidth - 2,
+    })
+    updateEdges()
+    track.addEventListener('scroll', updateEdges, { passive: true })
+    const observer = new ResizeObserver(updateEdges)
+    observer.observe(track)
+    return () => {
+      track.removeEventListener('scroll', updateEdges)
+      observer.disconnect()
+    }
+  }, [])
+
+  const scrollProjects = (direction) => {
+    const track = trackRef.current
+    const card = track.querySelector('.project-editorial-card')
+    const step = card.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap)
+    const target = Math.max(0, Math.min(track.scrollWidth - track.clientWidth, track.scrollLeft + direction * step))
+    track.scrollTo({ left: target, behavior: shouldReduceMotion ? 'instant' : 'smooth' })
+  }
+
   const dialogRef = useRef(null)
   const closeButtonRef = useRef(null)
   const triggerRef = useRef(null)
@@ -238,11 +294,24 @@ const Projects = () => {
               <span className="projects-editorial-outline">Build</span>
             </h2>
             <p className="projects-editorial-intro">
-              Three production-minded builds. Pick a system, inspect the decisions, then open the full gallery.
+              Four production-minded builds. Pick a system, inspect the decisions, then open the full gallery.
             </p>
           </motion.header>
 
+          <div className="project-carousel-shell">
           <motion.div
+            ref={trackRef}
+            id="project-track"
+            role="region"
+            aria-label="Selected projects — swipe or use arrow keys to see more"
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.target !== event.currentTarget) return
+              if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                event.preventDefault()
+                scrollProjects(event.key === 'ArrowLeft' ? -1 : 1)
+              }
+            }}
             className="project-editorial-stack"
             variants={stackVariants}
             initial="hidden"
@@ -259,6 +328,20 @@ const Projects = () => {
               />
             ))}
           </motion.div>
+          <aside className="project-carousel-edge-panel" aria-label="Project carousel navigation">
+            <p className="project-carousel-edge-hint" aria-hidden="true">
+              swipe to see more
+            </p>
+            <div className="project-carousel-nav">
+              <button type="button" onClick={() => scrollProjects(-1)} disabled={scrollEdges.start} aria-label="Previous projects" aria-controls="project-track">
+                <ChevronLeft size={22} aria-hidden="true" />
+              </button>
+              <button type="button" onClick={() => scrollProjects(1)} disabled={scrollEdges.end} aria-label="Next projects" aria-controls="project-track">
+                <ChevronRight size={22} aria-hidden="true" />
+              </button>
+            </div>
+          </aside>
+          </div>
         </div>
       </section>
 
@@ -371,7 +454,7 @@ const ProjectCard = ({ project, index, animationVariants, onOpenLightbox }) => {
 
       <button
         type="button"
-        className="project-editorial-preview"
+        className={`project-editorial-preview${project.previewFit === 'contain' ? ' project-editorial-preview--contain' : ''}`}
         onClick={onOpenLightbox}
         aria-label={`Open gallery for ${project.title}`}
       >
@@ -472,6 +555,7 @@ ProjectCard.propTypes = {
     techStack: PropTypes.arrayOf(PropTypes.string).isRequired,
     githubUrl: PropTypes.string.isRequired,
     ctaLabel: PropTypes.string.isRequired,
+    previewFit: PropTypes.oneOf(['contain']),
     images: PropTypes.arrayOf(
       PropTypes.shape({
         src: PropTypes.string.isRequired,

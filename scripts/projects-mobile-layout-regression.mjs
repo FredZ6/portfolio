@@ -10,7 +10,7 @@ assert.doesNotMatch(source, /activeMobileProjectIndex/)
 
 const mobileRule = css.match(/@media \(max-width:\s*768px\) \{([\s\S]*?)\n\}/)?.[1] ?? ''
 assert(mobileRule, 'Expected a <=768px Projects breakpoint.')
-assert.match(mobileRule, /\.project-editorial-stack\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)/)
+assert.match(mobileRule, /\.project-editorial-stack\s*\{[\s\S]*?grid-auto-columns:\s*90%/)
 assert.match(mobileRule, /\.project-editorial-card[\s\S]*?transform:\s*none/)
 assert.match(mobileRule, /\.project-editorial-card[\s\S]*?margin(?:-inline)?:\s*0/)
 assert.match(css, /\.project-editorial-card\s*\{[\s\S]*?min-width:\s*0/)
@@ -18,4 +18,8 @@ assert.match(css, /\.project-editorial-action[\s\S]*?min-height:\s*44px/)
 assert.match(css, /@media \(max-width:\s*420px\)/)
 assert.match(css, /@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*?\.project-editorial-card/)
 
-console.log('Projects mobile layout is a readable, non-scrolling single-column stack.')
+console.log('Projects mobile layout uses a readable, snapping horizontal carousel.')
+
+assert.match(css, /scroll-snap-type: x mandatory/)
+assert.match(css, /grid-auto-flow: column/)
+assert.match(source, /const PROJECTS = \[\s*\{\s*id: 4,/)
