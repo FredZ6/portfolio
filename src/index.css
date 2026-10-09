@@ -2361,7 +2361,7 @@ body {
 }
 
 .hero-actions a:hover,
-.hero-actions button:hover,
+.hero-actions button:hover:not(:disabled),
 .resume-dialog-actions a:hover,
 .resume-dialog-actions button:hover {
   border-color: var(--blue);
@@ -2380,6 +2380,11 @@ body {
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.hero-actions .hero-resume-button:disabled {
+  opacity: 1;
+  cursor: default;
 }
 
 .hero-next {

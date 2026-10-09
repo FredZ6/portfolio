@@ -1,17 +1,12 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
 import Projects from './components/Projects'
 import Skills from './components/Skills'
 import Footer from './components/Footer'
-import ResumeDialog from './components/ResumeDialog'
 
 function App() {
-  const [isResumeOpen, setIsResumeOpen] = useState(false)
-  const openResume = useCallback(() => setIsResumeOpen(true), [])
-  const closeResume = useCallback(() => setIsResumeOpen(false), [])
-
   useEffect(() => {
     document.documentElement.dataset.theme = 'light'
 
@@ -29,13 +24,12 @@ function App() {
     <div className="editorial-app-shell relative isolate min-h-[100dvh] overflow-hidden">
       <Navbar />
       <main>
-        <Hero onOpenResume={openResume} />
+        <Hero />
         <Skills />
         <Projects />
         <About />
       </main>
       <Footer />
-      <ResumeDialog isOpen={isResumeOpen} onClose={closeResume} />
     </div>
   )
 }

@@ -1,9 +1,8 @@
 import { useLayoutEffect, useRef } from 'react'
-import PropTypes from 'prop-types'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { ArrowDownRight, FileText, Github, Linkedin, Mail } from 'lucide-react'
 
-const Hero = ({ onOpenResume }) => {
+const Hero = () => {
   const heroRef = useRef(null)
   const birdRef = useRef(null)
   useLayoutEffect(() => {
@@ -135,7 +134,7 @@ const Hero = ({ onOpenResume }) => {
             <a href="mailto:fredzhang026@gmail.com" aria-label="Email Fred Zhang">
               <Mail aria-hidden="true" size={19} />
             </a>
-            <button type="button" className="hero-resume-button" onClick={onOpenResume}>
+            <button type="button" className="hero-resume-button" disabled>
               <FileText aria-hidden="true" size={18} />
               Résumé
             </button>
@@ -149,10 +148,6 @@ const Hero = ({ onOpenResume }) => {
       </motion.div>
     </section>
   )
-}
-
-Hero.propTypes = {
-  onOpenResume: PropTypes.func.isRequired,
 }
 
 export default Hero
